@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 Classical Methods | STAT 372 Open Textbook (R)</title>
+  <meta name="description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 Classical Methods | STAT 372 Open Textbook (R)" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 Classical Methods | STAT 372 Open Textbook (R)" />
+  
+  <meta name="twitter:description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  
+
+<meta name="author" content="Dr. Wanhua Su" />
+
+
+<meta name="date" content="2024-11-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="discriminant-analysis-and-classification.html"/>
+<link rel="next" href="summary.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#learning-outcomes"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#some-examples"><i class="fa fa-check"></i><b>2.2</b> Some Examples</a>
+<ul>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-1-storm-survival-of-sparrows"><i class="fa fa-check"></i>Example 1: Storm Survival of Sparrows</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-2-spam-or-e-mail"><i class="fa fa-check"></i>Example 2: Spam or E-mail?</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-3-classification-of-iris"><i class="fa fa-check"></i>Example 3: Classification of Iris</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#multivariate-methods-covered-in-stat-372"><i class="fa fa-check"></i><b>2.3</b> Multivariate Methods Covered in STAT 372</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#review-univariate-analysis"><i class="fa fa-check"></i><b>2.4</b> Review: Univariate Analysis</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#random-variable-and-its-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Random Variable and Its Distribution</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#properties-of-expectation-and-variance"><i class="fa fa-check"></i><b>2.4.2</b> Properties of Expectation and Variance</a></li>
+<li class="chapter" data-level="2.4.3" data-path="intro.html"><a href="intro.html#continuous-random-variables"><i class="fa fa-check"></i><b>2.4.3</b> Continuous Random Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#revisit-learning-learning-outcomes"><i class="fa fa-check"></i>Revisit Learning Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="matrix-algebra.html"><a href="matrix-algebra.html"><i class="fa fa-check"></i><b>3</b> Matrix Algebra</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrix-algebra.html"><a href="matrix-algebra.html#learning-outcomes-1"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="3.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#vectors"><i class="fa fa-check"></i><b>3.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#some-basic-operations-on-vectors"><i class="fa fa-check"></i><b>3.1.1</b> Some Basic Operations on Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="matrix-algebra.html"><a href="matrix-algebra.html#matrices"><i class="fa fa-check"></i><b>3.2</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#basic-operations-on-matrix"><i class="fa fa-check"></i><b>3.2.1</b> Basic Operations on Matrix</a></li>
+<li class="chapter" data-level="3.2.2" data-path="matrix-algebra.html"><a href="matrix-algebra.html#eigenvalues-and-eigenvectors"><i class="fa fa-check"></i><b>3.2.2</b> Eigenvalues and Eigenvectors</a></li>
+<li class="chapter" data-level="3.2.3" data-path="matrix-algebra.html"><a href="matrix-algebra.html#spectral-eigen-decomposition"><i class="fa fa-check"></i><b>3.2.3</b> Spectral (Eigen) Decomposition</a></li>
+<li class="chapter" data-level="3.2.4" data-path="matrix-algebra.html"><a href="matrix-algebra.html#singular-value-decomposition"><i class="fa fa-check"></i><b>3.2.4</b> Singular-Value Decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="matrix-algebra.html"><a href="matrix-algebra.html#mean-vectors-and-covariance-matrices"><i class="fa fa-check"></i><b>3.3</b> Mean Vectors and Covariance Matrices</a></li>
+<li class="chapter" data-level="3.4" data-path="matrix-algebra.html"><a href="matrix-algebra.html#sample-mean-vector-and-covariance-matrix"><i class="fa fa-check"></i><b>3.4</b> Sample Mean Vector and Covariance Matrix</a></li>
+<li class="chapter" data-level="3.5" data-path="matrix-algebra.html"><a href="matrix-algebra.html#review-exercises"><i class="fa fa-check"></i><b>3.5</b> Review Exercises</a></li>
+<li class="chapter" data-level="" data-path="matrix-algebra.html"><a href="matrix-algebra.html#revisit-the-learning-outcomes"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html"><i class="fa fa-check"></i><b>4</b> Displaying Multivariate Data and Measures of Distance</a>
+<ul>
+<li class="chapter" data-level="" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#learning-outcomes-2"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="4.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#display-multivariate-data"><i class="fa fa-check"></i><b>4.1</b> Display Multivariate Data</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#scatterplot"><i class="fa fa-check"></i><b>4.1.1</b> Scatterplot</a></li>
+<li class="chapter" data-level="4.1.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#graphs-of-growth-curves"><i class="fa fa-check"></i><b>4.1.2</b> Graphs of Growth Curves</a></li>
+<li class="chapter" data-level="4.1.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#star-plots"><i class="fa fa-check"></i><b>4.1.3</b> Star Plots</a></li>
+<li class="chapter" data-level="4.1.4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#chernoff-faces-plot"><i class="fa fa-check"></i><b>4.1.4</b> Chernoff Faces Plot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-in-multivariate-analysis"><i class="fa fa-check"></i><b>4.2</b> Distance in Multivariate Analysis</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distances-for-quantitative-variables"><i class="fa fa-check"></i><b>4.2.1</b> Distances for Quantitative Variables</a></li>
+<li class="chapter" data-level="4.2.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-for-categorical-variables"><i class="fa fa-check"></i><b>4.2.2</b> Distance for Categorical Variables</a></li>
+<li class="chapter" data-level="4.2.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-for-mixed-variable-types"><i class="fa fa-check"></i><b>4.2.3</b> Distance for Mixed Variable Types</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3</b> Multivariate Normal Distribution</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#properties-of-multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.1</b> Properties of Multivariate Normal Distribution</a></li>
+<li class="chapter" data-level="4.3.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#bivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.2</b> Bivariate Normal Distribution</a></li>
+<li class="chapter" data-level="4.3.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#contour-of-multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.3</b> Contour of Multivariate Normal Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#the-sampling-distribution-of-mathbfbar-x-and-boldsymbols"><i class="fa fa-check"></i><b>4.4</b> The Sampling Distribution of <span class="math inline">\(\mathbf{\bar X}\)</span> and <span class="math inline">\(\boldsymbol{S}\)</span></a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distributions-related-to-normal-distribution"><i class="fa fa-check"></i><b>4.4.1</b> Distributions Related to Normal Distribution</a></li>
+<li class="chapter" data-level="4.4.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#applications-to-distributions-related-to-sample-means"><i class="fa fa-check"></i><b>4.4.2</b> Applications to Distributions Related to Sample Means</a></li>
+<li class="chapter" data-level="4.4.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#generalize-to-multivariate-cases"><i class="fa fa-check"></i><b>4.4.3</b> Generalize to Multivariate Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#review-exercises-1"><i class="fa fa-check"></i><b>4.5</b> Review Exercises</a></li>
+<li class="chapter" data-level="" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#revisit-the-learning-outcomes-1"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html"><i class="fa fa-check"></i><b>5</b> Hypothesis Tests on Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#learning-outcomes-3"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="5.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-one-mean-vector"><i class="fa fa-check"></i><b>5.1</b> Hypothesis Test for one Mean Vector</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case"><i class="fa fa-check"></i><b>5.1.1</b> Univariate Case</a></li>
+<li class="chapter" data-level="5.1.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case"><i class="fa fa-check"></i><b>5.1.2</b> Multivariate Case</a></li>
+<li class="chapter" data-level="5.1.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#evaluating-multivariate-normality"><i class="fa fa-check"></i><b>5.1.3</b> Evaluating Multivariate Normality</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-two-mean-vectors"><i class="fa fa-check"></i><b>5.2</b> Hypothesis Test for Two Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-based-on-two-independent-samples"><i class="fa fa-check"></i><b>5.2.1</b> Univariate Case Based on Two Independent Samples</a></li>
+<li class="chapter" data-level="5.2.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-based-on-two-independent-samples"><i class="fa fa-check"></i><b>5.2.2</b> Multivariate Case Based on Two Independent Samples</a></li>
+<li class="chapter" data-level="5.2.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#two-sample-non-pooled-hotellings-t2-test"><i class="fa fa-check"></i><b>5.2.3</b> Two-sample Non-pooled Hotelling’s <span class="math inline">\(T^2\)</span> Test</a></li>
+<li class="chapter" data-level="5.2.4" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#two-sample-hotellings-t2-confidence-interval"><i class="fa fa-check"></i><b>5.2.4</b> Two-sample Hotelling’s <span class="math inline">\(T^2\)</span> Confidence Interval</a></li>
+<li class="chapter" data-level="5.2.5" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-based-on-a-paired-sample"><i class="fa fa-check"></i><b>5.2.5</b> Univariate Case Based on a Paired Sample</a></li>
+<li class="chapter" data-level="5.2.6" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-based-on-a-paired-sample"><i class="fa fa-check"></i><b>5.2.6</b> Multivariate Case Based on a Paired Sample</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-several-mean-vectors"><i class="fa fa-check"></i><b>5.3</b> Hypothesis Test for Several Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-one-way-anova-f-test"><i class="fa fa-check"></i><b>5.3.1</b> Univariate Case: One-Way ANOVA F Test</a></li>
+<li class="chapter" data-level="5.3.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-one-way-manova"><i class="fa fa-check"></i><b>5.3.2</b> Multivariate Case: One-Way MANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#revisit-the-learning-outcomes-2"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html"><i class="fa fa-check"></i><b>6</b> Principal Component Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#learning-outcomes-4"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="6.1" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#finding-the-principal-components"><i class="fa fa-check"></i><b>6.1</b> Finding the Principal Components</a></li>
+<li class="chapter" data-level="6.2" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#scaling-in-principal-component-analysis"><i class="fa fa-check"></i><b>6.2</b> Scaling in Principal Component Analysis</a></li>
+<li class="chapter" data-level="6.3" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#limitations-of-principal-component-analysis"><i class="fa fa-check"></i><b>6.3</b> Limitations of Principal Component Analysis</a></li>
+<li class="chapter" data-level="6.4" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#further-reading"><i class="fa fa-check"></i><b>6.4</b> Further Reading</a></li>
+<li class="chapter" data-level="" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#revisit-the-learning-outcomes-3"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>7</b> Factor Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="factor-analysis.html"><a href="factor-analysis.html#learning-outcomes-5"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="7.1" data-path="factor-analysis.html"><a href="factor-analysis.html#model-of-factor-analysis"><i class="fa fa-check"></i><b>7.1</b> Model of Factor Analysis</a></li>
+<li class="chapter" data-level="7.2" data-path="factor-analysis.html"><a href="factor-analysis.html#estimating-factor-loadings-l_ij-and-specific-variance-psi_i"><i class="fa fa-check"></i><b>7.2</b> Estimating Factor Loadings <span class="math inline">\(l_{ij}\)</span> and Specific Variance <span class="math inline">\(\psi_i\)</span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="factor-analysis.html"><a href="factor-analysis.html#the-principle-component-method"><i class="fa fa-check"></i><b>7.2.1</b> The Principle Component Method</a></li>
+<li class="chapter" data-level="7.2.2" data-path="factor-analysis.html"><a href="factor-analysis.html#the-maximum-likelihood-method"><i class="fa fa-check"></i><b>7.2.2</b> The Maximum Likelihood Method</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="factor-analysis.html"><a href="factor-analysis.html#factor-rotation"><i class="fa fa-check"></i><b>7.3</b> Factor Rotation</a></li>
+<li class="chapter" data-level="7.4" data-path="factor-analysis.html"><a href="factor-analysis.html#factor-scores"><i class="fa fa-check"></i><b>7.4</b> Factor Scores</a></li>
+<li class="chapter" data-level="" data-path="factor-analysis.html"><a href="factor-analysis.html#revisit-the-learning-outcomes-4"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html"><i class="fa fa-check"></i><b>8</b> Discriminant Analysis and Classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#learning-outcomes-6"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="8.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#performance-measure"><i class="fa fa-check"></i><b>8.2</b> Performance Measure</a></li>
+<li class="chapter" data-level="8.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#overfitting-and-cross-validation"><i class="fa fa-check"></i><b>8.3</b> Overfitting and Cross Validation</a></li>
+<li class="chapter" data-level="8.4" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classification-models"><i class="fa fa-check"></i><b>8.4</b> Classification Models</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>8.4.1</b> <span class="math inline">\(K\)</span> Nearest Neighbors</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#logistic-regression-for-binary-response"><i class="fa fa-check"></i><b>8.5</b> Logistic Regression for Binary Response</a>
+<ul>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#interpretation-of-beta_i"><i class="fa fa-check"></i>Interpretation of <span class="math inline">\(\beta_i\)</span></a></li>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#estimation-of-beta_i"><i class="fa fa-check"></i>Estimation of <span class="math inline">\(\beta_i\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#logistic-regression-for-multi-class-nominal-data"><i class="fa fa-check"></i><b>8.6</b> Logistic Regression for Multi-class Nominal Data</a></li>
+<li class="chapter" data-level="8.7" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#cumulative-logit-model-for-multi-class-ordinal-data"><i class="fa fa-check"></i><b>8.7</b> Cumulative Logit Model for Multi-class Ordinal Data</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#cumulative-logit-models-with-proportional-odds"><i class="fa fa-check"></i><b>8.7.1</b> Cumulative Logit Models with Proportional Odds</a></li>
+<li class="chapter" data-level="8.7.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-probability-of-each-category"><i class="fa fa-check"></i><b>8.7.2</b> Model Probability of Each Category</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-selection-for-logistic-regression"><i class="fa fa-check"></i><b>8.8</b> Model Selection for Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#aic-and-bic"><i class="fa fa-check"></i><b>8.8.1</b> AIC and BIC</a></li>
+<li class="chapter" data-level="8.8.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#forward-selection"><i class="fa fa-check"></i><b>8.8.2</b> Forward Selection</a></li>
+<li class="chapter" data-level="8.8.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#backward-elimination"><i class="fa fa-check"></i><b>8.8.3</b> Backward Elimination</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-checking"><i class="fa fa-check"></i><b>8.9</b> Model Checking</a>
+<ul>
+<li class="chapter" data-level="8.9.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#residual-analysis"><i class="fa fa-check"></i><b>8.9.1</b> Residual Analysis</a></li>
+<li class="chapter" data-level="8.9.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#preditive-power-accuracy-and-roc-curve"><i class="fa fa-check"></i><b>8.9.2</b> Preditive Power: Accuracy and ROC Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="8.10" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classification-tree-recursive-partitioning"><i class="fa fa-check"></i><b>8.10</b> Classification Tree (Recursive Partitioning)</a></li>
+<li class="chapter" data-level="8.11" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#regression-tree"><i class="fa fa-check"></i><b>8.11</b> Regression Tree</a></li>
+<li class="chapter" data-level="8.12" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#random-forest"><i class="fa fa-check"></i><b>8.12</b> Random Forest</a></li>
+<li class="chapter" data-level="8.13" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#support-vector-machines"><i class="fa fa-check"></i><b>8.13</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="8.14" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#neural-networks"><i class="fa fa-check"></i><b>8.14</b> Neural Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="classical-methods.html"><a href="classical-methods.html"><i class="fa fa-check"></i><b>9</b> Classical Methods</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="classical-methods.html"><a href="classical-methods.html#mahalanobis-distance-method"><i class="fa fa-check"></i><b>9.1</b> Mahalanobis Distance Method</a></li>
+<li class="chapter" data-level="9.2" data-path="classical-methods.html"><a href="classical-methods.html#bayes-posterior"><i class="fa fa-check"></i><b>9.2</b> Bayes Posterior</a></li>
+<li class="chapter" data-level="9.3" data-path="classical-methods.html"><a href="classical-methods.html#fishers-discriminant-analysis"><i class="fa fa-check"></i><b>9.3</b> Fisher’s Discriminant Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="revisit-learning-outcomes.html"><a href="revisit-learning-outcomes.html"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+<li class="chapter" data-level="11" data-path="clustering-analysis.html"><a href="clustering-analysis.html"><i class="fa fa-check"></i><b>11</b> Clustering Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#learning-outcomes-7"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="11.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#introduction-2"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#clustering-methods"><i class="fa fa-check"></i><b>11.2</b> Clustering Methods</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#hierarchical-method"><i class="fa fa-check"></i><b>11.2.1</b> Hierarchical Method</a></li>
+<li class="chapter" data-level="11.2.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#k-means"><i class="fa fa-check"></i><b>11.2.2</b> K-Means</a></li>
+<li class="chapter" data-level="11.2.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#model-based-clustering"><i class="fa fa-check"></i><b>11.2.3</b> Model-Based Clustering</a></li>
+<li class="chapter" data-level="11.2.4" data-path="clustering-analysis.html"><a href="clustering-analysis.html#pros-and-cons-of-clustering-methods"><i class="fa fa-check"></i><b>11.2.4</b> Pros and Cons of Clustering Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#determine-k-number-of-clusters"><i class="fa fa-check"></i><b>11.3</b> Determine <span class="math inline">\(K\)</span>: Number of Clusters</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#the-elbow-plot-method"><i class="fa fa-check"></i><b>11.3.1</b> The Elbow Plot Method</a></li>
+<li class="chapter" data-level="11.3.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#the-silhouette-score"><i class="fa fa-check"></i><b>11.3.2</b> The Silhouette Score</a></li>
+<li class="chapter" data-level="11.3.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#gap-statistics"><i class="fa fa-check"></i><b>11.3.3</b> Gap Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#side-note-on-the-em-algorithm"><i class="fa fa-check"></i>Side-Note on the EM Algorithm</a></li>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#revisit-learning-outcomes-1"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html"><i class="fa fa-check"></i><b>12</b> Canonical Correlation Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#learning-outcomes-8"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#revisit-learning-outcomes-2"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html"><i class="fa fa-check"></i><b>13</b> Multidimensional Scaling</a>
+<ul>
+<li class="chapter" data-level="" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#learning-outcomes-9"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#revisit-learning-outcomes-3"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAT 372 Open Textbook (R)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="classical-methods" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> Classical Methods<a href="classical-methods.html#classical-methods" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The classical methods covered are Mahalanobis distance, Bayesian posterior, Fisher’s LDA and QDA.</p>
+<div id="mahalanobis-distance-method" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Mahalanobis Distance Method<a href="classical-methods.html#mahalanobis-distance-method" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The idea is to classify observation to the class with the shortest Mahalanobis distance to the class center. That is
+<span class="math display">\[
+y &lt;- \mbox{argmin}_i (\mathbf{x}-\mbox{\boldmath ${\mu_i}$})^T\mbox{\boldmath ${\Sigma}$}_i^{-1} (\mathbf{x}-\mbox{\boldmath ${\mu_i}$})
+\]</span>
+where <span class="math inline">\(\mbox{\boldmath ${\mu_i}$}\)</span> and <span class="math inline">\(\mbox{\boldmath ${\Sigma}$}_i\)</span> are the mean vector and variance-covariance matrix of class <span class="math inline">\(i\)</span>.</p>
+</div>
+<div id="bayes-posterior" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Bayes Posterior<a href="classical-methods.html#bayes-posterior" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose there are <span class="math inline">\(K\)</span> classes, <span class="math inline">\(\mathbf{x}|Y=i \sim f_i(\mathbf{x})\)</span>, and the relative frequency of each class is <span class="math inline">\(P(Y=i)=\pi_i\)</span> (we call this the prior). By Bayes rule, the posterior probability is
+<span class="math display">\[
+P(Y=i|\mathbf{x})=\frac{P(Y=i, \mathbf{x})}{P(\mathbf{x})}=\frac{P(\mathbf{x}|Y=i)P(Y=i)}{\displaystyle\sum_{j=1}^KP(\mathbf{x}|Y=j)P(Y=j)}=\frac{f_i(\mathbf{x})\pi_i}{\displaystyle\sum_{j=1}^K f_j(\mathbf{x})\pi_j}\propto f_i(\mathbf{x})\pi_i
+\]</span>
+Assign the observation <span class="math inline">\(\mathbf{x}\)</span> to the class yielding the largest posterior probability, i.e.,
+<span class="math display">\[
+y=\mbox{argmax}_i \frac{f_i(\mathbf{x})\pi_i}{\displaystyle\sum_{j=1}^K f_j(\mathbf{x})\pi_j}=\mbox{argmax}_i f_i(\mathbf{x})\pi_i.
+\]</span>
+If there are only two classes, <span class="math inline">\(K=2\)</span>, assign <span class="math inline">\(\mathbf{x}\)</span> to class 1 if the posterior probability <span class="math inline">\(P(Y=1|\mathbf{x})\ge P(Y=2|\mathbf{x})\)</span>, i.e., if <span class="math inline">\(P(Y=1|\mathbf{x})\ge 0.5\)</span>.</p>
+<p>If we further assume the distributions <span class="math inline">\(f_i\)</span> are multivariate normal distributions, we can obtain the discriminant function in a close form. If <span class="math inline">\(\mathbf{X}|Y=0\sim MVN(\mbox{\boldmath ${\mu}$}_0, \mbox{\boldmath ${\Sigma}$}_0), \mathbf{X}|Y=1\sim MVN(\mbox{\boldmath ${\mu}$}_1, \mbox{\boldmath ${\Sigma}$}_1)\)</span>, The Bayesian posterior is given by
+<span class="math display">\[
+P(Y=0|\mathbf{x})=\frac{\pi_0 f_0(\mathbf{x})}{\pi_0 f_0(\mathbf{x})+\pi_1 f_1(\mathbf{x})}, \quad P(Y=1|\mathbf{x})=\frac{\pi_1 f_1(\mathbf{x})}{\pi_0 f_0(\mathbf{x})+\pi_1 f_1(\mathbf{x})}
+\]</span>
+Assign the observation <span class="math inline">\(\mathbf{x}\)</span> to class 0 if <span class="math inline">\(P(Y=0|\mathbf{x})\ge P(Y=1|\mathbf{x})\)</span> or
+<span class="math display">\[
+\frac{P(Y=0|\mathbf{x})}{P(Y=1|\mathbf{x})}\ge 1 \Longrightarrow \log \frac{P(Y=0|\mathbf{x})}{P(Y=1|\mathbf{x})}=\log \frac{\pi_0 f_0(\mathbf{x})}{\pi_1 f_1(\mathbf{x})}\ge 0
+\]</span>
+That is
+<span class="math display">\[\begin{align*}
+&amp;\log \frac{P(Y=0|\mathbf{x})}{P(Y=1|\mathbf{x})}=\log \frac{\pi_0}{\pi_1}+\log \frac{f_0(\mathbf{x})}{f_1(\mathbf{x})}=\log \frac{\pi_0}{\pi_1}+\log \left\{\frac{\frac{1}{(2\pi)^{p/2}|\mbox{\boldmath ${\Sigma}$}_0|^{1/2}}\exp \left[-\frac{(\mathbf{x}-\mbox{\boldmath ${\mu_0}$})^{T}\mbox{\boldmath ${\Sigma_0}$}^{-1} (\mathbf{x}-\mbox{\boldmath ${\mu_0}$})}{2}\right]}{\frac{1}{(2\pi)^{p/2}|\mbox{\boldmath ${\Sigma}$}_1|^{1/2}}\exp \left[-\frac{(\mathbf{x}-\mbox{\boldmath ${\mu_1}$})^{T}\mbox{\boldmath ${\Sigma_1}$}^{-1} (\mathbf{x}-\mbox{\boldmath ${\mu_1}$})}{2}\right]}\right\}\\
+&amp;=\log \frac{\pi_0}{\pi_1}+\frac{1}{2}\log\left(\frac{|\mbox{\boldmath ${\Sigma}$}_0|}{|\mbox{\boldmath ${\Sigma}$}_1|}\right)-\frac{1}{2}\left[(\mathbf{x}-\mbox{\boldmath ${\mu_0}$})^{T}\mbox{\boldmath ${\Sigma}$}_0^{-1} (\mathbf{x}-\mbox{\boldmath ${\mu_0}$})-(\mathbf{x}-\mbox{\boldmath ${\mu_1}$})^{T}\mbox{\boldmath ${\Sigma}$}_1^{-1} (\mathbf{x}-\mbox{\boldmath ${\mu_1}$}) \right]\\
+&amp;=C-\frac{1}{2}\left[\mathbf{x}^T\mbox{\boldmath ${\Sigma}$}_0^{-1}\mathbf{x}-\mbox{\boldmath ${\mu_0}$}^T\mbox{\boldmath ${\Sigma}$}_0^{-1}\mathbf{x}-\mathbf{x}^T\mbox{\boldmath ${\Sigma}$}_0^{-1}\mbox{\boldmath ${\mu_0}$}+\mbox{\boldmath ${\mu_0}$}^T\mbox{\boldmath ${\Sigma}$}_0^{-1}\mbox{\boldmath ${\mu_0}$}-\mathbf{x}^T\mbox{\boldmath ${\Sigma}$}_1^{-1}\mathbf{x}+\mbox{\boldmath ${\mu_1}$}^T\mbox{\boldmath ${\Sigma}$}_1^{-1}\mathbf{x}+\mathbf{x}^T\mbox{\boldmath ${\Sigma}$}_1^{-1}\mbox{\boldmath ${\mu_1}$}-\mbox{\boldmath ${\mu_1}$}^T\mbox{\boldmath ${\Sigma}$}_1^{-1}\mbox{\boldmath ${\mu_1}$}\right]
+\end{align*}\]</span></p>
+The idea of discriminant function can be generalized to three classes problems.
+<p>In general, we assign <span class="math inline">\(\mathbf{x}\)</span> to the class giving the largest value of <span class="math inline">\(\delta(\cdot)\)</span>, i.e., <span class="math inline">\(y=\mbox{argmax}_i \delta_i(\mathbf{x})\)</span> where the <span class="math inline">\(\delta(\cdot)\)</span> is defined as
+<span class="math display">\[\begin{align*}
+\delta_i(\mathbf{x})&amp;=\log(\pi_i)+\mbox{\boldmath ${\mu}$}_i^T\mbox{\boldmath ${\Sigma}$}^{-1}\mathbf{x}-\frac{1}{2}\mbox{\boldmath ${\mu}$}_i^T\mbox{\boldmath ${\Sigma}$}^{-1}\mbox{\boldmath ${\mu}$}_i, i=1, 2, \cdots, k, \mbox {for LDA}\\
+\delta_i(\mathbf{x})&amp;=\log(\pi_i)-\frac{1}{2}\log|\mbox{\boldmath ${\Sigma}$}_i|-\frac{1}{2}(\mathbf{x}-\mbox{\boldmath ${\mu}$}_i)^T\mbox{\boldmath ${\Sigma}$}_i^{-1}(\mathbf{x}-\mbox{\boldmath ${\mu}$}_i), i=1, 2, \cdots, k, \mbox {for QDA}
+\end{align*}\]</span></p>
+</div>
+<div id="fishers-discriminant-analysis" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Fisher’s Discriminant Analysis<a href="classical-methods.html#fishers-discriminant-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For Fisher’s discriminant analysis, we do not assume the distribution of <span class="math inline">\(\mathbf{X}\)</span> is multivariate normal. And we want to find a linear combination (projection) of <span class="math inline">\(\mathbf{X}\)</span>, such that the between-group variation in the new coordinate is maximized. That is to find
+<span class="math display">\[
+\mbox{argmax}_{\mathbf{a}} \frac{\mathbf{a}^T\mathbf{S}_B\mathbf{a}}{\mathbf{a}^T\mathbf{S}_W\mathbf{a}}
+\]</span>
+which is equivalent to finding <span class="math inline">\(\mbox{argmax}_{\mathbf{a}} \mathbf{a}^T\mathbf{S}_B\mathbf{a}\)</span> with the constraint <span class="math inline">\(\mathbf{a}^T\mathbf{S}_W\mathbf{a}=1\)</span>. By Lagrange multiplier method, the objective function is
+<span class="math display">\[
+Q= \mathbf{a}^T\mathbf{S}_B\mathbf{a}-\lambda(\mathbf{a}^T\mathbf{S}_W\mathbf{a}-1)
+\]</span>
+<span class="math display">\[\begin{align*}
+\frac{\partial Q}{\partial \mathbf{a}}&amp;=2\mathbf{S}_B\mathbf{a}-2\lambda \mathbf{S}_W \mathbf{a}=0 \Longrightarrow
+\mathbf{S}_B\mathbf{a}=\lambda \mathbf{S}_W\mathbf{a}  \Longrightarrow \mathbf{S}_W^{-1}\mathbf{S}_B\mathbf{a}=\lambda\mathbf{a}\\
+\frac{\partial Q}{\partial \lambda}&amp;=\mathbf{a}^T\mathbf{S}_W\mathbf{a}-1=0\Longrightarrow \mathbf{a}^T\mathbf{S}_W\mathbf{a}=1
+\end{align*}\]</span>
+The first equation implies that <span class="math inline">\(\lambda\)</span> is an eigenvalue of the matrix <span class="math inline">\(\mathbf{S}_W^{-1}\mathbf{S}_B\)</span> and <span class="math inline">\(\mathbf{a}\)</span> is the corresponding eigenvector. The first equation also implies that <span class="math inline">\(\mathbf{a}^T\mathbf{S}_B\mathbf{a}=\lambda\)</span>, that is, to maximize <span class="math inline">\(\mathbf{a}^T\mathbf{S}_B\mathbf{a}\)</span> is to maximize <span class="math inline">\(\lambda\)</span>. As a result, <span class="math inline">\(\mathbf{e}\)</span> is the eigenvector associated to the largest eigenvalue of the matrix <span class="math inline">\(\mathbf{S}_W^{-1}\mathbf{S}_B\)</span>, then
+<span class="math display">\[
+\mathbf{a}=\frac{\mathbf{e}}{\sqrt{c}}, \quad \mbox{ where $c=\mathbf{e}^T\mathbf{S}_W\mathbf{e}$}.
+\]</span>
+Assign <span class="math inline">\(\mathbf{x}\)</span> to the class giving the smallest projected distance to the class center, i.e.,
+<span class="math display">\[
+y=\arg\min_i [\mathbf{a}^T(\mathbf{x}-\mbox{\boldmath ${\mu}$}_i)]^2.
+\]</span>
+: Bayes Posterior and Fisher’s Discriminant Analysis</p>
+<p>Suppose <span class="math inline">\(\mbox{\boldmath ${\mu}$}_1=[2.5, 2.5]^T, \mbox{\boldmath ${\mu}$}_2=[7.5, 7.5]^T\)</span> and
+<span class="math display">\[
+\mbox{\boldmath ${\Sigma}$}_1=\mbox{\boldmath ${\Sigma}$}_2=\left[
+\begin{array}{rr}
+1&amp;0.2\\
+0.2&amp;4
+\end{array}
+\right].
+\]</span>
+Classify <span class="math inline">\(\mathbf{x}=[4, 6]^T\)</span> to either class 1 or class 2.</p>
+<div style="page-break-after: always;"></div>
+<p>Here is the code to do the example.</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="classical-methods.html#cb154-1" tabindex="-1"></a>mu1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="fl">2.5</span>)</span>
+<span id="cb154-2"><a href="classical-methods.html#cb154-2" tabindex="-1"></a>mu2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">7.5</span>, <span class="fl">7.5</span>)</span>
+<span id="cb154-3"><a href="classical-methods.html#cb154-3" tabindex="-1"></a>sigma1 <span class="ot">&lt;-</span> sigma2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.2</span>,<span class="fl">0.2</span>,<span class="dv">4</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb154-4"><a href="classical-methods.html#cb154-4" tabindex="-1"></a><span class="co">#given a new data (4, 6), which class shall we assign?</span></span>
+<span id="cb154-5"><a href="classical-methods.html#cb154-5" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">6</span>)</span>
+<span id="cb154-6"><a href="classical-methods.html#cb154-6" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">solve</span>(sigma1)<span class="sc">%*%</span><span class="fu">matrix</span>(mu1<span class="sc">-</span>mu2,<span class="dv">2</span>,<span class="dv">1</span>)</span>
+<span id="cb154-7"><a href="classical-methods.html#cb154-7" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">t</span>(e)<span class="sc">%*%</span>sigma1<span class="sc">%*%</span>e</span>
+<span id="cb154-8"><a href="classical-methods.html#cb154-8" tabindex="-1"></a>a <span class="ot">&lt;-</span> e<span class="sc">/</span><span class="fu">sqrt</span>(c[<span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb154-9"><a href="classical-methods.html#cb154-9" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">t</span>(a)<span class="sc">%*%</span>(<span class="fu">matrix</span>(x,<span class="dv">2</span>,<span class="dv">1</span>)<span class="sc">-</span>mu1))</span>
+<span id="cb154-10"><a href="classical-methods.html#cb154-10" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">t</span>(a)<span class="sc">%*%</span>(<span class="fu">matrix</span>(x,<span class="dv">2</span>,<span class="dv">1</span>)<span class="sc">-</span>mu2))</span>
+<span id="cb154-11"><a href="classical-methods.html#cb154-11" tabindex="-1"></a><span class="fu">c</span>(d1,d2) <span class="co">#closer to mu1, classify to class 1</span></span></code></pre></div>
+<pre><code>## [1] 1.991556 3.397359</code></pre>
+<p>We apply LDA and QDA on the iris data focusing on the two species: versicolor and virginica. We first split the data into training and test sets. We did a stratified sampling with 75% training and 25% testing.</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="classical-methods.html#cb156-1" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb156-2"><a href="classical-methods.html#cb156-2" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
+<span id="cb156-3"><a href="classical-methods.html#cb156-3" tabindex="-1"></a>data <span class="ot">&lt;-</span> iris[<span class="dv">51</span><span class="sc">:</span><span class="dv">150</span>,]</span>
+<span id="cb156-4"><a href="classical-methods.html#cb156-4" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>Species)</span></code></pre></div>
+<pre><code>## [1] &quot;setosa&quot;     &quot;versicolor&quot; &quot;virginica&quot;</code></pre>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="classical-methods.html#cb158-1" tabindex="-1"></a>data<span class="sc">$</span>Species <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(data<span class="sc">$</span>Species) <span class="co">#drop the level with no observations</span></span>
+<span id="cb158-2"><a href="classical-methods.html#cb158-2" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>Species)</span></code></pre></div>
+<pre><code>## [1] &quot;versicolor&quot; &quot;virginica&quot;</code></pre>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="classical-methods.html#cb160-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4061</span>)</span>
+<span id="cb160-2"><a href="classical-methods.html#cb160-2" tabindex="-1"></a>flds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(data<span class="sc">$</span>Species, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">list =</span> <span class="cn">TRUE</span>, <span class="at">returnTrain =</span> <span class="cn">FALSE</span>) <span class="co">#response must be factor for stratified sampling</span></span>
+<span id="cb160-3"><a href="classical-methods.html#cb160-3" tabindex="-1"></a>train <span class="ot">&lt;-</span> data[<span class="sc">-</span>flds[[<span class="dv">1</span>]],]</span>
+<span id="cb160-4"><a href="classical-methods.html#cb160-4" tabindex="-1"></a>test <span class="ot">&lt;-</span> data[flds[[<span class="dv">1</span>]],]</span>
+<span id="cb160-5"><a href="classical-methods.html#cb160-5" tabindex="-1"></a><span class="fu">table</span>(train<span class="sc">$</span>Species)</span></code></pre></div>
+<pre><code>## 
+## versicolor  virginica 
+##         37         38</code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="classical-methods.html#cb162-1" tabindex="-1"></a><span class="fu">table</span>(test<span class="sc">$</span>Species)</span></code></pre></div>
+<pre><code>## 
+## versicolor  virginica 
+##         13         12</code></pre>
+<p>The misclassification rate of Fisher’s LDA method is 0.04, i.e., the accuracy is 96%.</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="classical-methods.html#cb164-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb164-2"><a href="classical-methods.html#cb164-2" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb164-3"><a href="classical-methods.html#cb164-3" tabindex="-1"></a><span class="fu">library</span>(klaR)</span>
+<span id="cb164-4"><a href="classical-methods.html#cb164-4" tabindex="-1"></a><span class="co">#pairs.panels(train[,1:4],bg=c(&quot;red&quot;,&quot;blue&quot;)[train$Species],pch=21)</span></span>
+<span id="cb164-5"><a href="classical-methods.html#cb164-5" tabindex="-1"></a>objlda <span class="ot">&lt;-</span> <span class="fu">lda</span>(Species<span class="sc">~</span>.,<span class="at">data=</span>train)</span>
+<span id="cb164-6"><a href="classical-methods.html#cb164-6" tabindex="-1"></a>ldap <span class="ot">&lt;-</span> <span class="fu">predict</span>(objlda,test)</span>
+<span id="cb164-7"><a href="classical-methods.html#cb164-7" tabindex="-1"></a>(<span class="at">ldatab=</span><span class="fu">table</span>(<span class="at">True=</span>test<span class="sc">$</span>Species,<span class="at">Predict=</span>ldap<span class="sc">$</span>class))</span></code></pre></div>
+<pre><code>##             Predict
+## True         versicolor virginica
+##   versicolor         12         1
+##   virginica           0        12</code></pre>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="classical-methods.html#cb166-1" tabindex="-1"></a>(<span class="at">ldar=</span><span class="dv">1</span><span class="sc">-</span><span class="fu">sum</span>(<span class="fu">diag</span>(ldatab))<span class="sc">/</span><span class="fu">sum</span>(ldatab))</span></code></pre></div>
+<pre><code>## [1] 0.04</code></pre>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="classical-methods.html#cb168-1" tabindex="-1"></a><span class="fu">partimat</span>(Species<span class="sc">~</span>.,<span class="at">data=</span>train,<span class="at">method=</span><span class="st">&quot;lda&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-46-1.png" width="85%" /></p>
+<p>The misclassification rate of Fisher’s QDA method is 0.04, i.e., the accuracy is 96%.</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="classical-methods.html#cb169-1" tabindex="-1"></a>objqda <span class="ot">&lt;-</span> <span class="fu">qda</span>(Species<span class="sc">~</span>.,<span class="at">data=</span>train)</span>
+<span id="cb169-2"><a href="classical-methods.html#cb169-2" tabindex="-1"></a>qdap <span class="ot">&lt;-</span> <span class="fu">predict</span>(objqda,test)</span>
+<span id="cb169-3"><a href="classical-methods.html#cb169-3" tabindex="-1"></a>(qdatab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">True=</span>test<span class="sc">$</span>Species,<span class="at">Predict=</span>qdap<span class="sc">$</span>class))</span></code></pre></div>
+<pre><code>##             Predict
+## True         versicolor virginica
+##   versicolor         12         1
+##   virginica           0        12</code></pre>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="classical-methods.html#cb171-1" tabindex="-1"></a>(qdar <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">sum</span>(<span class="fu">diag</span>(qdatab))<span class="sc">/</span><span class="fu">sum</span>(qdatab))</span></code></pre></div>
+<pre><code>## [1] 0.04</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="classical-methods.html#cb173-1" tabindex="-1"></a><span class="fu">partimat</span>(Species<span class="sc">~</span>.,<span class="at">data=</span>train,<span class="at">method=</span><span class="st">&quot;qda&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-47-1.png" width="85%" /></p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="discriminant-analysis-and-classification.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="summary.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

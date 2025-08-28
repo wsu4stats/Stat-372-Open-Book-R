@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>7 Factor Analysis | STAT 372 Open Textbook (R)</title>
+  <meta name="description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="7 Factor Analysis | STAT 372 Open Textbook (R)" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="7 Factor Analysis | STAT 372 Open Textbook (R)" />
+  
+  <meta name="twitter:description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  
+
+<meta name="author" content="Dr. Wanhua Su" />
+
+
+<meta name="date" content="2025-07-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="principal-component-analysis.html"/>
+<link rel="next" href="discriminant-analysis-and-classification.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#learning-outcomes"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#some-examples"><i class="fa fa-check"></i><b>2.2</b> Some Examples</a>
+<ul>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-1-storm-survival-of-sparrows"><i class="fa fa-check"></i>Example 1: Storm Survival of Sparrows</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-2-spam-or-e-mail"><i class="fa fa-check"></i>Example 2: Spam or E-mail?</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-3-classification-of-iris"><i class="fa fa-check"></i>Example 3: Classification of Iris</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#multivariate-methods-covered-in-stat-372"><i class="fa fa-check"></i><b>2.3</b> Multivariate Methods Covered in STAT 372</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#review-univariate-analysis"><i class="fa fa-check"></i><b>2.4</b> Review: Univariate Analysis</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#random-variable-and-its-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Random Variable and Its Distribution</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#properties-of-expectation-and-variance"><i class="fa fa-check"></i><b>2.4.2</b> Properties of Expectation and Variance</a></li>
+<li class="chapter" data-level="2.4.3" data-path="intro.html"><a href="intro.html#continuous-random-variables"><i class="fa fa-check"></i><b>2.4.3</b> Continuous Random Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#revisit-learning-learning-outcomes"><i class="fa fa-check"></i>Revisit Learning Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="matrix-algebra.html"><a href="matrix-algebra.html"><i class="fa fa-check"></i><b>3</b> Matrix Algebra</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrix-algebra.html"><a href="matrix-algebra.html#learning-outcomes-1"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="3.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#vectors"><i class="fa fa-check"></i><b>3.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#some-basic-operations-on-vectors"><i class="fa fa-check"></i><b>3.1.1</b> Some Basic Operations on Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="matrix-algebra.html"><a href="matrix-algebra.html#matrices"><i class="fa fa-check"></i><b>3.2</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#basic-operations-on-matrix"><i class="fa fa-check"></i><b>3.2.1</b> Basic Operations on Matrix</a></li>
+<li class="chapter" data-level="3.2.2" data-path="matrix-algebra.html"><a href="matrix-algebra.html#eigenvalues-and-eigenvectors"><i class="fa fa-check"></i><b>3.2.2</b> Eigenvalues and Eigenvectors</a></li>
+<li class="chapter" data-level="3.2.3" data-path="matrix-algebra.html"><a href="matrix-algebra.html#spectral-eigen-decomposition"><i class="fa fa-check"></i><b>3.2.3</b> Spectral (Eigen) Decomposition</a></li>
+<li class="chapter" data-level="3.2.4" data-path="matrix-algebra.html"><a href="matrix-algebra.html#singular-value-decomposition"><i class="fa fa-check"></i><b>3.2.4</b> Singular-Value Decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="matrix-algebra.html"><a href="matrix-algebra.html#mean-vectors-and-covariance-matrices"><i class="fa fa-check"></i><b>3.3</b> Mean Vectors and Covariance Matrices</a></li>
+<li class="chapter" data-level="3.4" data-path="matrix-algebra.html"><a href="matrix-algebra.html#sample-mean-vector-and-covariance-matrix"><i class="fa fa-check"></i><b>3.4</b> Sample Mean Vector and Covariance Matrix</a></li>
+<li class="chapter" data-level="3.5" data-path="matrix-algebra.html"><a href="matrix-algebra.html#review-exercises"><i class="fa fa-check"></i><b>3.5</b> Review Exercises</a></li>
+<li class="chapter" data-level="" data-path="matrix-algebra.html"><a href="matrix-algebra.html#revisit-the-learning-outcomes"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html"><i class="fa fa-check"></i><b>4</b> Displaying Multivariate Data and Measures of Distance</a>
+<ul>
+<li class="chapter" data-level="" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#learning-outcomes-2"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="4.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#display-multivariate-data"><i class="fa fa-check"></i><b>4.1</b> Display Multivariate Data</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#scatterplot"><i class="fa fa-check"></i><b>4.1.1</b> Scatterplot</a></li>
+<li class="chapter" data-level="4.1.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#graphs-of-growth-curves"><i class="fa fa-check"></i><b>4.1.2</b> Graphs of Growth Curves</a></li>
+<li class="chapter" data-level="4.1.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#star-plots"><i class="fa fa-check"></i><b>4.1.3</b> Star Plots</a></li>
+<li class="chapter" data-level="4.1.4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#chernoff-faces-plot"><i class="fa fa-check"></i><b>4.1.4</b> Chernoff Faces Plot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-in-multivariate-analysis"><i class="fa fa-check"></i><b>4.2</b> Distance in Multivariate Analysis</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distances-for-quantitative-variables"><i class="fa fa-check"></i><b>4.2.1</b> Distances for Quantitative Variables</a></li>
+<li class="chapter" data-level="4.2.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-for-categorical-variables"><i class="fa fa-check"></i><b>4.2.2</b> Distance for Categorical Variables</a></li>
+<li class="chapter" data-level="4.2.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-for-mixed-variable-types"><i class="fa fa-check"></i><b>4.2.3</b> Distance for Mixed Variable Types</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3</b> Multivariate Normal Distribution</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#properties-of-multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.1</b> Properties of Multivariate Normal Distribution</a></li>
+<li class="chapter" data-level="4.3.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#bivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.2</b> Bivariate Normal Distribution</a></li>
+<li class="chapter" data-level="4.3.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#contour-of-multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.3</b> Contour of Multivariate Normal Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#the-sampling-distribution-of-mathbfbar-x-and-boldsymbols"><i class="fa fa-check"></i><b>4.4</b> The Sampling Distribution of <span class="math inline">\(\mathbf{\bar X}\)</span> and <span class="math inline">\(\boldsymbol{S}\)</span></a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distributions-related-to-normal-distribution"><i class="fa fa-check"></i><b>4.4.1</b> Distributions Related to Normal Distribution</a></li>
+<li class="chapter" data-level="4.4.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#applications-to-distributions-related-to-sample-means"><i class="fa fa-check"></i><b>4.4.2</b> Applications to Distributions Related to Sample Means</a></li>
+<li class="chapter" data-level="4.4.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#generalize-to-multivariate-cases"><i class="fa fa-check"></i><b>4.4.3</b> Generalize to Multivariate Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#review-exercises-1"><i class="fa fa-check"></i><b>4.5</b> Review Exercises</a></li>
+<li class="chapter" data-level="" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#revisit-the-learning-outcomes-1"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html"><i class="fa fa-check"></i><b>5</b> Hypothesis Tests on Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#learning-outcomes-3"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="5.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-one-mean-vector"><i class="fa fa-check"></i><b>5.1</b> Hypothesis Test for one Mean Vector</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case"><i class="fa fa-check"></i><b>5.1.1</b> Univariate Case</a></li>
+<li class="chapter" data-level="5.1.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case"><i class="fa fa-check"></i><b>5.1.2</b> Multivariate Case</a></li>
+<li class="chapter" data-level="5.1.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#evaluating-multivariate-normality"><i class="fa fa-check"></i><b>5.1.3</b> Evaluating Multivariate Normality</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-two-mean-vectors"><i class="fa fa-check"></i><b>5.2</b> Hypothesis Test for Two Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-based-on-two-independent-samples"><i class="fa fa-check"></i><b>5.2.1</b> Univariate Case Based on Two Independent Samples</a></li>
+<li class="chapter" data-level="5.2.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-based-on-two-independent-samples"><i class="fa fa-check"></i><b>5.2.2</b> Multivariate Case Based on Two Independent Samples</a></li>
+<li class="chapter" data-level="5.2.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#two-sample-non-pooled-hotellings-t2-test"><i class="fa fa-check"></i><b>5.2.3</b> Two-sample Non-pooled Hotelling’s <span class="math inline">\(T^2\)</span> Test</a></li>
+<li class="chapter" data-level="5.2.4" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#two-sample-hotellings-t2-confidence-interval"><i class="fa fa-check"></i><b>5.2.4</b> Two-sample Hotelling’s <span class="math inline">\(T^2\)</span> Confidence Interval</a></li>
+<li class="chapter" data-level="5.2.5" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-based-on-a-paired-sample"><i class="fa fa-check"></i><b>5.2.5</b> Univariate Case Based on a Paired Sample</a></li>
+<li class="chapter" data-level="5.2.6" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-based-on-a-paired-sample"><i class="fa fa-check"></i><b>5.2.6</b> Multivariate Case Based on a Paired Sample</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-several-mean-vectors"><i class="fa fa-check"></i><b>5.3</b> Hypothesis Test for Several Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-one-way-anova-f-test"><i class="fa fa-check"></i><b>5.3.1</b> Univariate Case: One-Way ANOVA F Test</a></li>
+<li class="chapter" data-level="5.3.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-one-way-manova"><i class="fa fa-check"></i><b>5.3.2</b> Multivariate Case: One-Way MANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#revisit-the-learning-outcomes-2"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html"><i class="fa fa-check"></i><b>6</b> Principal Component Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#learning-outcomes-4"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="6.1" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#finding-the-principal-components"><i class="fa fa-check"></i><b>6.1</b> Finding the Principal Components</a></li>
+<li class="chapter" data-level="6.2" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#scaling-in-principal-component-analysis"><i class="fa fa-check"></i><b>6.2</b> Scaling in Principal Component Analysis</a></li>
+<li class="chapter" data-level="6.3" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#limitations-of-principal-component-analysis"><i class="fa fa-check"></i><b>6.3</b> Limitations of Principal Component Analysis</a></li>
+<li class="chapter" data-level="6.4" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#further-reading"><i class="fa fa-check"></i><b>6.4</b> Further Reading</a></li>
+<li class="chapter" data-level="" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#revisit-the-learning-outcomes-3"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>7</b> Factor Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="factor-analysis.html"><a href="factor-analysis.html#learning-outcomes-5"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="7.1" data-path="factor-analysis.html"><a href="factor-analysis.html#model-of-factor-analysis"><i class="fa fa-check"></i><b>7.1</b> Model of Factor Analysis</a></li>
+<li class="chapter" data-level="7.2" data-path="factor-analysis.html"><a href="factor-analysis.html#estimating-factor-loadings-l_ij-and-specific-variance-psi_i"><i class="fa fa-check"></i><b>7.2</b> Estimating Factor Loadings <span class="math inline">\(l_{ij}\)</span> and Specific Variance <span class="math inline">\(\psi_i\)</span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="factor-analysis.html"><a href="factor-analysis.html#the-principle-component-method"><i class="fa fa-check"></i><b>7.2.1</b> The Principle Component Method</a></li>
+<li class="chapter" data-level="7.2.2" data-path="factor-analysis.html"><a href="factor-analysis.html#the-maximum-likelihood-method"><i class="fa fa-check"></i><b>7.2.2</b> The Maximum Likelihood Method</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="factor-analysis.html"><a href="factor-analysis.html#factor-rotation"><i class="fa fa-check"></i><b>7.3</b> Factor Rotation</a></li>
+<li class="chapter" data-level="7.4" data-path="factor-analysis.html"><a href="factor-analysis.html#factor-scores"><i class="fa fa-check"></i><b>7.4</b> Factor Scores</a></li>
+<li class="chapter" data-level="" data-path="factor-analysis.html"><a href="factor-analysis.html#revisit-the-learning-outcomes-4"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html"><i class="fa fa-check"></i><b>8</b> Discriminant Analysis and Classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#learning-outcomes-6"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="8.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#performance-measure"><i class="fa fa-check"></i><b>8.2</b> Performance Measure</a></li>
+<li class="chapter" data-level="8.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#overfitting-and-cross-validation"><i class="fa fa-check"></i><b>8.3</b> Overfitting and Cross Validation</a></li>
+<li class="chapter" data-level="8.4" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classification-models"><i class="fa fa-check"></i><b>8.4</b> Classification Models</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>8.4.1</b> <span class="math inline">\(K\)</span> Nearest Neighbors</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#logistic-regression-for-binary-response"><i class="fa fa-check"></i><b>8.5</b> Logistic Regression for Binary Response</a>
+<ul>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#interpretation-of-beta_i"><i class="fa fa-check"></i>Interpretation of <span class="math inline">\(\beta_i\)</span></a></li>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#estimation-of-beta_i"><i class="fa fa-check"></i>Estimation of <span class="math inline">\(\beta_i\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#logistic-regression-for-multi-class-nominal-data"><i class="fa fa-check"></i><b>8.6</b> Logistic Regression for Multi-class Nominal Data</a></li>
+<li class="chapter" data-level="8.7" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#cumulative-logit-model-for-multi-class-ordinal-data"><i class="fa fa-check"></i><b>8.7</b> Cumulative Logit Model for Multi-class Ordinal Data</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#cumulative-logit-models-with-proportional-odds"><i class="fa fa-check"></i><b>8.7.1</b> Cumulative Logit Models with Proportional Odds</a></li>
+<li class="chapter" data-level="8.7.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-probability-of-each-category"><i class="fa fa-check"></i><b>8.7.2</b> Model Probability of Each Category</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-selection-for-logistic-regression"><i class="fa fa-check"></i><b>8.8</b> Model Selection for Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#aic-and-bic"><i class="fa fa-check"></i><b>8.8.1</b> AIC and BIC</a></li>
+<li class="chapter" data-level="8.8.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#forward-selection"><i class="fa fa-check"></i><b>8.8.2</b> Forward Selection</a></li>
+<li class="chapter" data-level="8.8.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#backward-elimination"><i class="fa fa-check"></i><b>8.8.3</b> Backward Elimination</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-checking"><i class="fa fa-check"></i><b>8.9</b> Model Checking</a>
+<ul>
+<li class="chapter" data-level="8.9.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#residual-analysis"><i class="fa fa-check"></i><b>8.9.1</b> Residual Analysis</a></li>
+<li class="chapter" data-level="8.9.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#preditive-power-accuracy-and-roc-curve"><i class="fa fa-check"></i><b>8.9.2</b> Preditive Power: Accuracy and ROC Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="8.10" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classification-tree-recursive-partitioning"><i class="fa fa-check"></i><b>8.10</b> Classification Tree (Recursive Partitioning)</a></li>
+<li class="chapter" data-level="8.11" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#regression-tree"><i class="fa fa-check"></i><b>8.11</b> Regression Tree</a></li>
+<li class="chapter" data-level="8.12" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#random-forest"><i class="fa fa-check"></i><b>8.12</b> Random Forest</a></li>
+<li class="chapter" data-level="8.13" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#support-vector-machines"><i class="fa fa-check"></i><b>8.13</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="8.14" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#neural-networks"><i class="fa fa-check"></i><b>8.14</b> Neural Networks</a></li>
+<li class="chapter" data-level="8.15" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classical-methods"><i class="fa fa-check"></i><b>8.15</b> Classical Methods</a>
+<ul>
+<li class="chapter" data-level="8.15.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#mahalanobis-distance-method"><i class="fa fa-check"></i><b>8.15.1</b> Mahalanobis Distance Method</a></li>
+<li class="chapter" data-level="8.15.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#bayes-posterior"><i class="fa fa-check"></i><b>8.15.2</b> Bayes Posterior</a></li>
+<li class="chapter" data-level="8.15.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#fishers-discriminant-analysis"><i class="fa fa-check"></i><b>8.15.3</b> Fisher’s Discriminant Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="8.16" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#summary"><i class="fa fa-check"></i><b>8.16</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#revisit-learning-outcomes"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="clustering-analysis.html"><a href="clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#learning-outcomes-7"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="9.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#introduction-2"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#clustering-methods"><i class="fa fa-check"></i><b>9.2</b> Clustering Methods</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#hierarchical-method"><i class="fa fa-check"></i><b>9.2.1</b> Hierarchical Method</a></li>
+<li class="chapter" data-level="9.2.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#k-means"><i class="fa fa-check"></i><b>9.2.2</b> K-Means</a></li>
+<li class="chapter" data-level="9.2.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#model-based-clustering"><i class="fa fa-check"></i><b>9.2.3</b> Model-Based Clustering</a></li>
+<li class="chapter" data-level="9.2.4" data-path="clustering-analysis.html"><a href="clustering-analysis.html#pros-and-cons-of-clustering-methods"><i class="fa fa-check"></i><b>9.2.4</b> Pros and Cons of Clustering Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#determine-k-number-of-clusters"><i class="fa fa-check"></i><b>9.3</b> Determine <span class="math inline">\(K\)</span>: Number of Clusters</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#the-elbow-plot-method"><i class="fa fa-check"></i><b>9.3.1</b> The Elbow Plot Method</a></li>
+<li class="chapter" data-level="9.3.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#the-silhouette-score"><i class="fa fa-check"></i><b>9.3.2</b> The Silhouette Score</a></li>
+<li class="chapter" data-level="9.3.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#gap-statistics"><i class="fa fa-check"></i><b>9.3.3</b> Gap Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#side-note-on-the-em-algorithm"><i class="fa fa-check"></i>Side-Note on the EM Algorithm</a></li>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#revisit-learning-outcomes-1"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html"><i class="fa fa-check"></i><b>10</b> Canonical Correlation Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#learning-outcomes-8"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="10.1" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#objective"><i class="fa fa-check"></i><b>10.1</b> Objective</a></li>
+<li class="chapter" data-level="10.2" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#obtain-the-canonical-variates-pairs"><i class="fa fa-check"></i><b>10.2</b> Obtain the Canonical Variates Pairs</a></li>
+<li class="chapter" data-level="10.3" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#interpretation"><i class="fa fa-check"></i><b>10.3</b> Interpretation</a></li>
+<li class="chapter" data-level="10.4" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#testing-mathbfsigma_120"><i class="fa fa-check"></i><b>10.4</b> Testing <span class="math inline">\(\mathbf{\Sigma}_{12}=0\)</span></a></li>
+<li class="chapter" data-level="" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#revisit-learning-outcomes-2"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html"><i class="fa fa-check"></i><b>11</b> Multidimensional Scaling</a>
+<ul>
+<li class="chapter" data-level="" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#learning-outcomes-9"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="11.1" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#objective-1"><i class="fa fa-check"></i><b>11.1</b> Objective</a></li>
+<li class="chapter" data-level="11.2" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#methods"><i class="fa fa-check"></i><b>11.2</b> Methods</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#classical-scaling"><i class="fa fa-check"></i><b>11.2.1</b> Classical Scaling</a></li>
+<li class="chapter" data-level="11.2.2" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#metric-scaling"><i class="fa fa-check"></i><b>11.2.2</b> Metric Scaling</a></li>
+<li class="chapter" data-level="11.2.3" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#non-metric-scaling"><i class="fa fa-check"></i><b>11.2.3</b> Non-metric Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#example"><i class="fa fa-check"></i><b>11.3</b> Example</a></li>
+<li class="chapter" data-level="" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#revisit-learning-outcomes-3"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAT 372 Open Textbook (R)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="factor-analysis" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">7</span> Factor Analysis<a href="factor-analysis.html#factor-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The objective of factor analysis is to search for <span class="math inline">\(m\)</span> common factors (latent variables which are not observed) to summarize the <span class="math inline">\(p\)</span> variables (observed) of the data, which implies that only <span class="math inline">\(m\)</span> features (<span class="math inline">\(m&lt;p\)</span>) are required to summarize the data. For example, a survey questionnaire might contain 50 questions about students’ learning abilities; some questions are about their reading ability, some are about analytical ability and some are about calculation ability, etc. Even though there are 50 measurements for each student we only need several factors to summarize the common features.</p>
+<div id="learning-outcomes-5" class="section level2 unnumbered hasAnchor">
+<h2>Learning Outcomes<a href="factor-analysis.html#learning-outcomes-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After finishing this note, students should be able to</p>
+<ul>
+<li>Write down the model for factor analysis and explain each term in the model.</li>
+<li>Obtain the factor loadings, communality, and specific variance of a certain variable <span class="math inline">\(X_i\)</span>, the proportion of variance explained by a common factor based on the computer outputs.</li>
+<li>Determine the proper number of common factors.</li>
+<li>Explain the ideas for estimating the factor loadings and the specific variance: the principle component and maximum likelihood methods.</li>
+<li>Apply the Newton-Raphson method to find the solutions of a simple equation.</li>
+<li>Explain why factor rotation is needed in factor analysis.</li>
+<li>Obtain/derive the factor scores using the weighted least squares method.</li>
+</ul>
+</div>
+<div id="model-of-factor-analysis" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Model of Factor Analysis<a href="factor-analysis.html#model-of-factor-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Recall that the objective of principle component analysis is to find <span class="math inline">\(k\)</span> uncorrelated linear combinations of the original variables to summarize the data and the principle components are the associated eigenvectors of the <span class="math inline">\(k\)</span> largest eigenvalues of the covariance (or correlation) matrix of the data. PCA is not based on any model. Factor analysis, however, is based on the following model:
+<span class="math display">\[\begin{align*}
+X_1&amp;=b_{11}F_1+b_{12}F_2+\cdots+b_{1m}F_m+\epsilon_1\\
+X_2&amp;=b_{21}F_1+b_{22}F_2+\cdots+b_{2m}F_m+\epsilon_2\\
+\vdots\\
+X_p&amp;=b_{p1}F_1+b_{p2}F_2+\cdots+b_{pm}F_m+\epsilon_p
+\end{align*}\]</span>
+or
+<span class="math display">\[\begin{align*}
+X_1-\mu_1&amp;=l_{11}F_1+l_{12}F_2+\cdots+l_{1m}F_m+\epsilon_1\\
+X_2-\mu_2&amp;=l_{21}F_1+l_{22}F_2+\cdots+l_{2m}F_m+\epsilon_2\\
+\vdots\\
+X_p-\mu_p&amp;=l_{p1}F_1+l_{p2}F_2+\cdots+l_{pm}F_m+\epsilon_p
+\end{align*}\]</span>
+We have
+<span class="math display">\[\begin{equation}
+\label{eq:model}
+\mathbf{X}-\mathbf{\mu}=\mathbf{LF}+\mathbf{\epsilon}
+\end{equation}\]</span>
+where <span class="math inline">\(\mathbf{X}\)</span> is a <span class="math inline">\(p\times 1\)</span> column vector of random variables and <span class="math inline">\(\mathbf{\mu}\)</span> is the vector of mean of the variables; <span class="math inline">\(\mathbf{F}\)</span> is a <span class="math inline">\(m\times 1\)</span> column vector of common factors and <span class="math inline">\(\mathbf{L}\)</span> is a <span class="math inline">\(p\times m\)</span> matrix gives the loading of the common factors; and <span class="math inline">\(\mathbf{\epsilon}\)</span> is a <span class="math inline">\(p \times 1\)</span> column vector of random variables for the error. In the model, all components except for <span class="math inline">\(\mathbf{X}\)</span> are unobserved and need to estimate.</p>
+<p>There are too many unknown parameters in the model to solve the equations; therefore, some assumptions are added to the model:</p>
+<ul>
+<li><span class="math display">\[E(\mathbf{F})=\mathbf{0}_{m\times 1}, Cov(\mathbf{F})=E(\mathbf{F}\mathbf{F}^T)=\mathbf{I}_{m\times m}\]</span></li>
+<li><span class="math display">\[E(\mathbf{\epsilon})=\mathbf{0}_{p\times 1}, Cov(\mathbf{\epsilon})=E(\mathbf{\epsilon}\mathbf{\epsilon}^T)=\mathbf{\Psi}_{p\times p}=
+\left[
+\begin{array}{cccc}
+\psi_1&amp;0&amp;\cdots&amp;0\\
+0&amp;\psi_2&amp;\cdots&amp;0\\
+\vdots&amp;\vdots&amp;\ddots&amp;0\\
+0&amp;0&amp;\cdots&amp;\psi_p
+\end{array}
+\right]\]</span></li>
+<li><span class="math display">\[Cov(\mathbf{\epsilon}, \mathbf{F})=E(\mathbf{\epsilon}\mathbf{F}^T)=\mathbf{0}_{p\times m}; Cov(\mathbf{F}, \mathbf{\epsilon})=E(\mathbf{F}\mathbf{\epsilon}^T)=\mathbf{0}_{m\times p}\]</span>
+Then
+<span class="math display">\[
+E[(\mathbf{X}-\mathbf{\mu})(\mathbf{X}-\mathbf{\mu})^T]=(\mathbf{LF}+\mathbf{\epsilon})(\mathbf{LF}+\mathbf{\epsilon})^T=\mathbf{LF}\mathbf{F}^T\mathbf{L}^T+\mathbf{\epsilon}(\mathbf{LF})^T+\mathbf{LF}\mathbf{\epsilon}^T+\mathbf{\epsilon}\mathbf{\epsilon}^T=E[\mathbf{LF}\mathbf{F}^T\mathbf{L}^T+\mathbf{\epsilon}\mathbf{F}^T\mathbf{L}^T+\mathbf{L}\mathbf{F}\mathbf{\epsilon}^T+\mathbf{\epsilon}\mathbf{\epsilon}^T]
+\]</span>
+<span class="math display">\[
+\mathbf{\Sigma}=E[(\mathbf{X}-\mathbf{\mu})(\mathbf{X}-\mathbf{\mu})^T]=\mathbf{L}E(\mathbf{F}\mathbf{F}^T)\mathbf{L}^T+E(\mathbf{\epsilon}\mathbf{F}^T)\mathbf{L}^T+\mathbf{L}E(\mathbf{F}\mathbf{\epsilon}^T)+E(\mathbf{\epsilon}\mathbf{\epsilon}^T)=\mathbf{L}\mathbf{L}^T+\mathbf{\Psi}.
+\]</span>
+Suppose <span class="math inline">\(p=2\)</span>, write out <span class="math inline">\(\mathbf{\Sigma}=\mathbf{L}\mathbf{L}^T+\mathbf{\Psi}\)</span> by terms.</li>
+</ul>
+<p>Recall: Var(X) = <span class="math inline">\(E[(X-\mu)^2] = \sigma^2\)</span>
+and that <span class="math inline">\(\Sigma = E[(\vec{x}-\vec{\mu})(\vec{x}-\vec{\mu})^{\top}]\)</span></p>
+<p><span class="math inline">\(p=2 \quad \Sigma = LL^{\top} + \Psi\)</span></p>
+<p><span class="math inline">\(\vec{X} = \begin{pmatrix} X_1 \\ X_2 \end{pmatrix}, \quad \vec{\mu} = \begin{pmatrix} \mu_1 \\ \mu_2 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(\vec{F} = \begin{pmatrix} F_1 \\ F_2 \end{pmatrix}, \quad \vec{\varepsilon} = \begin{pmatrix} \varepsilon_1 \\ \varepsilon_2 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(X_1 - \mu_1 = l_{11}F_1 + l_{12}F_2 + \varepsilon_1\)</span>
+<span class="math inline">\(X_2 - \mu_2 = l_{21}F_1 + l_{22}F_2 + \varepsilon_2\)</span></p>
+<p><span class="math display">\[
+\Sigma = \begin{pmatrix}
+\text{Var}(X_1) &amp; \text{Cov}(X_1, X_2) \\
+\text{Cov}(X_2, X_1) &amp; \text{Var}(X_2)
+\end{pmatrix}, \quad L = \begin{pmatrix} l_{11} &amp; l_{12} \\ l_{21} &amp; l_{22} \end{pmatrix}
+\]</span></p>
+<p><span class="math inline">\(\text{Var}(X_1) = E[(X_1 - \mu_1)^2] = E[(l_{11}F_1 + l_{12}F_2 + \varepsilon_1)^2]\)</span>
+<span class="math display">\[
+\begin{aligned}
+&amp;= E[l_{11}^2 F_1^2 + l_{12}^2 F_2^2 + \varepsilon_1^2 + 2l_{11}l_{12}F_1F_2 + 2l_{11}F_1\varepsilon_1 + 2l_{12}F_2\varepsilon_1] \\
+&amp;\text{Note: } E[aX+bY] = aE[X]+bE[Y] \\
+&amp;= l_{11}^2 E[F_1^2] + l_{12}^2 E[F_2^2] + E[\varepsilon_1^2] + 2l_{11}l_{12} E[F_1F_2] + 2l_{11}E[F_1\varepsilon_1] + 2l_{12}E[F_2\varepsilon_2] \\
+&amp;\text{Note: } E[F_1F_2] = Cov(F_1,F_2), \text{ and } E[F_i\varepsilon_i] = 0 \text{ which leaves us with: } \\
+&amp;= l_{11}^2 \times 1 + l_{12}^2 \times 1 + \Psi_1 + 0 + 0 + 0 \\
+&amp;= l_{11}^2 + l_{12}^2 + \Psi_1 \\
+\text{Var}(X_2) &amp;= E[(X_2 - \mu_2)^2] = E[(l_{21}F_1 + l_{22}F_2 + \varepsilon_2)^2] \\
+&amp;= l_{21}^2 + l_{22}^2 + \Psi_2
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+L L^{\top} + \Psi = \begin{pmatrix} l_{11} &amp; l_{12} \\ l_{21} &amp; l_{22} \end{pmatrix} \begin{pmatrix} l_{11} &amp; l_{21} \\ l_{12} &amp; l_{22} \end{pmatrix} + \begin{pmatrix} \Psi_1 &amp; 0 \\ 0 &amp; \Psi_2 \end{pmatrix}
+\]</span></p>
+<p><span class="math inline">\(\text{Cov}(X_1, X_2) = E[(X_1 - \mu_1)(X_2 - \mu_2)]\)</span>
+<span class="math display">\[
+\begin{aligned}
+&amp;= E[(l_{11}F_1 + l_{12}F_2 + \varepsilon_1)(l_{21}F_1 + l_{22}F_2 + \varepsilon_2)] \\
+&amp;= E[l_{11}F_1^2 + l_{11}l_{22}F_1F_2 + l_{11}F_1\varepsilon_2 + l_{12}l_{21}F_1F_2 + l_{12}F_2^2 + l_{12}F_2\varepsilon_2 + l_{21}F_1\varepsilon_1 + l_{22}F_2\varepsilon_1 + \varepsilon_1\varepsilon_2] \\
+&amp;= l_{11}l_{21} + l_{12}l_{22} \quad \\
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\therefore \Sigma = \begin{pmatrix}
+l_{11}^2 + l_{12}^2 + \Psi_1 &amp; l_{11}l_{21} + l_{12}l_{22} \\
+l_{21}l_{11} + l_{22}l_{12} &amp; l_{21}^2 + l_{22}^2 + \Psi_2
+\end{pmatrix}
+\]</span></p>
+<p>There are some terminologies in factor analysis.</p>
+<ul>
+<li>The variance of <span class="math inline">\(X_i\)</span> can be decomposed into two parts: communality <span class="math inline">\(h_i^2=l_{i1}^2+l_{i2}^2+\cdots+l_{im}^2\)</span> and specific variance <span class="math inline">\(\psi_i\)</span>. That is
+<span class="math display">\[
+Var(X_i)=\underbrace{l_{i1}^2+l_{i2}^2+\cdots+l_{im}^2}\limits_{\mbox{{small communality}}}+\underbrace{\psi_i}\limits_{\mbox{{small specific variance}}}=h_i^2+\psi_i.
+\]</span>
+The communality of variable <span class="math inline">\(X_i\)</span> is the sum of squares of the <span class="math inline">\(i\)</span>th row of the loading matrix <span class="math inline">\(\mathbf{L}\)</span>. If we use the correlation matrix <span class="math inline">\(\mathbf{\rho}\)</span> to conduct the factor analysis, we have <span class="math inline">\(Var(X_i)=h_i^2+\psi_i=1\)</span>.</li>
+<li>The number of common factors can be determined by the number of eigenvalues that are at least 1 for the correlation matrix, which is referred to be the Kaiser rule. Or, one can draw the scree plot to determine the number of common factors required to capture a certain account of the total variation of the data.</li>
+<li>For variable <span class="math inline">\(X_i\)</span>, the proportion of variance explained by the common factors is <span class="math inline">\(\frac{h_i^2}{\sigma_{ii}}\)</span>. The proportion of total variance explained by the <span class="math inline">\(m\)</span> common factors is
+<span class="math display">\[
+\frac{\sum_{i=1}^p h_i^2}{\sum_{i=1}^p \sigma_{ii}}.
+\]</span>
+And the proportion of total variance explained by a single common factor, say factor <span class="math inline">\(j\)</span> is
+<span class="math display">\[
+\frac{l_{1j}^2+l_{2j}^2+\cdots+l_{pj}^2}{\sigma_{11}+\sigma_{22}+\cdots+\sigma_{pp}}=\frac{\mbox{sum of squares of the $j$th column of the loading matrix $\mathbf{L}$}}{\mbox{ trace of $\mathbf{\Sigma}$}}.
+\]</span></li>
+</ul>
+</div>
+<div id="estimating-factor-loadings-l_ij-and-specific-variance-psi_i" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Estimating Factor Loadings <span class="math inline">\(l_{ij}\)</span> and Specific Variance <span class="math inline">\(\psi_i\)</span><a href="factor-analysis.html#estimating-factor-loadings-l_ij-and-specific-variance-psi_i" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To find the factor loadings <span class="math inline">\(\mathbf{L}\)</span> and the specific variances <span class="math inline">\(\mathbf{\Psi}\)</span>, two most popular estimation methods are the principle component method and the maximum likelihood method.</p>
+<div id="the-principle-component-method" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> The Principle Component Method<a href="factor-analysis.html#the-principle-component-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Recall the spectral decomposition; the covariance matrix can be expressed as
+<span class="math display">\[
+\mathbf{\Sigma}=\lambda_1\mathbf{e_1}\mathbf{e_1}^{T}+\lambda_2\mathbf{e_2}\mathbf{e_2}^{T}+\cdots+\lambda_n\mathbf{e_n}\mathbf{e_n}^{T}=\sum_{i=1}^n \lambda_i\mathbf{e_i}\mathbf{e_i}^{T}=\mathbf{P}\mathbf{\Lambda}\mathbf{P}^{T}
+\]</span>
+where <span class="math inline">\(\lambda_i\)</span> is the <span class="math inline">\(i\)</span>th largest eigenvalue of <span class="math inline">\(\mathbf{\Sigma}\)</span>, <span class="math inline">\(\mathbf{e_i}\)</span> is its corresponding unit eigenvector, and <span class="math inline">\(\mathbf{P}=[\mathbf{e_1}, \mathbf{e_2}, \cdots, \mathbf{e_n}]\)</span> and <span class="math inline">\(\mathbf{\Lambda}\)</span> is the diagonal matrix
+<span class="math display">\[
+\mathbf{\Lambda}=
+\left[
+\begin{array}{ccccc}
+\lambda_1 &amp;0&amp;0&amp;\cdots&amp; 0\\
+0&amp;\lambda_2&amp;0&amp;\cdots&amp; 0\\
+\vdots&amp;\vdots&amp;\vdots&amp;\vdots&amp;\vdots\\
+0&amp;0&amp;0&amp;\cdots&amp; \lambda_n
+\end{array}
+\right].
+\]</span>
+Simply let <span class="math inline">\(\mathbf{L}=[\sqrt{\lambda_1}\mathbf{e_1}, \sqrt{\lambda_2}\mathbf{e_2}, \cdots, \sqrt{\lambda_m}\mathbf{e_m}]\)</span>, i.e., the first <span class="math inline">\(m\)</span> principle components.</p>
+<p>In practice, the principal component factor analysis of the sample covariance matrix <span class="math inline">\(\mathbf{S}\)</span> is specified in terms of its eigenvalue-eigenvector pairs <span class="math inline">\((\hat \lambda_1, \hat {\mathbf{e}}_1), (\hat \lambda_2, \hat {\mathbf{e}}_2), \cdots, (\hat \lambda_p, \hat {\mathbf{e}}_p)\)</span>, where <span class="math inline">\(\hat \lambda_1\ge \hat \lambda_2\ge \cdots \ge \hat \lambda_p\)</span>. Then the matrix of estimated factor loadings <span class="math inline">\(\tilde{l}_{ij}\)</span> is given by
+<span class="math display">\[
+\mathbf{\widetilde {L}}=[\sqrt{\hat \lambda_1} \hat {\mathbf{e}}_1, \sqrt{\hat \lambda_2} \hat {\mathbf{e}}_2, \cdots, \sqrt{\hat \lambda_m}\hat {\mathbf{e}}_m]
+\]</span>
+The estimated specific variances are given by the diagonal elements of the diagonal matrix
+<span class="math display">\[
+\mathbf{S}-\widetilde{\mathbf{L}}\widetilde{\mathbf{L}}^{T}
+\]</span>, that is
+<span class="math display">\[
+\widetilde{\mathbf{\Psi}}=
+\left[
+\begin{array}{cccc}
+\widetilde{\psi}_1&amp;0&amp;\cdots&amp;0\\
+0&amp;\widetilde{\psi}_2&amp;\cdots&amp;0\\
+\vdots&amp;\vdots&amp;\ddots&amp;0\\
+0&amp;0&amp;\cdots&amp;\widetilde{\psi}_p
+\end{array}
+\right] \quad \mbox{ with $\widetilde{\psi}_i=s_{ii}-\sum_{j=1}^m \tilde{l}^2_{ij}$}
+\]</span>
+Communalities are estimated by <span class="math inline">\(\tilde {h}_i^2=\tilde{l}_{i1}^2+\tilde{l}_{i2}^2+\cdots+\tilde{l}_{im}^2\)</span>.</p>
+</div>
+<div id="the-maximum-likelihood-method" class="section level3 hasAnchor" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> The Maximum Likelihood Method<a href="factor-analysis.html#the-maximum-likelihood-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If we further assume both the common factors <span class="math inline">\(\mathbf{F}\)</span> and the error <span class="math inline">\(\mathbf{\epsilon}\)</span> to be normally distributed, then <span class="math inline">\((\mathbf{X}-\mathbf{\mu})\sim \mbox{MVN}(\mathbf{0}, \mathbf{\Sigma})\)</span>. For a single observation <span class="math inline">\(\mathbf{x}\)</span>, its density function is
+<span class="math display">\[
+f(\mathbf{x})=\frac{1}{(2\pi)^{p/2}|\mathbf{\Sigma}|^{1/2}}\exp \left\{-\frac{(\mathbf{x}-\mathbf{\mu})^{T}\mathbf{\Sigma}^{-1} (\mathbf{x}-\mathbf{\mu})}{2}\right\}.
+\]</span>
+Consider <span class="math inline">\(n\)</span> independent observations, the likelihood function is the product of the <span class="math inline">\(n\)</span> independent multivariate normal density functions
+<span class="math display">\[
+Q=\prod_{i=1}^n f(\mathbf{x_i})=\prod_{i=1}^n \frac{1}{(2\pi)^{p/2}|\mathbf{\Sigma}|^{1/2}}\exp \left\{-\frac{(\mathbf{x_i}-\mathbf{\mu})^{T}\mathbf{\Sigma}^{-1} (\mathbf{x_i}-\mathbf{\mu})}{2}\right\}.
+\]</span>
+Since <span class="math inline">\(\mathbf{\Sigma}=\mathbf{L}\mathbf{L}^T+\mathbf{\Psi}\)</span>, the about likelihood function becomes
+<span class="math display">\[
+Q=\prod_{i=1}^n f(\mathbf{x_i})=\prod_{i=1}^n \frac{1}{(2\pi)^{p/2}|\mathbf{L}\mathbf{L}^T+\mathbf{\Psi}|^{1/2}}|\exp \left\{-\frac{(\mathbf{x_i}-\mathbf{\mu})^{T}(\mathbf{L}\mathbf{L}^T+\mathbf{\Psi})^{-1} (\mathbf{x_i}-\mathbf{\mu})}{2}\right\}.
+\]</span>
+To find the maximum likelihood (ML) estimates, the standard way is to find the values of <span class="math inline">\(\mathbf{L}, \mathbf{\Psi}\)</span>, and <span class="math inline">\(\mathbf{\mu}\)</span> such that the likelihood function <span class="math inline">\(Q\)</span> by solving for the following equations:
+<span class="math display">\[
+\frac{\partial Q}{\partial \mathbf{L}}=0;\quad  \frac{\partial Q}{\partial \mathbf{\Psi}}=0; \quad \frac{\partial Q}{\partial \mathbf{\mu}}=0.
+\]</span>
+We denote the maximize likelihood estimates as <span class="math inline">\(\hat {\mathbf{L}}\)</span>, <span class="math inline">\(\hat {\mathbf{\Psi}}\)</span>, and <span class="math inline">\(\hat {\mathbf{\mu}}\)</span>. However, there is no closed-form solution to this problem, and the ML estimator must be obtained by numerical method. One widely used numerical method is the Newton-Raphson method, which solves the form <span class="math inline">\(f(x) = 0\)</span> equations. The main idea of the Newton-Raphson method is as follows. We set an initial value <span class="math inline">\(x_0\)</span>, and the sequence <span class="math inline">\(x_0, x_1, x_2, x_3, \cdots\)</span> generated in the manner described below should converge
+to the exact root. The equation of the tangent line to the graph <span class="math inline">\(y = f(x)\)</span> at the point <span class="math inline">\((x_0, f(x_0))\)</span> is
+<span class="math display">\[
+y-f(x_0) = f^{&#39;}(x_0)(x-x_0).
+\]</span>
+The tangent line intersects the <span class="math inline">\(x\)</span>-axis when <span class="math inline">\(y = 0\)</span> and <span class="math inline">\(x = x_1\)</span>, so
+<span class="math display">\[
+0-f(x_0) = f^{&#39;}(x_0)(x_1-x_0) \quad \Longrightarrow x_1=x_0-\frac{f(x_0)}{f^{&#39;}(x_0)}.
+\]</span>
+More generally, we have
+<span class="math display">\[
+x_{n+1}=x_n-\frac{f(x_n)}{f^{&#39;}(x_n)}.
+\]</span>
+Therefore, the steps of Newton-Raphson method to solve <span class="math inline">\(f(x) = 0\)</span> are:</p>
+<ol style="list-style-type: decimal">
+<li>Set an initial value <span class="math inline">\(x_0\)</span>.</li>
+<li>Calculate <span class="math inline">\(x_{n+1}=x_n-\frac{f(x_n)}{f^{&#39;}(x_n)}\)</span>.</li>
+<li>Stop if <span class="math inline">\(|x_{n+1}-x_n|&lt;\mbox{threshold}\)</span>; otherwise, let <span class="math inline">\(x_n=x_{n+1}\)</span> and <span class="math inline">\(x_{n+1}=x_n-\frac{f(x_n)}{f^{&#39;}(x_n)}\)</span>.</li>
+<li>Repeat step (3).</li>
+</ol>
+<p>To find the ML estimate of <span class="math inline">\(f(x)\)</span> is to solve for <span class="math inline">\(f^{&#39;}(x)=0\)</span>. Therefore, we just need to iterate <span class="math inline">\(x_{n+1}=x_n-\frac{f^{&#39;}(x_n)}{f^{&#39;&#39;}(x_n)}\)</span> until converge.</p>
+<p><span class="math inline">\(\textbf{Example}: \text{Newton-Raphson Univariate Case}\)</span></p>
+<p>Find the roots of <span class="math inline">\(f(x)=x^2+6x+8\)</span> using Newton-Raphson method.</p>
+<p>Note that <span class="math inline">\(f&#39;(x)=2x+6\)</span> and the update is
+<span class="math display">\[
+x_{n+1}=x_{n}-\frac{f(x_n)}{f&#39;(x_n)}=x_{n}-\frac{x_n^2+6x_n+8}{2x_n+6}
+\]</span></p>
+<ol style="list-style-type: decimal">
+<li><p>Set the initial value <span class="math inline">\(x_0=-5\)</span> and the stopping criterion <span class="math inline">\(|x_{n+1}-x_n|&lt;0.00001\)</span>.</p></li>
+<li><p><span class="math inline">\(x_1=x_0-\frac{x_0^2+6x_0+8}{2x_0+6}=-4.25\)</span>, since <span class="math inline">\(|x_1-x_0|=|-4.25-(-5)|&gt;0.00001\)</span>, move on.</p></li>
+<li><p><span class="math inline">\(x_2=x_1-\frac{x_1^2+6x_1+8}{2x_1+6}=-4.025\)</span>, since <span class="math inline">\(|x_2-x_1|=|-4.025-(-4.25)|&gt;0.00001\)</span>, move on.</p></li>
+<li><p><span class="math inline">\(x_3=x_2-\frac{x_2^2+6x_2+8}{2x_2+6}=-4.000305\)</span>, since <span class="math inline">\(|x_3-x_2|=|-4.000305-(-4.025)|=0.0247&gt;0.00001\)</span>, move on.</p></li>
+<li><p><span class="math inline">\(x_4=x_3-\frac{x_3^2+6x_3+8}{2x_3+6}=-4\)</span>, since <span class="math inline">\(|x_4-x_3|=|-4-(-4.000305)|=0.000305&gt;0.00001\)</span>, move on.</p></li>
+<li><p><span class="math inline">\(x_5=x_4-\frac{x_4^2+6x_4+8}{2x_4+6}=-4\)</span>, since <span class="math inline">\(|x_5-x_4|=|-4-(-4)|=0&lt;0.00001\)</span>, stop. The solution is <span class="math inline">\(x=-4\)</span>.</p></li>
+<li><p>Set the initial value <span class="math inline">\(x_0=10\)</span>, repeat the procedure and we get <span class="math inline">\(x=-2\)</span>.</p></li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="factor-analysis.html#cb1-1" tabindex="-1"></a>x0 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">5</span></span>
+<span id="cb1-2"><a href="factor-analysis.html#cb1-2" tabindex="-1"></a>error <span class="ot">&lt;-</span> <span class="fl">0.00001</span></span>
+<span id="cb1-3"><a href="factor-analysis.html#cb1-3" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">return</span> (x<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span><span class="dv">6</span><span class="sc">*</span>x<span class="sc">+</span><span class="dv">8</span>)</span>
+<span id="cb1-4"><a href="factor-analysis.html#cb1-4" tabindex="-1"></a>fp <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">return</span> (<span class="dv">2</span><span class="sc">*</span>x<span class="sc">+</span><span class="dv">6</span>)</span>
+<span id="cb1-5"><a href="factor-analysis.html#cb1-5" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> x0<span class="sc">-</span><span class="fu">f</span>(x0)<span class="sc">/</span><span class="fu">fp</span>(x0)</span>
+<span id="cb1-6"><a href="factor-analysis.html#cb1-6" tabindex="-1"></a><span class="cf">while</span> (<span class="fu">abs</span>(x1<span class="sc">-</span>x0)<span class="sc">&gt;</span>error){</span>
+<span id="cb1-7"><a href="factor-analysis.html#cb1-7" tabindex="-1"></a>  x0 <span class="ot">&lt;-</span> x1</span>
+<span id="cb1-8"><a href="factor-analysis.html#cb1-8" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> x0<span class="sc">-</span><span class="fu">f</span>(x0)<span class="sc">/</span><span class="fu">fp</span>(x0)</span>
+<span id="cb1-9"><a href="factor-analysis.html#cb1-9" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;x=&quot;</span>,x1,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb1-10"><a href="factor-analysis.html#cb1-10" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## x= -4.025 
+## x= -4.000305 
+## x= -4 
+## x= -4</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="factor-analysis.html#cb3-1" tabindex="-1"></a>x0 <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb3-2"><a href="factor-analysis.html#cb3-2" tabindex="-1"></a>error <span class="ot">&lt;-</span> <span class="fl">0.00001</span></span>
+<span id="cb3-3"><a href="factor-analysis.html#cb3-3" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">return</span> (x<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span><span class="dv">6</span><span class="sc">*</span>x<span class="sc">+</span><span class="dv">8</span>)</span>
+<span id="cb3-4"><a href="factor-analysis.html#cb3-4" tabindex="-1"></a>fp <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">return</span> (<span class="dv">2</span><span class="sc">*</span>x<span class="sc">+</span><span class="dv">6</span>)</span>
+<span id="cb3-5"><a href="factor-analysis.html#cb3-5" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> x0<span class="sc">-</span><span class="fu">f</span>(x0)<span class="sc">/</span><span class="fu">fp</span>(x0)</span>
+<span id="cb3-6"><a href="factor-analysis.html#cb3-6" tabindex="-1"></a><span class="cf">while</span> (<span class="fu">abs</span>(x1<span class="sc">-</span>x0)<span class="sc">&gt;</span>error){</span>
+<span id="cb3-7"><a href="factor-analysis.html#cb3-7" tabindex="-1"></a>  x0 <span class="ot">&lt;-</span> x1</span>
+<span id="cb3-8"><a href="factor-analysis.html#cb3-8" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> x0<span class="sc">-</span><span class="fu">f</span>(x0)<span class="sc">/</span><span class="fu">fp</span>(x0)</span>
+<span id="cb3-9"><a href="factor-analysis.html#cb3-9" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;x=&quot;</span>,x1,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb3-10"><a href="factor-analysis.html#cb3-10" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## x= 0.3457014 
+## x= -1.177704 
+## x= -1.814473 
+## x= -1.985483 
+## x= -1.999896 
+## x= -2 
+## x= -2</code></pre>
+<p><span class="math inline">\(\textbf{Example}: \text{MLE Using Newton-Raphson Univariate Case}\)</span></p>
+<p>Suppose <span class="math inline">\(X_1, \cdots, X_n\sim \text{Bernoulli}(p)\)</span>, find the MLE of the probability success <span class="math inline">\(\hat p\)</span>.</p>
+<p>The likelihood function is
+<span class="math display">\[
+L(p)=\prod_{i=1}^n p^{y_i}(1-p)^{1-y_i}=p^{\sum y_i}(1-p)^{n-\sum y_i}.
+\]</span>
+The log-likelihood is
+<span class="math display">\[
+l(p)=(\sum y_i)\log p+(n-\sum y_i)\log(1-p).
+\]</span>
+The first and the second derivatives of the log-likelihood are</p>
+<p><span class="math display">\[
+\begin{aligned}
+l&#39;(p)&amp;=\frac{\partial l(p)}{\partial p}=\frac{\sum y_i}{p}-\frac{n-\sum y_i}{1-p}\\
+l&#39;&#39;(p)&amp;=\frac{\partial^2 l(p)}{\partial p^2}=-\frac{\sum y_i}{p^2}-\frac{n-\sum y_i}{(1-p)^2}\\
+\end{aligned}
+\]</span></p>
+<p>To find the MLE <span class="math inline">\(\hat p\)</span>, we need to find the solution of the equation <span class="math inline">\(l&#39;(p)=0\)</span> which can be solved by the Newton-Raphson method with the iterative update:
+<span class="math display">\[
+p_{n+1}=p_n-\frac{l&#39;(p_n)}{l&quot;(p_n)}.
+\]</span></p>
+<p> code for obtaining MLE by the Newton-Raphson method.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="factor-analysis.html#cb5-1" tabindex="-1"></a>lp1 <span class="ot">&lt;-</span> <span class="cf">function</span>(yvec, p){</span>
+<span id="cb5-2"><a href="factor-analysis.html#cb5-2" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(yvec)</span>
+<span id="cb5-3"><a href="factor-analysis.html#cb5-3" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">sum</span>(yvec)</span>
+<span id="cb5-4"><a href="factor-analysis.html#cb5-4" tabindex="-1"></a>  result <span class="ot">&lt;-</span> y<span class="sc">/</span>p<span class="sc">-</span>(n<span class="sc">-</span>y)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>p)</span>
+<span id="cb5-5"><a href="factor-analysis.html#cb5-5" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
+<span id="cb5-6"><a href="factor-analysis.html#cb5-6" tabindex="-1"></a>}</span>
+<span id="cb5-7"><a href="factor-analysis.html#cb5-7" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="factor-analysis.html#cb5-8" tabindex="-1"></a>lp2 <span class="ot">&lt;-</span> <span class="cf">function</span>(yvec, p){</span>
+<span id="cb5-9"><a href="factor-analysis.html#cb5-9" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(yvec)</span>
+<span id="cb5-10"><a href="factor-analysis.html#cb5-10" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">sum</span>(yvec)</span>
+<span id="cb5-11"><a href="factor-analysis.html#cb5-11" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="sc">-</span>y<span class="sc">/</span>(p<span class="sc">^</span><span class="dv">2</span>)<span class="sc">-</span>(n<span class="sc">-</span>y)<span class="sc">/</span>((<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb5-12"><a href="factor-analysis.html#cb5-12" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
+<span id="cb5-13"><a href="factor-analysis.html#cb5-13" tabindex="-1"></a>}</span>
+<span id="cb5-14"><a href="factor-analysis.html#cb5-14" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="factor-analysis.html#cb5-15" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4061</span>)</span>
+<span id="cb5-16"><a href="factor-analysis.html#cb5-16" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb5-17"><a href="factor-analysis.html#cb5-17" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb5-18"><a href="factor-analysis.html#cb5-18" tabindex="-1"></a>yvec <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, p)</span>
+<span id="cb5-19"><a href="factor-analysis.html#cb5-19" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sum</span>(yvec)</span>
+<span id="cb5-20"><a href="factor-analysis.html#cb5-20" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb5-21"><a href="factor-analysis.html#cb5-21" tabindex="-1"></a>itnum <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb5-22"><a href="factor-analysis.html#cb5-22" tabindex="-1"></a>err <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span>{<span class="sc">-</span><span class="dv">6</span>}</span>
+<span id="cb5-23"><a href="factor-analysis.html#cb5-23" tabindex="-1"></a>newton_p <span class="ot">&lt;-</span> <span class="cf">function</span>(yvec, p0, <span class="at">err=</span><span class="dv">10</span><span class="sc">^</span>{<span class="sc">-</span><span class="dv">6</span>}, <span class="at">maxit =</span> itnum){</span>
+<span id="cb5-24"><a href="factor-analysis.html#cb5-24" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>maxit){</span>
+<span id="cb5-25"><a href="factor-analysis.html#cb5-25" tabindex="-1"></a>  p1 <span class="ot">&lt;-</span> p0<span class="sc">-</span><span class="fu">lp1</span>(yvec, p0)<span class="sc">/</span><span class="fu">lp2</span>(yvec,p0)</span>
+<span id="cb5-26"><a href="factor-analysis.html#cb5-26" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">abs</span>(p1<span class="sc">-</span>p0)<span class="sc">&lt;</span>err) <span class="cf">break</span></span>
+<span id="cb5-27"><a href="factor-analysis.html#cb5-27" tabindex="-1"></a>  p0 <span class="ot">&lt;-</span> p1</span>
+<span id="cb5-28"><a href="factor-analysis.html#cb5-28" tabindex="-1"></a>  }</span>
+<span id="cb5-29"><a href="factor-analysis.html#cb5-29" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">phat =</span> p0, <span class="at">iterations =</span> i)</span>
+<span id="cb5-30"><a href="factor-analysis.html#cb5-30" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
+<span id="cb5-31"><a href="factor-analysis.html#cb5-31" tabindex="-1"></a>}</span>
+<span id="cb5-32"><a href="factor-analysis.html#cb5-32" tabindex="-1"></a>pobj <span class="ot">&lt;-</span> <span class="fu">newton_p</span>(yvec,p0,err,<span class="dv">10</span>) </span>
+<span id="cb5-33"><a href="factor-analysis.html#cb5-33" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="at">phat=</span>pobj<span class="sc">$</span>phat, <span class="at">iteration=</span>pobj<span class="sc">$</span>iterations))</span></code></pre></div>
+<pre><code>##      phat iteration 
+##      0.56      5.00</code></pre>
+<p>The Newton-Raphson method can be extended to multivariate cases. Take logistic regression for example, the coefficient parameters <span class="math inline">\(\mathbf{\beta}\)</span> can be updated by:
+<span class="math display">\[
+\mathbf{\beta}_{n+1}=\mathbf{\beta}_n-H^{-1}(\mathbf{\beta}_n)g( \mathbf{\beta}_n)
+\]</span>
+where <span class="math inline">\(g(\mathbf{\beta})\)</span> is the gradient of the log likelihood <span class="math inline">\(\log L(\mathbf{\beta})\)</span>, it is vector of partial derivatives <span class="math display">\[g(\mathbf{\beta})=\left[\frac{\partial \log L(\mathbf{\beta})}{\partial \beta_1}, \frac{\partial \log L(\mathbf{\beta})}{\partial \beta_2}, \cdots, \frac{\partial \log L(\mathbf{\beta})}{\partial \beta_p}\right]\]</span> and <span class="math inline">\(H(\mathbf{\beta})\)</span> is the Hessian matrix of the log likelihood function <span class="math inline">\(\log L(\mathbf{\beta})\)</span>, it is a matrix of second partial derivatives. That is the elements of the Hessian matrix are
+<span class="math display">\[
+H_{ij}=\frac{\partial^2 \log L(\mathbf{\beta})}{\partial \beta_i \partial \beta_j}.
+\]</span>
+And the stopping criterion is <span class="math inline">\(|\mathbf{\beta}_{n+1}-\mathbf{\beta}_n|&lt;\mbox{threshold}\)</span>.</p>
+<p><span class="math inline">\(\textbf{Example}: \text{MLE Using Newton-Raphson Multivariate Case}\)</span></p>
+<p>Suppose <span class="math inline">\(X_1, \cdots, X_n\sim N(\mu, \sigma)\)</span>, find the MLE of mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span> by Newton-Raphson method.</p>
+<p>The likelihood function is
+<span class="math display">\[
+L(\mu, \sigma)=\prod_{i=1}^n \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x_i-\mu)^2}{2\sigma^2}}=(2\pi)^{-n/2}(\sigma)^{-n}\exp\left\{-\frac{\sum (x_i-\mu)^2}{2\sigma^2}\right\}.
+\]</span>
+The log-likelihood is
+<span class="math display">\[
+l(\mu, \sigma)=(-\frac{n}{2})\log(2\pi)+(-n)\log(\sigma)-\frac{\sum (x_i-\mu)^2}{2\sigma^2}.
+\]</span>
+The gradient vector is
+<span class="math display">\[
+\left[\frac{\partial l(\mu, \sigma)}{\partial \mu}, \frac{\partial l(\mu, \sigma)}{\partial \sigma}\right]=\left[\frac{\sum (x_i-\mu)}{\sigma^2}, -\frac{n}{\sigma}+\frac{\sum (x_i-\mu)^2}{\sigma^3}\right].
+\]</span>
+The Hessian matrix is given by
+<span class="math display">\[
+\mathbf{H}=\left[
+\begin{array}{cc}
+\frac{\partial^2 l(\mu, \sigma)}{\partial \mu^2} &amp; \frac{\partial^2 l(\mu, \sigma)}{\partial \mu \partial \sigma}\\
+\frac{\partial^2 l(\mu, \sigma)}{ \partial \sigma \partial \mu} &amp; \frac{\partial^2 l(\mu, \sigma)}{\partial \sigma^2}\\
+\end{array}
+\right]=\left[
+\begin{array}{cc}
+-\frac{n}{\sigma^2} &amp; -\frac{2\sum (x_i-\mu)}{\sigma^3}\\
+-\frac{2\sum (x_i-\mu)}{\sigma^3} &amp; \frac{n}{\sigma^2}-\frac{3\sum (x_i-\mu)^2}{\sigma^4}\\
+\end{array}
+\right];
+\]</span></p>
+<p> code for obtaining the MLE of <span class="math inline">\((\mu, \sigma)\)</span> for normal distribution using Newton-Raphson method.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="factor-analysis.html#cb7-1" tabindex="-1"></a>gradient_norm <span class="ot">&lt;-</span> <span class="cf">function</span>(yvec, m, sigma) {</span>
+<span id="cb7-2"><a href="factor-analysis.html#cb7-2" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(yvec)</span>
+<span id="cb7-3"><a href="factor-analysis.html#cb7-3" tabindex="-1"></a>  dm1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(yvec<span class="sc">-</span>m)<span class="sc">/</span>(sigma<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb7-4"><a href="factor-analysis.html#cb7-4" tabindex="-1"></a>  dsigma1 <span class="ot">&lt;-</span> <span class="sc">-</span>n<span class="sc">/</span>sigma<span class="sc">+</span><span class="fu">sum</span>((yvec<span class="sc">-</span>m)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(sigma<span class="sc">^</span><span class="dv">3</span>)</span>
+<span id="cb7-5"><a href="factor-analysis.html#cb7-5" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(dm1, dsigma1))</span>
+<span id="cb7-6"><a href="factor-analysis.html#cb7-6" tabindex="-1"></a>}</span>
+<span id="cb7-7"><a href="factor-analysis.html#cb7-7" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="factor-analysis.html#cb7-8" tabindex="-1"></a>hessian_norm <span class="ot">&lt;-</span> <span class="cf">function</span>(yvec, m, sigma) {</span>
+<span id="cb7-9"><a href="factor-analysis.html#cb7-9" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(yvec)</span>
+<span id="cb7-10"><a href="factor-analysis.html#cb7-10" tabindex="-1"></a>  hmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb7-11"><a href="factor-analysis.html#cb7-11" tabindex="-1"></a>  hmat[<span class="dv">1</span>, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="sc">-</span>n<span class="sc">/</span>(sigma<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb7-12"><a href="factor-analysis.html#cb7-12" tabindex="-1"></a>  hmat[<span class="dv">2</span>, <span class="dv">2</span>] <span class="ot">&lt;-</span> n<span class="sc">/</span>(sigma<span class="sc">^</span><span class="dv">2</span>)<span class="sc">-</span><span class="dv">3</span><span class="sc">*</span><span class="fu">sum</span>((yvec<span class="sc">-</span>m)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(sigma<span class="sc">^</span><span class="dv">4</span>)</span>
+<span id="cb7-13"><a href="factor-analysis.html#cb7-13" tabindex="-1"></a>  hmat[<span class="dv">1</span>, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">*</span><span class="fu">sum</span>(yvec<span class="sc">-</span>m)<span class="sc">/</span>(sigma<span class="sc">^</span><span class="dv">3</span>)</span>
+<span id="cb7-14"><a href="factor-analysis.html#cb7-14" tabindex="-1"></a>  hmat[<span class="dv">2</span>, <span class="dv">1</span>] <span class="ot">&lt;-</span> hmat[<span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb7-15"><a href="factor-analysis.html#cb7-15" tabindex="-1"></a>  <span class="fu">return</span>(hmat)</span>
+<span id="cb7-16"><a href="factor-analysis.html#cb7-16" tabindex="-1"></a>}</span>
+<span id="cb7-17"><a href="factor-analysis.html#cb7-17" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="factor-analysis.html#cb7-18" tabindex="-1"></a>newton_norm <span class="ot">&lt;-</span> <span class="cf">function</span>(yvec, m0, sigma0, <span class="at">err=</span><span class="dv">10</span><span class="sc">^</span>{<span class="sc">-</span><span class="dv">6</span>}, <span class="at">maxit =</span> itnum){</span>
+<span id="cb7-19"><a href="factor-analysis.html#cb7-19" tabindex="-1"></a>  bvec0 <span class="ot">&lt;-</span> <span class="fu">c</span>(m0, sigma0)</span>
+<span id="cb7-20"><a href="factor-analysis.html#cb7-20" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>maxit){</span>
+<span id="cb7-21"><a href="factor-analysis.html#cb7-21" tabindex="-1"></a>  hmat <span class="ot">&lt;-</span> <span class="fu">hessian_norm</span>(yvec, bvec0[<span class="dv">1</span>], bvec0[<span class="dv">2</span>])</span>
+<span id="cb7-22"><a href="factor-analysis.html#cb7-22" tabindex="-1"></a>  mathbf <span class="ot">&lt;-</span> <span class="fu">gradient_norm</span>(yvec, bvec0[<span class="dv">1</span>], bvec0[<span class="dv">2</span>])</span>
+<span id="cb7-23"><a href="factor-analysis.html#cb7-23" tabindex="-1"></a>  bvec1 <span class="ot">&lt;-</span>bvec0<span class="sc">-</span><span class="fu">solve</span>(hmat)<span class="sc">%*%</span>mathbf</span>
+<span id="cb7-24"><a href="factor-analysis.html#cb7-24" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">sqrt</span>(<span class="fu">sum</span>((bvec1<span class="sc">-</span>bvec0)<span class="sc">^</span><span class="dv">2</span>))<span class="sc">&lt;</span>err) <span class="cf">break</span></span>
+<span id="cb7-25"><a href="factor-analysis.html#cb7-25" tabindex="-1"></a>  bvec0 <span class="ot">&lt;-</span> bvec1</span>
+<span id="cb7-26"><a href="factor-analysis.html#cb7-26" tabindex="-1"></a>  }</span>
+<span id="cb7-27"><a href="factor-analysis.html#cb7-27" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mean =</span> bvec1[<span class="dv">1</span>], <span class="at">std =</span> bvec1[<span class="dv">2</span>], <span class="at">iterations =</span> i)</span>
+<span id="cb7-28"><a href="factor-analysis.html#cb7-28" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
+<span id="cb7-29"><a href="factor-analysis.html#cb7-29" tabindex="-1"></a>}</span>
+<span id="cb7-30"><a href="factor-analysis.html#cb7-30" tabindex="-1"></a></span>
+<span id="cb7-31"><a href="factor-analysis.html#cb7-31" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4061</span>)</span>
+<span id="cb7-32"><a href="factor-analysis.html#cb7-32" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb7-33"><a href="factor-analysis.html#cb7-33" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb7-34"><a href="factor-analysis.html#cb7-34" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb7-35"><a href="factor-analysis.html#cb7-35" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb7-36"><a href="factor-analysis.html#cb7-36" tabindex="-1"></a>sigma0 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb7-37"><a href="factor-analysis.html#cb7-37" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span>m, <span class="at">sd=</span>sigma)</span>
+<span id="cb7-38"><a href="factor-analysis.html#cb7-38" tabindex="-1"></a>nobj <span class="ot">&lt;-</span> <span class="fu">newton_norm</span>(x,m0,sigma0,<span class="at">err=</span><span class="dv">10</span><span class="sc">^</span>{<span class="sc">-</span><span class="dv">6</span>},<span class="dv">100</span>) </span>
+<span id="cb7-39"><a href="factor-analysis.html#cb7-39" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="at">mean=</span>nobj<span class="sc">$</span>mean, <span class="at">std=</span>nobj<span class="sc">$</span>std, <span class="at">iteration=</span>nobj<span class="sc">$</span>iterations))</span></code></pre></div>
+<pre><code>##      mean       std iteration 
+##  9.930474  1.951255  9.000000</code></pre>
+</div>
+</div>
+<div id="factor-rotation" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Factor Rotation<a href="factor-analysis.html#factor-rotation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After the <span class="math inline">\(m\)</span> common factors are found, the next step is to label the common factors to unveil the underlying features. However, the initial loadings yielded by either the principle component method or the maximum likelihood method might be difficult to interpret; we can rotate them by an orthogonal transformation until a simple and interpretable structure is achieved. The goal is to find an orthogonal transformation such that each variable has a large loading on a single factor and relatively small loadings on the other factors. As a result, we are able to group the variables and relate them to the common factors, i.e., we can label the common factors.</p>
+<p>Note that for any orthogonal transformation <span class="math inline">\(\mathbf{T}\)</span>, <span class="math inline">\(\mathbf{T}\mathbf{T}^T=\mathbf{T}^T\mathbf{T}=\mathbf{I}\)</span>. The rotated loading is given by <span class="math inline">\(\mathbf{L}_1=\mathbf{L}\mathbf{T}\)</span>, then
+<span class="math display">\[
+\mathbf{L}_1\mathbf{L}_1^T=\mathbf{L}\mathbf{T}\mathbf{T}^T\mathbf{L}^T=\mathbf{L}\mathbf{L}^T
+\]</span>
+which means factor rotation won’t change the communalities and specific variances.</p>
+<p>One of the most popular methods of factor rotation is the <span class="math inline">\(\textit{varimax}\)</span> criterion, which solves for the rotated loadings <span class="math inline">\(\widetilde {l}_{ij}\)</span> such that the following quantity is maximized
+<span class="math display">\[
+V=\frac{1}{p}\sum_{j=1}^m\left[\sum_{i=1}^p\widetilde {l}_{ij}^4-\frac{1}{p}(\sum_{i=1}^p \widetilde {l}_{ij}^2)^2\right], \quad \widetilde {l}_{ij}=\frac{l_{ij}}{h_i^2}=\frac{l_{ij}}{\sqrt{\sum_{i=1}^m l_{ij}^2}}.
+\]</span>
+The varimax procedure selects the orthogonal transformation that makes the sample variance of the standardized loadings for each factor (summed over the <span class="math inline">\(m\)</span> common factors) as large as possible.</p>
+</div>
+<div id="factor-scores" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Factor Scores<a href="factor-analysis.html#factor-scores" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In factor analysis, the major interests are factor loadings and factor labeling. In some applications, the estimated values of the common factors are useful for prediction and model fitting. One method to obtain the factor scores is the weighted least squares method. Recall that the factor model is given by <span class="math inline">\(\mathbf{X}-\mathbf{\mu}=\mathbf{LF}+\mathbf{\epsilon}\)</span>. The main idea of weighted least squares is to obtain the value of <span class="math inline">\(\hat {\mathbf{f}}\)</span> such that the weighted square of the error
+<span class="math display">\[
+\sum_{i=1}^p \frac{\epsilon_i^2}{\psi_i}=\mathbf{\epsilon}^T\mathbf{\Psi}^{-1}\mathbf{\epsilon}=(\mathbf{x}-\mathbf{\mu}-\mathbf{L}\mathbf{f})^T\mathbf{\Psi}^{-1}  (\mathbf{x}-\mathbf{\mu}-\mathbf{L}\mathbf{f})
+\]</span>
+is minimized. And the solution is
+<span class="math display">\[
+\hat {\mathbf{f}}=(\mathbf{L}^T\mathbf{\Psi}^{-1}\mathbf{L})^{-1}\mathbf{L}^T\mathbf{\Psi}^{-1}(\mathbf{x}-\mathbf{\mu}).
+\]</span></p>
+<p><span class="math inline">\(\textbf{Proof}\)</span>: Let
+<span class="math display">\[
+Q=(\mathbf{x}-\mathbf{\mu}-\mathbf{L}\mathbf{f})^T\mathbf{\Psi}^{-1}  (\mathbf{x}-\mathbf{\mu}-\mathbf{L}\mathbf{f})=
+(\mathbf{x}-\mathbf{\mu})^T\mathbf{\Psi}^{-1} (\mathbf{x}-\mathbf{\mu})-\mathbf{f}^T\mathbf{L}^T\mathbf{\Psi}^{-1}(\mathbf{x}-\mathbf{\mu})-(\mathbf{x}-\mathbf{\mu})^T\mathbf{\Psi}^{-1}\mathbf{L}\mathbf{f}+\mathbf{f}^T\mathbf{L}^T\mathbf{\Psi}^{-1}\mathbf{L}\mathbf{f}
+\]</span>
+<span class="math display">\[
+\frac{\partial Q}{\partial \mathbf{f}}=-\mathbf{L}^T\mathbf{\Psi}^{-1}(\mathbf{x}-\mathbf{\mu})+2\mathbf{L}^T\mathbf{\Psi}^{-1}\mathbf{L}\mathbf{f}-\mathbf{L}^T\mathbf{\Psi}^{-1}(\mathbf{x}-\mathbf{\mu})=0\Longrightarrow \mathbf{L}^T\mathbf{\Psi}^{-1}(\mathbf{x}-\mathbf{\mu})=\mathbf{L}^T\mathbf{\Psi}^{-1}\mathbf{L}\mathbf{f}
+\]</span>
+which gives the solution is
+<span class="math display">\[
+\hat {\mathbf{f}}=(\mathbf{L}^T\mathbf{\Psi}^{-1}\mathbf{L})^{-1}\mathbf{L}^T\mathbf{\Psi}^{-1}(\mathbf{x}-\mathbf{\mu}).
+\]</span>
+Plug the maximum likelihood estimates of <span class="math inline">\(\mathbf{L}\)</span>, <span class="math inline">\(\mathbf{\Psi}\)</span>, and <span class="math inline">\(\mathbf{\mu}\)</span> into the equation, the estimated factor scores are
+<span class="math display">\[
+\hat {\mathbf{f}}=(\hat {\mathbf{L}}^T\hat {\mathbf{\Psi}}^{-1}\hat {\mathbf{L}})^{-1} \hat {\mathbf{L}}^T\hat {\mathbf{\Psi}}^{-1}(\mathbf{x}-\bar {\mathbf{x}}).
+\]</span></p>
+<p><span class="math inline">\(\textbf{Example}\)</span>: Factor Analysis</p>
+<p>This data set gives 33 men’s decathlon performances at the Olympic Games (1988). 10 columns events of the decathlon: 100 meters (100), long jump (long), shotput (poid), high jump (haut), 400 meters (400), 110-meter hurdles (110), discus throw (disq), pole vault (perc), javelin (jave) and 1500 meters (1500).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="factor-analysis.html#cb9-1" tabindex="-1"></a><span class="fu">library</span>(ade4) <span class="co">#load the package</span></span>
+<span id="cb9-2"><a href="factor-analysis.html#cb9-2" tabindex="-1"></a><span class="fu">data</span>(olympic)  <span class="co">#get the data set, it is an object</span></span>
+<span id="cb9-3"><a href="factor-analysis.html#cb9-3" tabindex="-1"></a>dmat <span class="ot">&lt;-</span> olympic<span class="sc">$</span>tab <span class="co">#get the results of 33 men</span></span>
+<span id="cb9-4"><a href="factor-analysis.html#cb9-4" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="factor-analysis.html#cb9-5" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb9-6"><a href="factor-analysis.html#cb9-6" tabindex="-1"></a><span class="fu">kable</span>(dmat, <span class="at">caption =</span> <span class="st">&quot;33 men&#39;s decathlon performances&quot;</span>) <span class="co">#show the data</span></span></code></pre></div>
+<table>
+<caption><span id="tab:olympic">Table 7.1: </span>33 men’s decathlon performances</caption>
+<thead>
+<tr class="header">
+<th align="right">100</th>
+<th align="right">long</th>
+<th align="right">poid</th>
+<th align="right">haut</th>
+<th align="right">400</th>
+<th align="right">110</th>
+<th align="right">disq</th>
+<th align="right">perc</th>
+<th align="right">jave</th>
+<th align="right">1500</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">11.25</td>
+<td align="right">7.43</td>
+<td align="right">15.48</td>
+<td align="right">2.27</td>
+<td align="right">48.90</td>
+<td align="right">15.13</td>
+<td align="right">49.28</td>
+<td align="right">4.7</td>
+<td align="right">61.32</td>
+<td align="right">268.95</td>
+</tr>
+<tr class="even">
+<td align="right">10.87</td>
+<td align="right">7.45</td>
+<td align="right">14.97</td>
+<td align="right">1.97</td>
+<td align="right">47.71</td>
+<td align="right">14.46</td>
+<td align="right">44.36</td>
+<td align="right">5.1</td>
+<td align="right">61.76</td>
+<td align="right">273.02</td>
+</tr>
+<tr class="odd">
+<td align="right">11.18</td>
+<td align="right">7.44</td>
+<td align="right">14.20</td>
+<td align="right">1.97</td>
+<td align="right">48.29</td>
+<td align="right">14.81</td>
+<td align="right">43.66</td>
+<td align="right">5.2</td>
+<td align="right">64.16</td>
+<td align="right">263.20</td>
+</tr>
+<tr class="even">
+<td align="right">10.62</td>
+<td align="right">7.38</td>
+<td align="right">15.02</td>
+<td align="right">2.03</td>
+<td align="right">49.06</td>
+<td align="right">14.72</td>
+<td align="right">44.80</td>
+<td align="right">4.9</td>
+<td align="right">64.04</td>
+<td align="right">285.11</td>
+</tr>
+<tr class="odd">
+<td align="right">11.02</td>
+<td align="right">7.43</td>
+<td align="right">12.92</td>
+<td align="right">1.97</td>
+<td align="right">47.44</td>
+<td align="right">14.40</td>
+<td align="right">41.20</td>
+<td align="right">5.2</td>
+<td align="right">57.46</td>
+<td align="right">256.64</td>
+</tr>
+<tr class="even">
+<td align="right">10.83</td>
+<td align="right">7.72</td>
+<td align="right">13.58</td>
+<td align="right">2.12</td>
+<td align="right">48.34</td>
+<td align="right">14.18</td>
+<td align="right">43.06</td>
+<td align="right">4.9</td>
+<td align="right">52.18</td>
+<td align="right">274.07</td>
+</tr>
+<tr class="odd">
+<td align="right">11.18</td>
+<td align="right">7.05</td>
+<td align="right">14.12</td>
+<td align="right">2.06</td>
+<td align="right">49.34</td>
+<td align="right">14.39</td>
+<td align="right">41.68</td>
+<td align="right">5.7</td>
+<td align="right">61.60</td>
+<td align="right">291.20</td>
+</tr>
+<tr class="even">
+<td align="right">11.05</td>
+<td align="right">6.95</td>
+<td align="right">15.34</td>
+<td align="right">2.00</td>
+<td align="right">48.21</td>
+<td align="right">14.36</td>
+<td align="right">41.32</td>
+<td align="right">4.8</td>
+<td align="right">63.00</td>
+<td align="right">265.86</td>
+</tr>
+<tr class="odd">
+<td align="right">11.15</td>
+<td align="right">7.12</td>
+<td align="right">14.52</td>
+<td align="right">2.03</td>
+<td align="right">49.15</td>
+<td align="right">14.66</td>
+<td align="right">42.36</td>
+<td align="right">4.9</td>
+<td align="right">66.46</td>
+<td align="right">269.62</td>
+</tr>
+<tr class="even">
+<td align="right">11.23</td>
+<td align="right">7.28</td>
+<td align="right">15.25</td>
+<td align="right">1.97</td>
+<td align="right">48.60</td>
+<td align="right">14.76</td>
+<td align="right">48.02</td>
+<td align="right">5.2</td>
+<td align="right">59.48</td>
+<td align="right">292.24</td>
+</tr>
+<tr class="odd">
+<td align="right">10.94</td>
+<td align="right">7.45</td>
+<td align="right">15.34</td>
+<td align="right">1.97</td>
+<td align="right">49.94</td>
+<td align="right">14.25</td>
+<td align="right">41.86</td>
+<td align="right">4.8</td>
+<td align="right">66.64</td>
+<td align="right">295.89</td>
+</tr>
+<tr class="even">
+<td align="right">11.18</td>
+<td align="right">7.34</td>
+<td align="right">14.48</td>
+<td align="right">1.94</td>
+<td align="right">49.02</td>
+<td align="right">15.11</td>
+<td align="right">42.76</td>
+<td align="right">4.7</td>
+<td align="right">65.84</td>
+<td align="right">256.74</td>
+</tr>
+<tr class="odd">
+<td align="right">11.02</td>
+<td align="right">7.29</td>
+<td align="right">12.92</td>
+<td align="right">2.06</td>
+<td align="right">48.23</td>
+<td align="right">14.94</td>
+<td align="right">39.54</td>
+<td align="right">5.0</td>
+<td align="right">56.80</td>
+<td align="right">257.85</td>
+</tr>
+<tr class="even">
+<td align="right">10.99</td>
+<td align="right">7.37</td>
+<td align="right">13.61</td>
+<td align="right">1.97</td>
+<td align="right">47.83</td>
+<td align="right">14.70</td>
+<td align="right">43.88</td>
+<td align="right">4.3</td>
+<td align="right">66.54</td>
+<td align="right">268.97</td>
+</tr>
+<tr class="odd">
+<td align="right">11.03</td>
+<td align="right">7.45</td>
+<td align="right">14.20</td>
+<td align="right">1.97</td>
+<td align="right">48.94</td>
+<td align="right">15.44</td>
+<td align="right">41.66</td>
+<td align="right">4.7</td>
+<td align="right">64.00</td>
+<td align="right">267.48</td>
+</tr>
+<tr class="even">
+<td align="right">11.09</td>
+<td align="right">7.08</td>
+<td align="right">14.51</td>
+<td align="right">2.03</td>
+<td align="right">49.89</td>
+<td align="right">14.78</td>
+<td align="right">43.20</td>
+<td align="right">4.9</td>
+<td align="right">57.18</td>
+<td align="right">268.54</td>
+</tr>
+<tr class="odd">
+<td align="right">11.46</td>
+<td align="right">6.75</td>
+<td align="right">16.07</td>
+<td align="right">2.00</td>
+<td align="right">51.28</td>
+<td align="right">16.06</td>
+<td align="right">50.66</td>
+<td align="right">4.8</td>
+<td align="right">72.60</td>
+<td align="right">302.42</td>
+</tr>
+<tr class="even">
+<td align="right">11.57</td>
+<td align="right">7.00</td>
+<td align="right">16.60</td>
+<td align="right">1.94</td>
+<td align="right">49.84</td>
+<td align="right">15.00</td>
+<td align="right">46.66</td>
+<td align="right">4.9</td>
+<td align="right">60.20</td>
+<td align="right">286.04</td>
+</tr>
+<tr class="odd">
+<td align="right">11.07</td>
+<td align="right">7.04</td>
+<td align="right">13.41</td>
+<td align="right">1.94</td>
+<td align="right">47.97</td>
+<td align="right">14.96</td>
+<td align="right">40.38</td>
+<td align="right">4.5</td>
+<td align="right">51.50</td>
+<td align="right">262.41</td>
+</tr>
+<tr class="even">
+<td align="right">10.89</td>
+<td align="right">7.07</td>
+<td align="right">15.84</td>
+<td align="right">1.79</td>
+<td align="right">49.68</td>
+<td align="right">15.38</td>
+<td align="right">45.32</td>
+<td align="right">4.9</td>
+<td align="right">60.48</td>
+<td align="right">277.84</td>
+</tr>
+<tr class="odd">
+<td align="right">11.52</td>
+<td align="right">7.36</td>
+<td align="right">13.93</td>
+<td align="right">1.94</td>
+<td align="right">49.99</td>
+<td align="right">15.64</td>
+<td align="right">38.82</td>
+<td align="right">4.6</td>
+<td align="right">67.04</td>
+<td align="right">266.42</td>
+</tr>
+<tr class="even">
+<td align="right">11.49</td>
+<td align="right">7.02</td>
+<td align="right">13.80</td>
+<td align="right">2.03</td>
+<td align="right">50.60</td>
+<td align="right">15.22</td>
+<td align="right">39.08</td>
+<td align="right">4.7</td>
+<td align="right">60.92</td>
+<td align="right">262.93</td>
+</tr>
+<tr class="odd">
+<td align="right">11.38</td>
+<td align="right">7.08</td>
+<td align="right">14.31</td>
+<td align="right">2.00</td>
+<td align="right">50.24</td>
+<td align="right">14.97</td>
+<td align="right">46.34</td>
+<td align="right">4.4</td>
+<td align="right">55.68</td>
+<td align="right">272.68</td>
+</tr>
+<tr class="even">
+<td align="right">11.30</td>
+<td align="right">6.97</td>
+<td align="right">13.23</td>
+<td align="right">2.15</td>
+<td align="right">49.98</td>
+<td align="right">15.38</td>
+<td align="right">38.72</td>
+<td align="right">4.6</td>
+<td align="right">54.34</td>
+<td align="right">277.84</td>
+</tr>
+<tr class="odd">
+<td align="right">11.00</td>
+<td align="right">7.23</td>
+<td align="right">13.15</td>
+<td align="right">2.03</td>
+<td align="right">49.73</td>
+<td align="right">14.96</td>
+<td align="right">38.06</td>
+<td align="right">4.5</td>
+<td align="right">52.82</td>
+<td align="right">285.57</td>
+</tr>
+<tr class="even">
+<td align="right">11.33</td>
+<td align="right">6.83</td>
+<td align="right">11.63</td>
+<td align="right">2.06</td>
+<td align="right">48.37</td>
+<td align="right">15.39</td>
+<td align="right">37.52</td>
+<td align="right">4.6</td>
+<td align="right">55.42</td>
+<td align="right">270.07</td>
+</tr>
+<tr class="odd">
+<td align="right">11.10</td>
+<td align="right">6.98</td>
+<td align="right">12.69</td>
+<td align="right">1.82</td>
+<td align="right">48.63</td>
+<td align="right">15.13</td>
+<td align="right">38.04</td>
+<td align="right">4.7</td>
+<td align="right">49.52</td>
+<td align="right">261.90</td>
+</tr>
+<tr class="even">
+<td align="right">11.51</td>
+<td align="right">7.01</td>
+<td align="right">14.17</td>
+<td align="right">1.94</td>
+<td align="right">51.16</td>
+<td align="right">15.18</td>
+<td align="right">45.84</td>
+<td align="right">4.6</td>
+<td align="right">56.28</td>
+<td align="right">303.17</td>
+</tr>
+<tr class="odd">
+<td align="right">11.26</td>
+<td align="right">6.90</td>
+<td align="right">12.41</td>
+<td align="right">1.88</td>
+<td align="right">48.24</td>
+<td align="right">15.61</td>
+<td align="right">38.02</td>
+<td align="right">4.4</td>
+<td align="right">52.68</td>
+<td align="right">272.06</td>
+</tr>
+<tr class="even">
+<td align="right">11.50</td>
+<td align="right">7.09</td>
+<td align="right">12.94</td>
+<td align="right">1.82</td>
+<td align="right">49.27</td>
+<td align="right">15.56</td>
+<td align="right">42.32</td>
+<td align="right">4.5</td>
+<td align="right">53.50</td>
+<td align="right">293.85</td>
+</tr>
+<tr class="odd">
+<td align="right">11.43</td>
+<td align="right">6.22</td>
+<td align="right">13.98</td>
+<td align="right">1.91</td>
+<td align="right">51.25</td>
+<td align="right">15.88</td>
+<td align="right">46.18</td>
+<td align="right">4.6</td>
+<td align="right">57.84</td>
+<td align="right">294.99</td>
+</tr>
+<tr class="even">
+<td align="right">11.47</td>
+<td align="right">6.43</td>
+<td align="right">12.33</td>
+<td align="right">1.94</td>
+<td align="right">50.30</td>
+<td align="right">15.00</td>
+<td align="right">38.72</td>
+<td align="right">4.0</td>
+<td align="right">57.26</td>
+<td align="right">293.72</td>
+</tr>
+<tr class="odd">
+<td align="right">11.57</td>
+<td align="right">7.19</td>
+<td align="right">10.27</td>
+<td align="right">1.91</td>
+<td align="right">50.71</td>
+<td align="right">16.20</td>
+<td align="right">34.36</td>
+<td align="right">4.1</td>
+<td align="right">54.94</td>
+<td align="right">269.98</td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: lower-alpha">
+<li>Is it reasonable to conduct a factor analysis?
+We can check with correlation matrix and correlation plot. The correlation plot illustrates that some events have strong association. Therefore it is reasonable to conduct a factor analysis.</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="factor-analysis.html#cb10-1" tabindex="-1"></a>cormat <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(dmat),<span class="dv">2</span>)</span>
+<span id="cb10-2"><a href="factor-analysis.html#cb10-2" tabindex="-1"></a><span class="fu">kable</span>(cormat, <span class="at">caption =</span> <span class="st">&quot;Correlation matrix of 10 events&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:corrplot">Table 7.2: </span>Correlation matrix of 10 events</caption>
+<colgroup>
+<col width="7%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">100</th>
+<th align="right">long</th>
+<th align="right">poid</th>
+<th align="right">haut</th>
+<th align="right">400</th>
+<th align="right">110</th>
+<th align="right">disq</th>
+<th align="right">perc</th>
+<th align="right">jave</th>
+<th align="right">1500</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">100</td>
+<td align="right">1.00</td>
+<td align="right">-0.54</td>
+<td align="right">-0.21</td>
+<td align="right">-0.15</td>
+<td align="right">0.61</td>
+<td align="right">0.64</td>
+<td align="right">-0.05</td>
+<td align="right">-0.39</td>
+<td align="right">-0.06</td>
+<td align="right">0.26</td>
+</tr>
+<tr class="even">
+<td align="left">long</td>
+<td align="right">-0.54</td>
+<td align="right">1.00</td>
+<td align="right">0.14</td>
+<td align="right">0.27</td>
+<td align="right">-0.52</td>
+<td align="right">-0.48</td>
+<td align="right">0.04</td>
+<td align="right">0.35</td>
+<td align="right">0.18</td>
+<td align="right">-0.40</td>
+</tr>
+<tr class="odd">
+<td align="left">poid</td>
+<td align="right">-0.21</td>
+<td align="right">0.14</td>
+<td align="right">1.00</td>
+<td align="right">0.12</td>
+<td align="right">0.09</td>
+<td align="right">-0.30</td>
+<td align="right">0.81</td>
+<td align="right">0.48</td>
+<td align="right">0.60</td>
+<td align="right">0.27</td>
+</tr>
+<tr class="even">
+<td align="left">haut</td>
+<td align="right">-0.15</td>
+<td align="right">0.27</td>
+<td align="right">0.12</td>
+<td align="right">1.00</td>
+<td align="right">-0.09</td>
+<td align="right">-0.31</td>
+<td align="right">0.15</td>
+<td align="right">0.21</td>
+<td align="right">0.12</td>
+<td align="right">-0.11</td>
+</tr>
+<tr class="odd">
+<td align="left">400</td>
+<td align="right">0.61</td>
+<td align="right">-0.52</td>
+<td align="right">0.09</td>
+<td align="right">-0.09</td>
+<td align="right">1.00</td>
+<td align="right">0.55</td>
+<td align="right">0.14</td>
+<td align="right">-0.32</td>
+<td align="right">0.12</td>
+<td align="right">0.59</td>
+</tr>
+<tr class="even">
+<td align="left">110</td>
+<td align="right">0.64</td>
+<td align="right">-0.48</td>
+<td align="right">-0.30</td>
+<td align="right">-0.31</td>
+<td align="right">0.55</td>
+<td align="right">1.00</td>
+<td align="right">-0.11</td>
+<td align="right">-0.52</td>
+<td align="right">-0.06</td>
+<td align="right">0.14</td>
+</tr>
+<tr class="odd">
+<td align="left">disq</td>
+<td align="right">-0.05</td>
+<td align="right">0.04</td>
+<td align="right">0.81</td>
+<td align="right">0.15</td>
+<td align="right">0.14</td>
+<td align="right">-0.11</td>
+<td align="right">1.00</td>
+<td align="right">0.34</td>
+<td align="right">0.44</td>
+<td align="right">0.40</td>
+</tr>
+<tr class="even">
+<td align="left">perc</td>
+<td align="right">-0.39</td>
+<td align="right">0.35</td>
+<td align="right">0.48</td>
+<td align="right">0.21</td>
+<td align="right">-0.32</td>
+<td align="right">-0.52</td>
+<td align="right">0.34</td>
+<td align="right">1.00</td>
+<td align="right">0.27</td>
+<td align="right">-0.03</td>
+</tr>
+<tr class="odd">
+<td align="left">jave</td>
+<td align="right">-0.06</td>
+<td align="right">0.18</td>
+<td align="right">0.60</td>
+<td align="right">0.12</td>
+<td align="right">0.12</td>
+<td align="right">-0.06</td>
+<td align="right">0.44</td>
+<td align="right">0.27</td>
+<td align="right">1.00</td>
+<td align="right">0.10</td>
+</tr>
+<tr class="even">
+<td align="left">1500</td>
+<td align="right">0.26</td>
+<td align="right">-0.40</td>
+<td align="right">0.27</td>
+<td align="right">-0.11</td>
+<td align="right">0.59</td>
+<td align="right">0.14</td>
+<td align="right">0.40</td>
+<td align="right">-0.03</td>
+<td align="right">0.10</td>
+<td align="right">1.00</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="factor-analysis.html#cb11-1" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb11-2"><a href="factor-analysis.html#cb11-2" tabindex="-1"></a><span class="fu">corrplot</span>(<span class="fu">cor</span>(dmat), <span class="at">order =</span> <span class="st">&quot;hclust&quot;</span>, <span class="at">tl.col=</span><span class="st">&#39;black&#39;</span>, <span class="at">tl.cex=</span>.<span class="dv">75</span>) <span class="co">#correlation plot</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:corrplot"></span>
+<img src="Plots/corrplot-1.png" alt="Correlation Plot of 10 Events" width="60%" />
+<p class="caption">
+Figure 7.1: Correlation Plot of 10 Events
+</p>
+</div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Determine the number common factors.</li>
+</ol>
+<p>We can use the Kaiser rule to determine the number of common factors, i.e., number of eigenvalues at least 1 of the correlation matrix.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="factor-analysis.html#cb12-1" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">eigen</span>(cormat)</span>
+<span id="cb12-2"><a href="factor-analysis.html#cb12-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">round</span>(obj<span class="sc">$</span>values,<span class="dv">3</span>))</span></code></pre></div>
+<pre><code>##  [1] 3.424 2.608 0.942 0.881 0.555 0.496 0.429 0.307 0.262 0.095</code></pre>
+<p>Since there are two eigenvalues greater than 1, we can use two common factors. The third largest value is 0.942 which is very close to 1; it is fine to use three common factors as well.</p>
+<p>We can also use the scree plot or the cumulative variation plot to determine the number of common factors. For the scree plot, we look for the turning point that the elbow becomes flat; for the cumulative variation plot, we look for the cut-point for a specified cumulative proportion of variation.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="factor-analysis.html#cb14-1" tabindex="-1"></a>vvec <span class="ot">&lt;-</span> obj<span class="sc">$</span>values <span class="co">#already sorted</span></span>
+<span id="cb14-2"><a href="factor-analysis.html#cb14-2" tabindex="-1"></a>csumvec <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(vvec)</span>
+<span id="cb14-3"><a href="factor-analysis.html#cb14-3" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">round</span>(csumvec,<span class="dv">3</span>)<span class="sc">/</span><span class="fu">length</span>(vvec)) <span class="co">#cumulative proportion</span></span></code></pre></div>
+<pre><code>##  [1] 0.3424 0.6032 0.6974 0.7855 0.8410 0.8906 0.9335 0.9642 0.9905 1.0000</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="factor-analysis.html#cb16-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb16-2"><a href="factor-analysis.html#cb16-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(vvec)), vvec, <span class="at">xlab=</span><span class="st">&quot;Number of Common Factors&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Eigenvalues&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">16</span>)</span>
+<span id="cb16-3"><a href="factor-analysis.html#cb16-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(csumvec)), csumvec<span class="sc">/</span><span class="fu">length</span>(csumvec), <span class="at">xlab=</span><span class="st">&quot;Number of Common Factors&quot;</span>, </span>
+<span id="cb16-4"><a href="factor-analysis.html#cb16-4" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Cumulative Proportion&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">16</span>)</span>
+<span id="cb16-5"><a href="factor-analysis.html#cb16-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fl">0.8</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb16-6"><a href="factor-analysis.html#cb16-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fl">0.9</span>, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:numfactor"></span>
+<img src="Plots/numfactor-1.png" alt="Determine the Number of Common Factors" width="90%" />
+<p class="caption">
+Figure 7.2: Determine the Number of Common Factors
+</p>
+</div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="factor-analysis.html#cb17-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p>The scree plot shows the elbow becomes flat after three common factors. The cumulative proportion variation plot implies that we need three common factors to capture about 70% of the variation of the data, four common factors for 80% and six common factors for 90%.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Compare the factor loadings with and without rotation with two and three common factors; using PCA method and likelihood method.</li>
+</ol>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="factor-analysis.html#cb18-1" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb18-2"><a href="factor-analysis.html#cb18-2" tabindex="-1"></a><span class="co">#get the initial loading without rotation using principal component method with two common factor</span></span>
+<span id="cb18-3"><a href="factor-analysis.html#cb18-3" tabindex="-1"></a>mpc <span class="ot">&lt;-</span> <span class="fu">fa</span>(dmat,<span class="at">nfactors =</span> <span class="dv">2</span>, <span class="at">fm=</span><span class="st">&quot;pa&quot;</span>,<span class="at">rotate =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb18-4"><a href="factor-analysis.html#cb18-4" tabindex="-1"></a><span class="co">#get the initial loading without rotation using MLE method with two common factor</span></span>
+<span id="cb18-5"><a href="factor-analysis.html#cb18-5" tabindex="-1"></a>mmle <span class="ot">&lt;-</span> <span class="fu">fa</span>(dmat,<span class="at">nfactors =</span> <span class="dv">2</span>,<span class="at">fm=</span><span class="st">&quot;ml&quot;</span>,<span class="at">rotate =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb18-6"><a href="factor-analysis.html#cb18-6" tabindex="-1"></a>lmat <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cbind</span>(mpc<span class="sc">$</span>loading,mmle<span class="sc">$</span>loading),<span class="dv">3</span>) </span>
+<span id="cb18-7"><a href="factor-analysis.html#cb18-7" tabindex="-1"></a><span class="fu">kable</span>(lmat, <span class="at">caption =</span> <span class="st">&quot;Factor Loading without Rotation&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Table 7.3: </span>Factor Loading without Rotation</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">PA1</th>
+<th align="right">PA2</th>
+<th align="right">ML2</th>
+<th align="right">ML1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">100</td>
+<td align="right">-0.714</td>
+<td align="right">0.256</td>
+<td align="right">0.745</td>
+<td align="right">-0.220</td>
+</tr>
+<tr class="even">
+<td align="left">long</td>
+<td align="right">0.649</td>
+<td align="right">-0.250</td>
+<td align="right">-0.655</td>
+<td align="right">0.155</td>
+</tr>
+<tr class="odd">
+<td align="left">poid</td>
+<td align="right">0.559</td>
+<td align="right">0.791</td>
+<td align="right">0.014</td>
+<td align="right">0.989</td>
+</tr>
+<tr class="even">
+<td align="left">haut</td>
+<td align="right">0.307</td>
+<td align="right">0.014</td>
+<td align="right">-0.221</td>
+<td align="right">0.135</td>
+</tr>
+<tr class="odd">
+<td align="left">400</td>
+<td align="right">-0.627</td>
+<td align="right">0.578</td>
+<td align="right">0.840</td>
+<td align="right">0.083</td>
+</tr>
+<tr class="even">
+<td align="left">110</td>
+<td align="right">-0.747</td>
+<td align="right">0.145</td>
+<td align="right">0.697</td>
+<td align="right">-0.309</td>
+</tr>
+<tr class="odd">
+<td align="left">disq</td>
+<td align="right">0.351</td>
+<td align="right">0.754</td>
+<td align="right">0.148</td>
+<td align="right">0.813</td>
+</tr>
+<tr class="even">
+<td align="left">perc</td>
+<td align="right">0.646</td>
+<td align="right">0.168</td>
+<td align="right">-0.427</td>
+<td align="right">0.493</td>
+</tr>
+<tr class="odd">
+<td align="left">jave</td>
+<td align="right">0.304</td>
+<td align="right">0.466</td>
+<td align="right">0.054</td>
+<td align="right">0.599</td>
+</tr>
+<tr class="even">
+<td align="left">1500</td>
+<td align="right">-0.253</td>
+<td align="right">0.581</td>
+<td align="right">0.543</td>
+<td align="right">0.273</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="factor-analysis.html#cb19-1" tabindex="-1"></a>mpc1 <span class="ot">&lt;-</span> <span class="fu">fa</span>(dmat,<span class="at">nfactors =</span> <span class="dv">2</span>, <span class="at">fm=</span><span class="st">&quot;pa&quot;</span>,<span class="at">rotate =</span> <span class="st">&quot;varimax&quot;</span>)</span>
+<span id="cb19-2"><a href="factor-analysis.html#cb19-2" tabindex="-1"></a>mmle1 <span class="ot">&lt;-</span> <span class="fu">fa</span>(dmat,<span class="at">nfactors =</span> <span class="dv">2</span>,<span class="at">fm=</span><span class="st">&quot;ml&quot;</span>,<span class="at">rotate =</span> <span class="st">&quot;varimax&quot;</span>)</span>
+<span id="cb19-3"><a href="factor-analysis.html#cb19-3" tabindex="-1"></a>lmat1 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cbind</span>(mpc1<span class="sc">$</span>loading,mmle1<span class="sc">$</span>loading),<span class="dv">3</span>) </span>
+<span id="cb19-4"><a href="factor-analysis.html#cb19-4" tabindex="-1"></a><span class="fu">kable</span>(lmat1, <span class="at">caption =</span> <span class="st">&quot;Factor Loading with Rotation&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Table 7.3: </span>Factor Loading with Rotation</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">PA1</th>
+<th align="right">PA2</th>
+<th align="right">ML2</th>
+<th align="right">ML1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">100</td>
+<td align="right">0.754</td>
+<td align="right">-0.079</td>
+<td align="right">0.772</td>
+<td align="right">-0.089</td>
+</tr>
+<tr class="even">
+<td align="left">long</td>
+<td align="right">-0.693</td>
+<td align="right">0.057</td>
+<td align="right">-0.672</td>
+<td align="right">0.041</td>
+</tr>
+<tr class="odd">
+<td align="left">poid</td>
+<td align="right">-0.161</td>
+<td align="right">0.956</td>
+<td align="right">-0.155</td>
+<td align="right">0.977</td>
+</tr>
+<tr class="even">
+<td align="left">haut</td>
+<td align="right">-0.270</td>
+<td align="right">0.146</td>
+<td align="right">-0.241</td>
+<td align="right">0.095</td>
+</tr>
+<tr class="odd">
+<td align="left">400</td>
+<td align="right">0.816</td>
+<td align="right">0.249</td>
+<td align="right">0.814</td>
+<td align="right">0.226</td>
+</tr>
+<tr class="even">
+<td align="left">110</td>
+<td align="right">0.736</td>
+<td align="right">-0.194</td>
+<td align="right">0.739</td>
+<td align="right">-0.185</td>
+</tr>
+<tr class="odd">
+<td align="left">disq</td>
+<td align="right">0.011</td>
+<td align="right">0.832</td>
+<td align="right">0.007</td>
+<td align="right">0.826</td>
+</tr>
+<tr class="even">
+<td align="left">perc</td>
+<td align="right">-0.509</td>
+<td align="right">0.432</td>
+<td align="right">-0.505</td>
+<td align="right">0.413</td>
+</tr>
+<tr class="odd">
+<td align="left">jave</td>
+<td align="right">-0.072</td>
+<td align="right">0.552</td>
+<td align="right">-0.049</td>
+<td align="right">0.600</td>
+</tr>
+<tr class="even">
+<td align="left">1500</td>
+<td align="right">0.479</td>
+<td align="right">0.414</td>
+<td align="right">0.488</td>
+<td align="right">0.362</td>
+</tr>
+</tbody>
+</table>
+<p>The loadings after rotation are more extreme than those without rotation, which makes it easier to label the common factors. The computer output of the model with two common factors after rotation is as follows.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb20-1"><a href="factor-analysis.html#cb20-1" tabindex="-1"></a>Factor Analysis using method =  ml</span>
+<span id="cb20-2"><a href="factor-analysis.html#cb20-2" tabindex="-1"></a>Call: fa(r = dmat, nfactors = 2, rotate = &quot;varimax&quot;, fm = &quot;ml&quot;)</span>
+<span id="cb20-3"><a href="factor-analysis.html#cb20-3" tabindex="-1"></a>Standardized loadings (pattern matrix) based upon correlation matrix</span>
+<span id="cb20-4"><a href="factor-analysis.html#cb20-4" tabindex="-1"></a>       ML2   ML1    h2    u2 com</span>
+<span id="cb20-5"><a href="factor-analysis.html#cb20-5" tabindex="-1"></a>100   0.77 -0.09 0.604 0.396 1.0</span>
+<span id="cb20-6"><a href="factor-analysis.html#cb20-6" tabindex="-1"></a>long -0.67  0.04 0.453 0.547 1.0</span>
+<span id="cb20-7"><a href="factor-analysis.html#cb20-7" tabindex="-1"></a>poid -0.16  0.98 0.978 0.022 1.1</span>
+<span id="cb20-8"><a href="factor-analysis.html#cb20-8" tabindex="-1"></a>haut -0.24  0.10 0.067 0.933 1.3</span>
+<span id="cb20-9"><a href="factor-analysis.html#cb20-9" tabindex="-1"></a>400   0.81  0.23 0.713 0.287 1.2</span>
+<span id="cb20-10"><a href="factor-analysis.html#cb20-10" tabindex="-1"></a>110   0.74 -0.19 0.580 0.420 1.1</span>
+<span id="cb20-11"><a href="factor-analysis.html#cb20-11" tabindex="-1"></a>disq  0.01  0.83 0.682 0.318 1.0</span>
+<span id="cb20-12"><a href="factor-analysis.html#cb20-12" tabindex="-1"></a>perc -0.50  0.41 0.425 0.575 1.9</span>
+<span id="cb20-13"><a href="factor-analysis.html#cb20-13" tabindex="-1"></a>jave -0.05  0.60 0.362 0.638 1.0</span>
+<span id="cb20-14"><a href="factor-analysis.html#cb20-14" tabindex="-1"></a>1500  0.49  0.36 0.369 0.631 1.8</span>
+<span id="cb20-15"><a href="factor-analysis.html#cb20-15" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="factor-analysis.html#cb20-16" tabindex="-1"></a>                       ML2  ML1</span>
+<span id="cb20-17"><a href="factor-analysis.html#cb20-17" tabindex="-1"></a>SS loadings           2.83 2.40</span>
+<span id="cb20-18"><a href="factor-analysis.html#cb20-18" tabindex="-1"></a>Proportion Var        0.28 0.24</span>
+<span id="cb20-19"><a href="factor-analysis.html#cb20-19" tabindex="-1"></a>Cumulative Var        0.28 0.52</span>
+<span id="cb20-20"><a href="factor-analysis.html#cb20-20" tabindex="-1"></a>Proportion Explained  0.54 0.46</span>
+<span id="cb20-21"><a href="factor-analysis.html#cb20-21" tabindex="-1"></a>Cumulative Proportion 0.54 1.00</span>
+<span id="cb20-22"><a href="factor-analysis.html#cb20-22" tabindex="-1"></a></span>
+<span id="cb20-23"><a href="factor-analysis.html#cb20-23" tabindex="-1"></a>Mean item complexity =  1.2</span>
+<span id="cb20-24"><a href="factor-analysis.html#cb20-24" tabindex="-1"></a>Test of the hypothesis that 2 factors are sufficient.</span>
+<span id="cb20-25"><a href="factor-analysis.html#cb20-25" tabindex="-1"></a></span>
+<span id="cb20-26"><a href="factor-analysis.html#cb20-26" tabindex="-1"></a>The degrees of freedom for the null model are  45  and the objective function was  4.93 with Chi Square of  137.14</span>
+<span id="cb20-27"><a href="factor-analysis.html#cb20-27" tabindex="-1"></a>The degrees of freedom for the model are 26  and the objective function was  0.72 </span>
+<span id="cb20-28"><a href="factor-analysis.html#cb20-28" tabindex="-1"></a></span>
+<span id="cb20-29"><a href="factor-analysis.html#cb20-29" tabindex="-1"></a>The root mean square of the residuals (RMSR) is  0.06 </span>
+<span id="cb20-30"><a href="factor-analysis.html#cb20-30" tabindex="-1"></a>The df corrected root mean square of the residuals is  0.08 </span>
+<span id="cb20-31"><a href="factor-analysis.html#cb20-31" tabindex="-1"></a></span>
+<span id="cb20-32"><a href="factor-analysis.html#cb20-32" tabindex="-1"></a>The harmonic number of observations is  33 with the empirical chi square  10.47  with prob &lt;  1 </span>
+<span id="cb20-33"><a href="factor-analysis.html#cb20-33" tabindex="-1"></a>The total number of observations was  33  with Likelihood Chi Square =  19.12  with prob &lt;  0.83 </span>
+<span id="cb20-34"><a href="factor-analysis.html#cb20-34" tabindex="-1"></a></span>
+<span id="cb20-35"><a href="factor-analysis.html#cb20-35" tabindex="-1"></a>Tucker Lewis Index of factoring reliability =  1.139</span>
+<span id="cb20-36"><a href="factor-analysis.html#cb20-36" tabindex="-1"></a>RMSEA index =  0  and the 90 % confidence intervals are  0 0.085</span>
+<span id="cb20-37"><a href="factor-analysis.html#cb20-37" tabindex="-1"></a>BIC =  -71.79</span>
+<span id="cb20-38"><a href="factor-analysis.html#cb20-38" tabindex="-1"></a>Fit based upon off diagonal values = 0.97</span>
+<span id="cb20-39"><a href="factor-analysis.html#cb20-39" tabindex="-1"></a>Measures of factor score adequacy             </span>
+<span id="cb20-40"><a href="factor-analysis.html#cb20-40" tabindex="-1"></a>                                                   ML2  ML1</span>
+<span id="cb20-41"><a href="factor-analysis.html#cb20-41" tabindex="-1"></a>Correlation of (regression) scores with factors   0.93 0.99</span>
+<span id="cb20-42"><a href="factor-analysis.html#cb20-42" tabindex="-1"></a>Multiple R square of scores with factors          0.87 0.98</span>
+<span id="cb20-43"><a href="factor-analysis.html#cb20-43" tabindex="-1"></a>Minimum correlation of possible factor scores     0.75 0.95</span></code></pre></div>
+<p>The following table gives the factor scores of the first ten athletes. We can use these two factor scores as predictors to replace the original 10 variables for future model fitting.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="factor-analysis.html#cb21-1" tabindex="-1"></a>fscore <span class="ot">&lt;-</span> <span class="fu">round</span>(mmle1<span class="sc">$</span>scores,<span class="dv">3</span>) <span class="co">#factor scores</span></span>
+<span id="cb21-2"><a href="factor-analysis.html#cb21-2" tabindex="-1"></a><span class="fu">kable</span>(fscore[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,], <span class="at">caption =</span> <span class="st">&quot;Factor Scores for ten athletes&quot;</span>) </span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-4">Table 7.4: </span>Factor Scores for ten athletes</caption>
+<thead>
+<tr class="header">
+<th align="right">ML2</th>
+<th align="right">ML1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-0.324</td>
+<td align="right">1.100</td>
+</tr>
+<tr class="even">
+<td align="right">-1.433</td>
+<td align="right">0.529</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.837</td>
+<td align="right">0.071</td>
+</tr>
+<tr class="even">
+<td align="right">-0.925</td>
+<td align="right">0.676</td>
+</tr>
+<tr class="odd">
+<td align="right">-1.480</td>
+<td align="right">-0.982</td>
+</tr>
+<tr class="even">
+<td align="right">-1.439</td>
+<td align="right">-0.480</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.432</td>
+<td align="right">0.107</td>
+</tr>
+<tr class="even">
+<td align="right">-0.909</td>
+<td align="right">0.806</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.384</td>
+<td align="right">0.357</td>
+</tr>
+<tr class="even">
+<td align="right">-0.399</td>
+<td align="right">0.942</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(\textbf{Example}\)</span>: Principle Component Analysis Versus Factor Analysis</p>
+<p>Given the covariance matrix
+<span class="math display">\[
+\text{Cov}(\mathbf{X})=\mathbf{\Sigma}=\left[
+\begin{array}{rr}
+17&amp;4\\
+4&amp;2
+\end{array}
+\right].
+\]</span></p>
+<ul>
+<li>[(a)] Find the first principal component of <span class="math inline">\(\mathbf{X}\)</span>.</li>
+</ul>
+<p>The basis of the first PC is the unit eigenvector corresponding to the largest eigenvalue.
+<span class="math display">\[
+|\mathbf{A}-\lambda \mathbf{I}|=\left|
+\begin{array}{cc}
+17-\lambda&amp; 4\\
+4&amp; 2-\lambda
+\end{array}
+\right|=(17-\lambda)(2-\lambda)-16=0 \Longrightarrow \lambda^2-19\lambda+18=0
+\]</span>
+which gives the eigenvalues are <span class="math inline">\(\lambda_1=18\)</span> and <span class="math inline">\(\lambda_2=1\)</span>. The largest eigenvalue is <span class="math inline">\(\lambda_1=18\)</span>, we have
+<span class="math display">\[
+\left[
+\begin{array}{cc}
+1&amp; 4\\
+4&amp; -16
+\end{array}
+\right] \left[
+\begin{array}{c}
+x_1\\x_2
+\end{array}
+\right]=\left[
+\begin{array}{c}
+0\\0
+\end{array}
+\right]
+\]</span>
+which gives <span class="math inline">\(x_1=4x_2\)</span>; therefore the eigenvector could be
+<span class="math display">\[
+\mathbf{x_1}=\left[
+\begin{array}{c}
+4\\1
+\end{array}
+\right]
+\]</span>
+and the unit eigenvector is
+<span class="math display">\[
+\mathbf{e_1}=\left[
+\begin{array}{c}
+\frac{4}{\sqrt{17}}\\\frac{1}{\sqrt{17}}
+\end{array}
+\right].
+\]</span></p>
+<p>The first PC is
+<span class="math display">\[
+Y_1=\mathbf{a_1}^T\mathbf{x}=\mathbf{e_1}^T\mathbf{x}=\left[\frac{4}{\sqrt{17}}\quad  \frac{1}{\sqrt{17}}\right] \left[\begin{array}{c}
+x_1\\x_2\\
+\end{array}
+\right]=\frac{4}{\sqrt{17}} x_1+\frac{1}{\sqrt{17}} x_2
+\]</span></p>
+<ul>
+<li><p>[(b)] Suppose <span class="math inline">\(\mathbf{\Sigma}\)</span> can be decomposed as
+<span class="math display">\[
+\mathbf{\Sigma}=\left[
+\begin{array}{rr}
+17&amp;4\\
+4&amp;2
+\end{array}
+\right]
+=\left[
+\begin{array}{c}
+4\\
+1
+\end{array}
+\right][4\quad 1]+\left[
+\begin{array}{rr}
+1&amp;0\\
+0&amp;1
+\end{array}
+\right]
+\]</span>
+Obtain the factor loading with <span class="math inline">\(m=1\)</span> (only one common factor), communalities, specific variances, and the proportion of variance explained by the common factor. We have
+<span class="math display">\[\begin{align*}
+X_1&amp;=l_{11}F_1+\epsilon_1=4F_1+\epsilon_1\Longrightarrow \text{Var}(X_1)=l_{11}^2+\psi_1\\
+X_2&amp;=l_{21}F_1+\epsilon_2=F_1+\epsilon_2\Longrightarrow \text{Var}(X_2)=l_{21}^2+\psi_2
+\end{align*}\]</span>
+The communality (common variance explained by the common factor <span class="math inline">\(F_1\)</span>) for <span class="math inline">\(X_1\)</span> is <span class="math inline">\(h_1^2=l_{11}^2=4^2=16\)</span>, and the communality for <span class="math inline">\(X_2\)</span> is <span class="math inline">\(h_2^2=l_{21}^2=1^2=1\)</span>, specific variances for <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are <span class="math inline">\(\psi_1=1\)</span> and <span class="math inline">\(\psi_2=1\)</span> respectively. The proportion of total variance explained by the common factor <span class="math inline">\(F_1\)</span> is
+<span class="math display">\[
+\frac{l_{11}^2+l_{21}^2}{\text{Var}(X_1)+\text{Var}(X_2)}=\frac{h_1^2+h_2^2}{17+2}=\frac{16+1}{19}=0.8947
+\]</span></p></li>
+<li><p>[(c)] Given an observation <span class="math inline">\(\mathbf{x}=[1 \quad 2]^T\)</span> and <span class="math inline">\(\mathbf{\mu}=\mathbf{0}\)</span>, calculate its score on the first principal component.
+The score on the first PC is
+<span class="math display">\[
+Y_1=\mathbf{a_1}^T\mathbf{x}=\mathbf{e_1}^T\mathbf{x}=\left[\frac{4}{\sqrt{17}}\quad  \frac{1}{\sqrt{17}}\right] \left[\begin{array}{c}
+1\\2\\
+\end{array}
+\right]=\frac{4}{\sqrt{17}}\times 1+\frac{1}{\sqrt{17}}\times 2=1.455
+\]</span></p></li>
+<li><p>[(d)] Given an observation <span class="math inline">\(\mathbf{x}=[1 \quad 2]^T\)</span> and <span class="math inline">\(\mathbf{\mu}=\mathbf{0}\)</span>, calculate its factor score on the first common factor.</p></li>
+</ul>
+<p>It can be shown that the weighted least-square estimate of the factor score is given by
+<span class="math display">\[
+\hat {\mathbf{f}}=(\mathbf{L}^T\mathbf{\Psi}^{-1}\mathbf{L})^{-1}\mathbf{L}^T\mathbf{\Psi}^{-1}(\mathbf{x}-\mathbf{\mu}).
+\]</span>
+Therefore, the factor score on the first common factor is
+<span class="math display">\[
+\hat {\mathbf{f}}=(\mathbf{L}^T\mathbf{\Psi}^{-1}\mathbf{L})^{-1}\mathbf{L}^T\mathbf{\Psi}^{-1}(\mathbf{x}-\mathbf{\mu})=\left([4 \quad 1]\left[
+\begin{array}{rr}
+1&amp;0\\
+0&amp;1
+\end{array}
+\right]^{-1} \left[\begin{array}{c}
+4\\1\\
+\end{array}
+\right]\right)^{-1} [4 \quad 1] \left[
+\begin{array}{rr}
+1&amp;0\\
+0&amp;1
+\end{array}
+\right]^{-1} \left[\begin{array}{c}
+1-0\\2-0\\
+\end{array}
+\right]=\frac{6}{17}= 0.353
+\]</span></p>
+</div>
+<div id="revisit-the-learning-outcomes-4" class="section level2 unnumbered hasAnchor">
+<h2>Revisit the Learning Outcomes<a href="factor-analysis.html#revisit-the-learning-outcomes-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After finishing this note, students should be able to</p>
+<ul>
+<li>Write down the model for factor analysis and explain each term in the model.</li>
+<li>Obtain the factor loadings, communality, and specific variance of a certain variable <span class="math inline">\(X_i\)</span>, the proportion of variance explained by a common factor based on the computer outputs.</li>
+<li>Determine the proper number of common factors.</li>
+<li>Explain the ideas for estimating the factor loadings and the specific variance: the principle component and maximum likelihood methods.</li>
+<li>Apply the Newton-Raphson method to find the solutions of a simple equation.</li>
+<li>Explain why factor rotation is needed in factor analysis.</li>
+<li>Obtain/derive the factor scores using the weighted least squares method.</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="principal-component-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="discriminant-analysis-and-classification.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

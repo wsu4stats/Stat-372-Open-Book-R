@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Introduction | STAT 372 Open Textbook (R)</title>
+  <meta name="description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Introduction | STAT 372 Open Textbook (R)" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Introduction | STAT 372 Open Textbook (R)" />
+  
+  <meta name="twitter:description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  
+
+<meta name="author" content="Dr. Wanhua Su" />
+
+
+<meta name="date" content="2025-05-04" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="matrix-algebra.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#learning-outcomes"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#some-examples"><i class="fa fa-check"></i><b>2.2</b> Some Examples</a>
+<ul>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-1-storm-survival-of-sparrows"><i class="fa fa-check"></i>Example 1: Storm Survival of Sparrows</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-2-spam-or-e-mail"><i class="fa fa-check"></i>Example 2: Spam or E-mail?</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-3-classification-of-iris"><i class="fa fa-check"></i>Example 3: Classification of Iris</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#multivariate-methods-covered-in-stat-372"><i class="fa fa-check"></i><b>2.3</b> Multivariate Methods Covered in STAT 372</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#review-univariate-analysis"><i class="fa fa-check"></i><b>2.4</b> Review: Univariate Analysis</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#random-variable-and-its-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Random Variable and Its Distribution</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#properties-of-expectation-and-variance"><i class="fa fa-check"></i><b>2.4.2</b> Properties of Expectation and Variance</a></li>
+<li class="chapter" data-level="2.4.3" data-path="intro.html"><a href="intro.html#continuous-random-variables"><i class="fa fa-check"></i><b>2.4.3</b> Continuous Random Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#revisit-learning-learning-outcomes"><i class="fa fa-check"></i>Revisit Learning Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="matrix-algebra.html"><a href="matrix-algebra.html"><i class="fa fa-check"></i><b>3</b> Matrix Algebra</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrix-algebra.html"><a href="matrix-algebra.html#learning-outcomes-1"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="3.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#vectors"><i class="fa fa-check"></i><b>3.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#some-basic-operations-on-vectors"><i class="fa fa-check"></i><b>3.1.1</b> Some Basic Operations on Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="matrix-algebra.html"><a href="matrix-algebra.html#matrices"><i class="fa fa-check"></i><b>3.2</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#basic-operations-on-matrix"><i class="fa fa-check"></i><b>3.2.1</b> Basic Operations on Matrix</a></li>
+<li class="chapter" data-level="3.2.2" data-path="matrix-algebra.html"><a href="matrix-algebra.html#eigenvalues-and-eigenvectors"><i class="fa fa-check"></i><b>3.2.2</b> Eigenvalues and Eigenvectors</a></li>
+<li class="chapter" data-level="3.2.3" data-path="matrix-algebra.html"><a href="matrix-algebra.html#spectral-eigen-decomposition"><i class="fa fa-check"></i><b>3.2.3</b> Spectral (Eigen) Decomposition</a></li>
+<li class="chapter" data-level="3.2.4" data-path="matrix-algebra.html"><a href="matrix-algebra.html#singular-value-decomposition"><i class="fa fa-check"></i><b>3.2.4</b> Singular-Value Decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="matrix-algebra.html"><a href="matrix-algebra.html#mean-vectors-and-covariance-matrices"><i class="fa fa-check"></i><b>3.3</b> Mean Vectors and Covariance Matrices</a></li>
+<li class="chapter" data-level="3.4" data-path="matrix-algebra.html"><a href="matrix-algebra.html#sample-mean-vector-and-covariance-matrix"><i class="fa fa-check"></i><b>3.4</b> Sample Mean Vector and Covariance Matrix</a></li>
+<li class="chapter" data-level="3.5" data-path="matrix-algebra.html"><a href="matrix-algebra.html#review-exercises"><i class="fa fa-check"></i><b>3.5</b> Review Exercises</a></li>
+<li class="chapter" data-level="" data-path="matrix-algebra.html"><a href="matrix-algebra.html#revisit-the-learning-outcomes"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html"><i class="fa fa-check"></i><b>4</b> Displaying Multivariate Data and Measures of Distance</a>
+<ul>
+<li class="chapter" data-level="" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#learning-outcomes-2"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="4.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#display-multivariate-data"><i class="fa fa-check"></i><b>4.1</b> Display Multivariate Data</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#scatterplot"><i class="fa fa-check"></i><b>4.1.1</b> Scatterplot</a></li>
+<li class="chapter" data-level="4.1.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#graphs-of-growth-curves"><i class="fa fa-check"></i><b>4.1.2</b> Graphs of Growth Curves</a></li>
+<li class="chapter" data-level="4.1.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#star-plots"><i class="fa fa-check"></i><b>4.1.3</b> Star Plots</a></li>
+<li class="chapter" data-level="4.1.4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#chernoff-faces-plot"><i class="fa fa-check"></i><b>4.1.4</b> Chernoff Faces Plot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-in-multivariate-analysis"><i class="fa fa-check"></i><b>4.2</b> Distance in Multivariate Analysis</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distances-for-quantitative-variables"><i class="fa fa-check"></i><b>4.2.1</b> Distances for Quantitative Variables</a></li>
+<li class="chapter" data-level="4.2.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-for-categorical-variables"><i class="fa fa-check"></i><b>4.2.2</b> Distance for Categorical Variables</a></li>
+<li class="chapter" data-level="4.2.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-for-mixed-variable-types"><i class="fa fa-check"></i><b>4.2.3</b> Distance for Mixed Variable Types</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3</b> Multivariate Normal Distribution</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#properties-of-multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.1</b> Properties of Multivariate Normal Distribution</a></li>
+<li class="chapter" data-level="4.3.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#bivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.2</b> Bivariate Normal Distribution</a></li>
+<li class="chapter" data-level="4.3.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#contour-of-multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.3</b> Contour of Multivariate Normal Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#the-sampling-distribution-of-mathbfbar-x-and-boldsymbols"><i class="fa fa-check"></i><b>4.4</b> The Sampling Distribution of <span class="math inline">\(\mathbf{\bar X}\)</span> and <span class="math inline">\(\boldsymbol{S}\)</span></a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distributions-related-to-normal-distribution"><i class="fa fa-check"></i><b>4.4.1</b> Distributions Related to Normal Distribution</a></li>
+<li class="chapter" data-level="4.4.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#applications-to-distributions-related-to-sample-means"><i class="fa fa-check"></i><b>4.4.2</b> Applications to Distributions Related to Sample Means</a></li>
+<li class="chapter" data-level="4.4.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#generalize-to-multivariate-cases"><i class="fa fa-check"></i><b>4.4.3</b> Generalize to Multivariate Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#review-exercises-1"><i class="fa fa-check"></i><b>4.5</b> Review Exercises</a></li>
+<li class="chapter" data-level="" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#revisit-the-learning-outcomes-1"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html"><i class="fa fa-check"></i><b>5</b> Hypothesis Tests on Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#learning-outcomes-3"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="5.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-one-mean-vector"><i class="fa fa-check"></i><b>5.1</b> Hypothesis Test for one Mean Vector</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case"><i class="fa fa-check"></i><b>5.1.1</b> Univariate Case</a></li>
+<li class="chapter" data-level="5.1.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case"><i class="fa fa-check"></i><b>5.1.2</b> Multivariate Case</a></li>
+<li class="chapter" data-level="5.1.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#evaluating-multivariate-normality"><i class="fa fa-check"></i><b>5.1.3</b> Evaluating Multivariate Normality</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-two-mean-vectors"><i class="fa fa-check"></i><b>5.2</b> Hypothesis Test for Two Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-based-on-two-independent-samples"><i class="fa fa-check"></i><b>5.2.1</b> Univariate Case Based on Two Independent Samples</a></li>
+<li class="chapter" data-level="5.2.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-based-on-two-independent-samples"><i class="fa fa-check"></i><b>5.2.2</b> Multivariate Case Based on Two Independent Samples</a></li>
+<li class="chapter" data-level="5.2.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#two-sample-non-pooled-hotellings-t2-test"><i class="fa fa-check"></i><b>5.2.3</b> Two-sample Non-pooled Hotelling’s <span class="math inline">\(T^2\)</span> Test</a></li>
+<li class="chapter" data-level="5.2.4" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#two-sample-hotellings-t2-confidence-interval"><i class="fa fa-check"></i><b>5.2.4</b> Two-sample Hotelling’s <span class="math inline">\(T^2\)</span> Confidence Interval</a></li>
+<li class="chapter" data-level="5.2.5" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-based-on-a-paired-sample"><i class="fa fa-check"></i><b>5.2.5</b> Univariate Case Based on a Paired Sample</a></li>
+<li class="chapter" data-level="5.2.6" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-based-on-a-paired-sample"><i class="fa fa-check"></i><b>5.2.6</b> Multivariate Case Based on a Paired Sample</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-several-mean-vectors"><i class="fa fa-check"></i><b>5.3</b> Hypothesis Test for Several Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-one-way-anova-f-test"><i class="fa fa-check"></i><b>5.3.1</b> Univariate Case: One-Way ANOVA F Test</a></li>
+<li class="chapter" data-level="5.3.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-one-way-manova"><i class="fa fa-check"></i><b>5.3.2</b> Multivariate Case: One-Way MANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#revisit-the-learning-outcomes-2"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html"><i class="fa fa-check"></i><b>6</b> Principal Component Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#learning-outcomes-4"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="6.1" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#finding-the-principal-components"><i class="fa fa-check"></i><b>6.1</b> Finding the Principal Components</a></li>
+<li class="chapter" data-level="6.2" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#scaling-in-principal-component-analysis"><i class="fa fa-check"></i><b>6.2</b> Scaling in Principal Component Analysis</a></li>
+<li class="chapter" data-level="6.3" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#limitations-of-principal-component-analysis"><i class="fa fa-check"></i><b>6.3</b> Limitations of Principal Component Analysis</a></li>
+<li class="chapter" data-level="6.4" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#further-reading"><i class="fa fa-check"></i><b>6.4</b> Further Reading</a></li>
+<li class="chapter" data-level="" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#revisit-the-learning-outcomes-3"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>7</b> Factor Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="factor-analysis.html"><a href="factor-analysis.html#learning-outcomes-5"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="7.1" data-path="factor-analysis.html"><a href="factor-analysis.html#model-of-factor-analysis"><i class="fa fa-check"></i><b>7.1</b> Model of Factor Analysis</a></li>
+<li class="chapter" data-level="7.2" data-path="factor-analysis.html"><a href="factor-analysis.html#estimating-factor-loadings-l_ij-and-specific-variance-psi_i"><i class="fa fa-check"></i><b>7.2</b> Estimating Factor Loadings <span class="math inline">\(l_{ij}\)</span> and Specific Variance <span class="math inline">\(\psi_i\)</span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="factor-analysis.html"><a href="factor-analysis.html#the-principle-component-method"><i class="fa fa-check"></i><b>7.2.1</b> The Principle Component Method</a></li>
+<li class="chapter" data-level="7.2.2" data-path="factor-analysis.html"><a href="factor-analysis.html#the-maximum-likelihood-method"><i class="fa fa-check"></i><b>7.2.2</b> The Maximum Likelihood Method</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="factor-analysis.html"><a href="factor-analysis.html#factor-rotation"><i class="fa fa-check"></i><b>7.3</b> Factor Rotation</a></li>
+<li class="chapter" data-level="7.4" data-path="factor-analysis.html"><a href="factor-analysis.html#factor-scores"><i class="fa fa-check"></i><b>7.4</b> Factor Scores</a></li>
+<li class="chapter" data-level="" data-path="factor-analysis.html"><a href="factor-analysis.html#revisit-the-learning-outcomes-4"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html"><i class="fa fa-check"></i><b>8</b> Discriminant Analysis and Classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#learning-outcomes-6"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="8.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#performance-measure"><i class="fa fa-check"></i><b>8.2</b> Performance Measure</a></li>
+<li class="chapter" data-level="8.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#overfitting-and-cross-validation"><i class="fa fa-check"></i><b>8.3</b> Overfitting and Cross Validation</a></li>
+<li class="chapter" data-level="8.4" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classification-models"><i class="fa fa-check"></i><b>8.4</b> Classification Models</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>8.4.1</b> <span class="math inline">\(K\)</span> Nearest Neighbors</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#logistic-regression-for-binary-response"><i class="fa fa-check"></i><b>8.5</b> Logistic Regression for Binary Response</a>
+<ul>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#interpretation-of-beta_i"><i class="fa fa-check"></i>Interpretation of <span class="math inline">\(\beta_i\)</span></a></li>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#estimation-of-beta_i"><i class="fa fa-check"></i>Estimation of <span class="math inline">\(\beta_i\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#logistic-regression-for-multi-class-nominal-data"><i class="fa fa-check"></i><b>8.6</b> Logistic Regression for Multi-class Nominal Data</a></li>
+<li class="chapter" data-level="8.7" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#cumulative-logit-model-for-multi-class-ordinal-data"><i class="fa fa-check"></i><b>8.7</b> Cumulative Logit Model for Multi-class Ordinal Data</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#cumulative-logit-models-with-proportional-odds"><i class="fa fa-check"></i><b>8.7.1</b> Cumulative Logit Models with Proportional Odds</a></li>
+<li class="chapter" data-level="8.7.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-probability-of-each-category"><i class="fa fa-check"></i><b>8.7.2</b> Model Probability of Each Category</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-selection-for-logistic-regression"><i class="fa fa-check"></i><b>8.8</b> Model Selection for Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#aic-and-bic"><i class="fa fa-check"></i><b>8.8.1</b> AIC and BIC</a></li>
+<li class="chapter" data-level="8.8.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#forward-selection"><i class="fa fa-check"></i><b>8.8.2</b> Forward Selection</a></li>
+<li class="chapter" data-level="8.8.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#backward-elimination"><i class="fa fa-check"></i><b>8.8.3</b> Backward Elimination</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-checking"><i class="fa fa-check"></i><b>8.9</b> Model Checking</a>
+<ul>
+<li class="chapter" data-level="8.9.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#residual-analysis"><i class="fa fa-check"></i><b>8.9.1</b> Residual Analysis</a></li>
+<li class="chapter" data-level="8.9.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#preditive-power-accuracy-and-roc-curve"><i class="fa fa-check"></i><b>8.9.2</b> Preditive Power: Accuracy and ROC Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="8.10" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classification-tree-recursive-partitioning"><i class="fa fa-check"></i><b>8.10</b> Classification Tree (Recursive Partitioning)</a></li>
+<li class="chapter" data-level="8.11" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#regression-tree"><i class="fa fa-check"></i><b>8.11</b> Regression Tree</a></li>
+<li class="chapter" data-level="8.12" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#random-forest"><i class="fa fa-check"></i><b>8.12</b> Random Forest</a></li>
+<li class="chapter" data-level="8.13" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#support-vector-machines"><i class="fa fa-check"></i><b>8.13</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="8.14" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#neural-networks"><i class="fa fa-check"></i><b>8.14</b> Neural Networks</a></li>
+<li class="chapter" data-level="8.15" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classical-methods"><i class="fa fa-check"></i><b>8.15</b> Classical Methods</a>
+<ul>
+<li class="chapter" data-level="8.15.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#mahalanobis-distance-method"><i class="fa fa-check"></i><b>8.15.1</b> Mahalanobis Distance Method</a></li>
+<li class="chapter" data-level="8.15.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#bayes-posterior"><i class="fa fa-check"></i><b>8.15.2</b> Bayes Posterior</a></li>
+<li class="chapter" data-level="8.15.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#fishers-discriminant-analysis"><i class="fa fa-check"></i><b>8.15.3</b> Fisher’s Discriminant Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="8.16" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#summary"><i class="fa fa-check"></i><b>8.16</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#revisit-learning-outcomes"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="clustering-analysis.html"><a href="clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#learning-outcomes-7"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="9.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#introduction-2"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#clustering-methods"><i class="fa fa-check"></i><b>9.2</b> Clustering Methods</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#hierarchical-method"><i class="fa fa-check"></i><b>9.2.1</b> Hierarchical Method</a></li>
+<li class="chapter" data-level="9.2.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#k-means"><i class="fa fa-check"></i><b>9.2.2</b> K-Means</a></li>
+<li class="chapter" data-level="9.2.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#model-based-clustering"><i class="fa fa-check"></i><b>9.2.3</b> Model-Based Clustering</a></li>
+<li class="chapter" data-level="9.2.4" data-path="clustering-analysis.html"><a href="clustering-analysis.html#pros-and-cons-of-clustering-methods"><i class="fa fa-check"></i><b>9.2.4</b> Pros and Cons of Clustering Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#determine-k-number-of-clusters"><i class="fa fa-check"></i><b>9.3</b> Determine <span class="math inline">\(K\)</span>: Number of Clusters</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#the-elbow-plot-method"><i class="fa fa-check"></i><b>9.3.1</b> The Elbow Plot Method</a></li>
+<li class="chapter" data-level="9.3.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#the-silhouette-score"><i class="fa fa-check"></i><b>9.3.2</b> The Silhouette Score</a></li>
+<li class="chapter" data-level="9.3.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#gap-statistics"><i class="fa fa-check"></i><b>9.3.3</b> Gap Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#side-note-on-the-em-algorithm"><i class="fa fa-check"></i>Side-Note on the EM Algorithm</a></li>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#revisit-learning-outcomes-1"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html"><i class="fa fa-check"></i><b>10</b> Canonical Correlation Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#learning-outcomes-8"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="10.1" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#objective"><i class="fa fa-check"></i><b>10.1</b> Objective</a></li>
+<li class="chapter" data-level="10.2" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#obtain-the-canonical-variates-pairs"><i class="fa fa-check"></i><b>10.2</b> Obtain the Canonical Variates Pairs</a></li>
+<li class="chapter" data-level="10.3" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#interpretation"><i class="fa fa-check"></i><b>10.3</b> Interpretation</a></li>
+<li class="chapter" data-level="10.4" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#testing-mathbfsigma_120"><i class="fa fa-check"></i><b>10.4</b> Testing <span class="math inline">\(\mathbf{\Sigma}_{12}=0\)</span></a></li>
+<li class="chapter" data-level="" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#revisit-learning-outcomes-2"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html"><i class="fa fa-check"></i><b>11</b> Multidimensional Scaling</a>
+<ul>
+<li class="chapter" data-level="" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#learning-outcomes-9"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="11.1" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#objective-1"><i class="fa fa-check"></i><b>11.1</b> Objective</a></li>
+<li class="chapter" data-level="11.2" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#methods"><i class="fa fa-check"></i><b>11.2</b> Methods</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#classical-scaling"><i class="fa fa-check"></i><b>11.2.1</b> Classical Scaling</a></li>
+<li class="chapter" data-level="11.2.2" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#metric-scaling"><i class="fa fa-check"></i><b>11.2.2</b> Metric Scaling</a></li>
+<li class="chapter" data-level="11.2.3" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#non-metric-scaling"><i class="fa fa-check"></i><b>11.2.3</b> Non-metric Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#example"><i class="fa fa-check"></i><b>11.3</b> Example</a></li>
+<li class="chapter" data-level="" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#revisit-learning-outcomes-3"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAT 372 Open Textbook (R)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Introduction<a href="intro.html#intro" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-outcomes" class="section level2 unnumbered hasAnchor">
+<h2>Learning Outcomes<a href="intro.html#learning-outcomes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After finishing this chapter, students should be able to:</p>
+<ul>
+<li><p>Explain the differences between univariate analysis and multivariate analysis.</p></li>
+<li><p>Describe briefly several applications that multivariate analysis can be used.</p></li>
+<li><p>Calculate the expected value and variance of a random variable.</p></li>
+<li><p>Conduct hypothesis tests about population means covered in Stat 151 such as one-sample, two-sample, paired <span class="math inline">\(t\)</span> test, one-way ANOVA F test.</p></li>
+</ul>
+</div>
+<div id="introduction" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Introduction<a href="intro.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In Stat 151, we focused on descriptive and inferential statistics on a single random variable, for example, your height or your grade in the final exam; this is called <em>univariate analysis</em>. In most applications, however, we encounter data set in which several measurements are taken from the individuals. For example, in order to have a basic idea about the shape of a person, we need to know his height and weight, knowing either the height or weight alone is not enough. The analysis of this kind of data is called <em>multivariate analysis</em>. Students could be able to find a lot of data sets related to multivariate analysis from the Machine Learning and Data Science Community at <a href="https://www.kaggle.com/" class="uri">https://www.kaggle.com/</a>, the UCI Machine Learning Repository at <a href="http://archive.ics.uci.edu/ml/" class="uri">http://archive.ics.uci.edu/ml/</a>, and case studies in data analysis competition of annual SSC (Statistical Society of Canada) meeting.</p>
+</div>
+<div id="some-examples" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Some Examples<a href="intro.html#some-examples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Multivariate analysis methods are widely used in practice. The simplest example is fitting a multiple linear regression which covered in Stat 252. Recall that a simple linear regression model is given by
+<span class="math display">\[
+Y=\beta_0+\beta_1 x+\epsilon, \epsilon \sim N(0, \sigma),
+\]</span>
+where <span class="math inline">\(Y\)</span> is the response (dependent) variable and <span class="math inline">\(x\)</span> is an value of the predictor variable <span class="math inline">\(X\)</span>, <span class="math inline">\(\epsilon\)</span> is the error term, <span class="math inline">\(\beta_0\)</span> is the population intercept, and <span class="math inline">\(\beta_1\)</span> is the population slope. Simple linear regression has only one predictor variable. It can be generalized to multiple linear regression to include more predictor variables. For example, we can model the relationship between price of single houses and their features such as age (<span class="math inline">\(x_1\)</span>), size (<span class="math inline">\(x_2\)</span>), number of baths (<span class="math inline">\(x_3\)</span>), roof type (<span class="math inline">\(x_4\)</span>, tiled or non-tiled) by fitting a multiple regression model
+<span class="math display">\[
+Y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4 x_4+\epsilon, \epsilon \sim N(0, \sigma)
+\]</span>
+with dummy variable
+<span class="math display">\[x_4=
+\left\{
+\begin{array}{ll}
+1&amp;\mbox{tiled roof},\\
+0&amp;\mbox{non-tiled roof}.
+\end{array}
+\right.
+\]</span>
+Here are several examples will be used in STAT 372.</p>
+<div id="example-1-storm-survival-of-sparrows" class="section level3 unnumbered hasAnchor">
+<h3>Example 1: Storm Survival of Sparrows<a href="intro.html#example-1-storm-survival-of-sparrows" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The data set gives the body measurements of 49 female sparrows. The first measurement is <span class="math inline">\(X_1\)</span>=total length, the second one is <span class="math inline">\(X_2\)</span>=alar length, the third is <span class="math inline">\(X_3\)</span>=length of beak and head, the fourth is <span class="math inline">\(X_4\)</span>=length of humerus, and the fifth is <span class="math inline">\(X_5\)</span>=length of keel and sternum, all in mm.</p>
+<table class=" lightable-classic table" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto; font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;" colspan="6">
+</th>
+<th style="empty-cells: hide;" colspan="6">
+</th>
+<th style="empty-cells: hide;" colspan="6">
+</th>
+</tr>
+<tr>
+<th style="text-align:left;border-bottom:2px solid">
+ID
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_1\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_2\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_3\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_4\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_5\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+ID
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_1\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_2\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_3\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_4\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_5\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+ID
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_1\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_2\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_3\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_4\)</span>
+</th>
+<th style="text-align:left;border-bottom:2px solid">
+<span class="math inline">\(X_5\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+1
+</td>
+<td style="text-align:left;">
+156
+</td>
+<td style="text-align:left;">
+245
+</td>
+<td style="text-align:left;">
+31.6
+</td>
+<td style="text-align:left;">
+18.5
+</td>
+<td style="text-align:left;border-right:2px solid">
+20.5
+</td>
+<td style="text-align:left;border-right:2px solid">
+17
+</td>
+<td style="text-align:left;">
+158
+</td>
+<td style="text-align:left;">
+244
+</td>
+<td style="text-align:left;">
+31.4
+</td>
+<td style="text-align:left;">
+18.5
+</td>
+<td style="text-align:left;border-right:2px solid">
+21.6
+</td>
+<td style="text-align:left;border-right:2px solid">
+33
+</td>
+<td style="text-align:left;">
+159
+</td>
+<td style="text-align:left;">
+245
+</td>
+<td style="text-align:left;">
+31.8
+</td>
+<td style="text-align:left;">
+18.5
+</td>
+<td style="text-align:left;">
+21.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+2
+</td>
+<td style="text-align:left;">
+154
+</td>
+<td style="text-align:left;">
+240
+</td>
+<td style="text-align:left;">
+30.4
+</td>
+<td style="text-align:left;">
+17.9
+</td>
+<td style="text-align:left;border-right:2px solid">
+19.6
+</td>
+<td style="text-align:left;border-right:2px solid">
+18
+</td>
+<td style="text-align:left;">
+153
+</td>
+<td style="text-align:left;">
+238
+</td>
+<td style="text-align:left;">
+30.5
+</td>
+<td style="text-align:left;">
+18.2
+</td>
+<td style="text-align:left;border-right:2px solid">
+20.9
+</td>
+<td style="text-align:left;border-right:2px solid">
+34
+</td>
+<td style="text-align:left;">
+159
+</td>
+<td style="text-align:left;">
+247
+</td>
+<td style="text-align:left;">
+30.9
+</td>
+<td style="text-align:left;">
+18.1
+</td>
+<td style="text-align:left;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+3
+</td>
+<td style="text-align:left;">
+153
+</td>
+<td style="text-align:left;">
+240
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+18.4
+</td>
+<td style="text-align:left;border-right:2px solid">
+20.6
+</td>
+<td style="text-align:left;border-right:2px solid">
+19
+</td>
+<td style="text-align:left;">
+155
+</td>
+<td style="text-align:left;">
+236
+</td>
+<td style="text-align:left;">
+30.3
+</td>
+<td style="text-align:left;">
+18.5
+</td>
+<td style="text-align:left;border-right:2px solid">
+20.1
+</td>
+<td style="text-align:left;border-right:2px solid">
+35
+</td>
+<td style="text-align:left;">
+155
+</td>
+<td style="text-align:left;">
+243
+</td>
+<td style="text-align:left;">
+30.9
+</td>
+<td style="text-align:left;">
+18.5
+</td>
+<td style="text-align:left;">
+21.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+4
+</td>
+<td style="text-align:left;">
+153
+</td>
+<td style="text-align:left;">
+236
+</td>
+<td style="text-align:left;">
+30.9
+</td>
+<td style="text-align:left;">
+17.7
+</td>
+<td style="text-align:left;border-right:2px solid">
+20.2
+</td>
+<td style="text-align:left;border-right:2px solid">
+20
+</td>
+<td style="text-align:left;">
+163
+</td>
+<td style="text-align:left;">
+246
+</td>
+<td style="text-align:left;">
+32.5
+</td>
+<td style="text-align:left;">
+18.6
+</td>
+<td style="text-align:left;border-right:2px solid">
+21.9
+</td>
+<td style="text-align:left;border-right:2px solid">
+36
+</td>
+<td style="text-align:left;">
+162
+</td>
+<td style="text-align:left;">
+252
+</td>
+<td style="text-align:left;">
+31.9
+</td>
+<td style="text-align:left;">
+19.1
+</td>
+<td style="text-align:left;">
+22.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+5
+</td>
+<td style="text-align:left;">
+155
+</td>
+<td style="text-align:left;">
+243
+</td>
+<td style="text-align:left;">
+31.5
+</td>
+<td style="text-align:left;">
+18.6
+</td>
+<td style="text-align:left;border-right:2px solid">
+20.3
+</td>
+<td style="text-align:left;border-right:2px solid">
+21
+</td>
+<td style="text-align:left;">
+159
+</td>
+<td style="text-align:left;">
+236
+</td>
+<td style="text-align:left;">
+31.5
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;border-right:2px solid">
+21.5
+</td>
+<td style="text-align:left;border-right:2px solid">
+37
+</td>
+<td style="text-align:left;">
+152
+</td>
+<td style="text-align:left;">
+230
+</td>
+<td style="text-align:left;">
+30.4
+</td>
+<td style="text-align:left;">
+17.3
+</td>
+<td style="text-align:left;">
+18.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+6
+</td>
+<td style="text-align:left;">
+163
+</td>
+<td style="text-align:left;">
+247
+</td>
+<td style="text-align:left;">
+32
+</td>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;border-right:2px solid">
+20.9
+</td>
+<td style="text-align:left;border-right:2px solid">
+22
+</td>
+<td style="text-align:left;">
+155
+</td>
+<td style="text-align:left;">
+240
+</td>
+<td style="text-align:left;">
+31.4
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;border-right:2px solid">
+20.7
+</td>
+<td style="text-align:left;border-right:2px solid">
+38
+</td>
+<td style="text-align:left;">
+159
+</td>
+<td style="text-align:left;">
+242
+</td>
+<td style="text-align:left;">
+30.8
+</td>
+<td style="text-align:left;">
+18.2
+</td>
+<td style="text-align:left;">
+20.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+7
+</td>
+<td style="text-align:left;">
+157
+</td>
+<td style="text-align:left;">
+238
+</td>
+<td style="text-align:left;">
+30.9
+</td>
+<td style="text-align:left;">
+18.4
+</td>
+<td style="text-align:left;border-right:2px solid">
+20.2
+</td>
+<td style="text-align:left;border-right:2px solid">
+23
+</td>
+<td style="text-align:left;">
+156
+</td>
+<td style="text-align:left;">
+240
+</td>
+<td style="text-align:left;">
+31.5
+</td>
+<td style="text-align:left;">
+18.2
+</td>
+<td style="text-align:left;border-right:2px solid">
+20.6
+</td>
+<td style="text-align:left;border-right:2px solid">
+39
+</td>
+<td style="text-align:left;">
+155
+</td>
+<td style="text-align:left;">
+238
+</td>
+<td style="text-align:left;">
+31.2
+</td>
+<td style="text-align:left;">
+17.9
+</td>
+<td style="text-align:left;">
+19.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+8
+</td>
+<td style="text-align:left;">
+155
+</td>
+<td style="text-align:left;">
+239
+</td>
+<td style="text-align:left;">
+32.8
+</td>
+<td style="text-align:left;">
+18.6
+</td>
+<td style="text-align:left;border-right:2px solid">
+21.2
+</td>
+<td style="text-align:left;border-right:2px solid">
+24
+</td>
+<td style="text-align:left;">
+160
+</td>
+<td style="text-align:left;">
+242
+</td>
+<td style="text-align:left;">
+32.6
+</td>
+<td style="text-align:left;">
+18.8
+</td>
+<td style="text-align:left;border-right:2px solid">
+21.7
+</td>
+<td style="text-align:left;border-right:2px solid">
+40
+</td>
+<td style="text-align:left;">
+163
+</td>
+<td style="text-align:left;">
+249
+</td>
+<td style="text-align:left;">
+33.4
+</td>
+<td style="text-align:left;">
+19.5
+</td>
+<td style="text-align:left;">
+22.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+9
+</td>
+<td style="text-align:left;">
+164
+</td>
+<td style="text-align:left;">
+248
+</td>
+<td style="text-align:left;">
+32.7
+</td>
+<td style="text-align:left;">
+19.1
+</td>
+<td style="text-align:left;border-right:2px solid">
+21.1
+</td>
+<td style="text-align:left;border-right:2px solid">
+25
+</td>
+<td style="text-align:left;">
+152
+</td>
+<td style="text-align:left;">
+232
+</td>
+<td style="text-align:left;">
+30.3
+</td>
+<td style="text-align:left;">
+17.2
+</td>
+<td style="text-align:left;border-right:2px solid">
+19.8
+</td>
+<td style="text-align:left;border-right:2px solid">
+41
+</td>
+<td style="text-align:left;">
+163
+</td>
+<td style="text-align:left;">
+242
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+18.1
+</td>
+<td style="text-align:left;">
+20.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+10
+</td>
+<td style="text-align:left;">
+158
+</td>
+<td style="text-align:left;">
+238
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+18.8
+</td>
+<td style="text-align:left;border-right:2px solid">
+22
+</td>
+<td style="text-align:left;border-right:2px solid">
+26
+</td>
+<td style="text-align:left;">
+160
+</td>
+<td style="text-align:left;">
+250
+</td>
+<td style="text-align:left;">
+31.7
+</td>
+<td style="text-align:left;">
+18.8
+</td>
+<td style="text-align:left;border-right:2px solid">
+22.5
+</td>
+<td style="text-align:left;border-right:2px solid">
+42
+</td>
+<td style="text-align:left;">
+156
+</td>
+<td style="text-align:left;">
+237
+</td>
+<td style="text-align:left;">
+31.7
+</td>
+<td style="text-align:left;">
+18.2
+</td>
+<td style="text-align:left;">
+20.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+11
+</td>
+<td style="text-align:left;">
+158
+</td>
+<td style="text-align:left;">
+240
+</td>
+<td style="text-align:left;">
+31.3
+</td>
+<td style="text-align:left;">
+18.6
+</td>
+<td style="text-align:left;border-right:2px solid">
+22
+</td>
+<td style="text-align:left;border-right:2px solid">
+27
+</td>
+<td style="text-align:left;">
+155
+</td>
+<td style="text-align:left;">
+237
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+18.5
+</td>
+<td style="text-align:left;border-right:2px solid">
+20
+</td>
+<td style="text-align:left;border-right:2px solid">
+43
+</td>
+<td style="text-align:left;">
+159
+</td>
+<td style="text-align:left;">
+238
+</td>
+<td style="text-align:left;">
+31.5
+</td>
+<td style="text-align:left;">
+18.4
+</td>
+<td style="text-align:left;">
+20.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+12
+</td>
+<td style="text-align:left;">
+160
+</td>
+<td style="text-align:left;">
+244
+</td>
+<td style="text-align:left;">
+31.1
+</td>
+<td style="text-align:left;">
+18.6
+</td>
+<td style="text-align:left;border-right:2px solid">
+20.5
+</td>
+<td style="text-align:left;border-right:2px solid">
+28
+</td>
+<td style="text-align:left;">
+157
+</td>
+<td style="text-align:left;">
+245
+</td>
+<td style="text-align:left;">
+32.2
+</td>
+<td style="text-align:left;">
+19.5
+</td>
+<td style="text-align:left;border-right:2px solid">
+21.4
+</td>
+<td style="text-align:left;border-right:2px solid">
+44
+</td>
+<td style="text-align:left;">
+161
+</td>
+<td style="text-align:left;">
+245
+</td>
+<td style="text-align:left;">
+32.1
+</td>
+<td style="text-align:left;">
+19.1
+</td>
+<td style="text-align:left;">
+20.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+13
+</td>
+<td style="text-align:left;">
+161
+</td>
+<td style="text-align:left;">
+246
+</td>
+<td style="text-align:left;">
+32.3
+</td>
+<td style="text-align:left;">
+19.3
+</td>
+<td style="text-align:left;border-right:2px solid">
+21.8
+</td>
+<td style="text-align:left;border-right:2px solid">
+29
+</td>
+<td style="text-align:left;">
+165
+</td>
+<td style="text-align:left;">
+245
+</td>
+<td style="text-align:left;">
+33.1
+</td>
+<td style="text-align:left;">
+19.8
+</td>
+<td style="text-align:left;border-right:2px solid">
+22.7
+</td>
+<td style="text-align:left;border-right:2px solid">
+45
+</td>
+<td style="text-align:left;">
+155
+</td>
+<td style="text-align:left;">
+235
+</td>
+<td style="text-align:left;">
+30.7
+</td>
+<td style="text-align:left;">
+17.7
+</td>
+<td style="text-align:left;">
+19.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+14
+</td>
+<td style="text-align:left;">
+157
+</td>
+<td style="text-align:left;">
+245
+</td>
+<td style="text-align:left;">
+32
+</td>
+<td style="text-align:left;">
+19.1
+</td>
+<td style="text-align:left;border-right:2px solid">
+20
+</td>
+<td style="text-align:left;border-right:2px solid">
+30
+</td>
+<td style="text-align:left;">
+153
+</td>
+<td style="text-align:left;">
+231
+</td>
+<td style="text-align:left;">
+30.1
+</td>
+<td style="text-align:left;">
+17.3
+</td>
+<td style="text-align:left;border-right:2px solid">
+19.8
+</td>
+<td style="text-align:left;border-right:2px solid">
+46
+</td>
+<td style="text-align:left;">
+162
+</td>
+<td style="text-align:left;">
+247
+</td>
+<td style="text-align:left;">
+31.9
+</td>
+<td style="text-align:left;">
+19.1
+</td>
+<td style="text-align:left;">
+20.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+15
+</td>
+<td style="text-align:left;">
+157
+</td>
+<td style="text-align:left;">
+235
+</td>
+<td style="text-align:left;">
+31.5
+</td>
+<td style="text-align:left;">
+18.1
+</td>
+<td style="text-align:left;border-right:2px solid">
+19.8
+</td>
+<td style="text-align:left;border-right:2px solid">
+31
+</td>
+<td style="text-align:left;">
+162
+</td>
+<td style="text-align:left;">
+239
+</td>
+<td style="text-align:left;">
+30.3
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;border-right:2px solid">
+23.1
+</td>
+<td style="text-align:left;border-right:2px solid">
+47
+</td>
+<td style="text-align:left;">
+153
+</td>
+<td style="text-align:left;">
+237
+</td>
+<td style="text-align:left;">
+30.6
+</td>
+<td style="text-align:left;">
+18.6
+</td>
+<td style="text-align:left;">
+20.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+16
+</td>
+<td style="text-align:left;">
+156
+</td>
+<td style="text-align:left;">
+237
+</td>
+<td style="text-align:left;">
+30.9
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;border-right:2px solid">
+20.3
+</td>
+<td style="text-align:left;border-right:2px solid">
+32
+</td>
+<td style="text-align:left;">
+162
+</td>
+<td style="text-align:left;">
+243
+</td>
+<td style="text-align:left;">
+31.6
+</td>
+<td style="text-align:left;">
+18.8
+</td>
+<td style="text-align:left;border-right:2px solid">
+21.3
+</td>
+<td style="text-align:left;border-right:2px solid">
+48
+</td>
+<td style="text-align:left;">
+162
+</td>
+<td style="text-align:left;">
+245
+</td>
+<td style="text-align:left;">
+32.5
+</td>
+<td style="text-align:left;">
+18.5
+</td>
+<td style="text-align:left;">
+21.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:2px solid">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;border-right:2px solid">
+</td>
+<td style="text-align:left;border-right:2px solid">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;border-right:2px solid">
+</td>
+<td style="text-align:left;border-right:2px solid">
+49
+</td>
+<td style="text-align:left;">
+164
+</td>
+<td style="text-align:left;">
+248
+</td>
+<td style="text-align:left;">
+32.3
+</td>
+<td style="text-align:left;">
+18.8
+</td>
+<td style="text-align:left;">
+20.9
+</td>
+</tr>
+</tbody>
+</table>
+<p>Birds 1 to 21 survived a severe storm near Brown University in Rhode Island while the remainder died. (Original source Bumpus 1898.) Note that five measurements were taken from each bird, this is an example of multivariate analysis. Questions of interest might be:</p>
+<ul>
+<li>How are the measurements related to with one another?</li>
+<li>Do the survivors and non-survivors have significantly different mean values in the variables?</li>
+<li>Do the survivors and non-survivors show similar amounts of variation for the variables?</li>
+<li>Do the variables provide similar information to distinguish the survivors and non-survivors?</li>
+<li>Is it possible to construct a function of the variables that separates the survivors and non-survivors?</li>
+</ul>
+</div>
+<div id="example-2-spam-or-e-mail" class="section level3 unnumbered hasAnchor">
+<h3>Example 2: Spam or E-mail?<a href="intro.html#example-2-spam-or-e-mail" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Spam Email database contains 4601 instances and 57 explanatory variables:</p>
+<ul>
+<li>48 continuous explanatory variables in the forms of word_freq_WORD = percentage of words in the e-mail that match WORD. A “word” in this case is any string of alphanumeric characters bounded by non-alphanumeric characters or end-of-string.
+For example,
+<span class="math display">\[
+\mbox{word_freq_edu}=100 \times \frac{\mbox{number of times the &quot;edu&quot; appears in the e-mail}}{\mbox{total number of words in e-mail}}
+\]</span></li>
+<li>6 continuous variables in terms of char_freq_CHAR= percentage of characters in the e-mail that match CHAR. The characters can be $, !, etc.</li>
+<li>1 continuous variable in the forms of capital_run_length_average= average length of uninterrupted sequences of capital letters.</li>
+<li>1 continuous variable of type capital_run_length_longest= length of longest uninterrupted sequence of capital letters</li>
+<li>1 continuous integer variable of type capital_run_length_total= sum of length of uninterrupted sequences of capital letters= total number of capital letters in the e-mail</li>
+<li>1 categorical variable indicating whether the e-mail was considered spam (1) or not (0), i.e. unsolicited commercial e-mail.</li>
+</ul>
+<p>Questions of interest:</p>
+<ul>
+<li>Could we find a subset of those 57 explanatory variables that separate spams and e-mails?</li>
+<li>Could we build a model that predicts a message’s probability of being a spam?</li>
+</ul>
+</div>
+<div id="example-3-classification-of-iris" class="section level3 unnumbered hasAnchor">
+<h3>Example 3: Classification of Iris<a href="intro.html#example-3-classification-of-iris" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Iris flower data set is a multivariate data set introduced by Sir Ronald Fisher (1936) as an example of discriminant analysis. The data set consists of 50 samples from each of three species of Iris flowers (Iris setosa, Iris virginica and Iris versicolor).
+Pictures of the three species can be found on <a href="http://en.wikipedia.org/wiki/Iris_flower_data_set" class="uri">http://en.wikipedia.org/wiki/Iris_flower_data_set</a>.</p>
+<p><img src="iris.png" width="95%" /></p>
+<p>Four features were measured from each flower: the length and the width of the sepal and petal, in centimeters. The questions of interest for this data set are:</p>
+<ul>
+<li>Is there any two-dimensional sub-spaces that well separate the three species?</li>
+<li>For this discriminant/classification problem, what models are good in terms of misclassification rate?</li>
+</ul>
+</div>
+</div>
+<div id="multivariate-methods-covered-in-stat-372" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Multivariate Methods Covered in STAT 372<a href="intro.html#multivariate-methods-covered-in-stat-372" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will cover the following topics in STAT 372 this semester:</p>
+<ul>
+<li>Matrix algebra. In multivariate analysis, at least two measurements are taken from each individual and hence the data are organized in vectors and matrices. Basic principles in matrices and vectors will be covered.</li>
+<li>Descriptive statistics for multivariate data. Before analyzing the data, we should explore the data numerically or/and graphically. For example, we should calculate the covariance matrix of the explanatory variables to see whether the variables are related to one another or not; we can also plot scatter plots to see their relationships.</li>
+<li>Multivariate normal distribution and measures of distance between two observations. In univariate cases, most of the inferential statistics are based on the assumption that the variable follows a normal distribution. This assumption is generalized to the multivariate cases. For some hypothesis tests, we need the joint distribution of the variables to be multivariate normal. It is important to quantify the distance between two observations (vectors), because if their distance is larger than a certain threshold, these two observations are significantly different.</li>
+<li>Hypothesis test about a mean vector. In univariate cases, a one-sample <span class="math inline">\(t\)</span> test is used when making inferences on a population mean. In multivariate cases, the mean is a vector. The corresponding test statistic becomes Hotelling’s <span class="math inline">\(T^2\)</span> which follows a distribution proportional to an F distribution.</li>
+<li>Hypothesis test about two or more mean vectors. We use a paired <span class="math inline">\(t\)</span> test or two-sample <span class="math inline">\(t\)</span> test when we compare two population means, and one-way ANOVA when comparing more than two means for univariate data. What are the counterparts for multivariate cases?</li>
+<li>Principal component analysis and factor analysis. Some multivariate applications involve a large number of variables with high correlation. The high dimensional data make it difficult to explore the relationship between variables and interpret the models. Principal component analysis and factor analysis are two different methods that explain the variation of the data using another set of variables, the number of variables is less than the original set.</li>
+<li>Discriminant analysis and classification. This is one of the most important applications of multivariate analysis. The objective is to classify the objects into two or more groups based on their measurements. The data sets usually consist of a set of explanatory variables and a response variable indicating which group the individual belongs to. Classification methods introduced in STAT 372 include Fisher’s linear discriminant analysis, Logistic regression, K-nearest neighbors and decision tree.</li>
+<li>Clustering analysis. Unlike a classification problem, we do not know the group label for the individuals in a clustering problem. Therefore, the objectives of a clustering analysis are to determine the number of groups and assign the individuals to the groups. The hierarchical methods and K-means method will be introduced.</li>
+<li>Canonical correlation analysis. The objective of canonical correlation analysis is to identify and quantify the associations between two sets of variables.</li>
+<li>Multidimensional scaling. An iterative process for finding coordinates in a lower dimension to present the similarity of the data.</li>
+</ul>
+</div>
+<div id="review-univariate-analysis" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Review: Univariate Analysis<a href="intro.html#review-univariate-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This section reviews the concepts of random variables, distribution of a random variable, expected value and variance of a random variable, one-sample <span class="math inline">\(t\)</span> test, two-sample <span class="math inline">\(t\)</span> test, paired <span class="math inline">\(t\)</span> test, and one-way ANOVA F test.</p>
+<div id="random-variable-and-its-distribution" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Random Variable and Its Distribution<a href="intro.html#random-variable-and-its-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Definition</strong>: A <em>random variable</em> is a function (or a mapping) from the sample space <span class="math inline">\(S\)</span> into the real numbers.</p>
+<p>Random variables are usually denoted as uppercase letters, such as <span class="math inline">\(X, Y, Z\)</span>. A random variable can be either discrete or continuous. For a discrete random variable, we are able to list all the possible values and we use a probability mass function to describe its distribution. A continuous random variable maps the sample space into an interval; we can not list all of its possible values, and we use a probability density function to describe its distribution.</p>
+<div id="discrete-random-variable" class="section level4 hasAnchor" number="2.4.1.1">
+<h4><span class="header-section-number">2.4.1.1</span> Discrete Random Variable<a href="intro.html#discrete-random-variable" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>Example 1: Discrete Random Variable and Its Distribution</strong></p>
+<p>Flip an <strong>unbalanced</strong> coin twice, let <span class="math inline">\(Y=\)</span>number of heads observed. Suppose <span class="math inline">\(P(H)=\frac{1}{3}\)</span> and <span class="math inline">\(P(T)=\frac{2}{3}\)</span> (this is just an assumption since the coin is not balanced). Denote <span class="math inline">\(H\)</span>=event of observing a head; <span class="math inline">\(T\)</span>=event of observing a tail.</p>
+<p>All possible outcomes of flipping a coin twice are <span class="math inline">\(S=\{HH, HT, TH, TT\}\)</span>. If the outcome is <span class="math inline">\(\{HH\}\)</span>, we have <span class="math inline">\(Y=2\)</span>; if the outcome is <span class="math inline">\(\{HT\}\)</span>, <span class="math inline">\(Y=1\)</span>. Therefore <span class="math inline">\(Y\)</span> is a function (mapping) from the sample space <span class="math inline">\(S\)</span> into real numbers as follows</p>
+<p><span class="math display">\[
+\begin{array}{cc}
+\hline
+S &amp; Y(S) \\
+\hline
+HH &amp; 2  \\
+HT &amp; 1  \\
+TH &amp; 1  \\
+TT &amp; 0  \\
+\hline
+\end{array}
+\]</span></p>
+<p>The possible values for <span class="math inline">\(Y\)</span> is 0, 1, and 2. Consider <span class="math inline">\(\{Y=0\}\)</span> as an event, we can assign probability to that event, which is <span class="math inline">\(P(Y=0)=P(\{TT\})=P(\text{observing a tail in the first flip})\times P(\text{observing a tail in the second flip})=\frac{2}{3}\times \frac{2}{3}=\frac{4}{9}\)</span>. We use the notation <span class="math inline">\(p(y)\)</span> to represent <span class="math inline">\(P(Y=y)\)</span>, e.g., <span class="math inline">\(p(0)\)</span> is the probability that the random variable <span class="math inline">\(Y\)</span> takes value <span class="math inline">\(Y=0\)</span>, i.e., <span class="math inline">\(p(0)=P(Y=0)\)</span>. Similarly,
+<span class="math display">\[
+\begin{aligned}
+p(1)&amp;=P(Y=1)=P(\{HT\} \mbox{ or } \{TH\})=P(\{HT\})+P(\{TH\})=\frac{1}{3}\times\frac{2}{3}+\frac{2}{3}\times\frac{1}{3}=\frac{4}{9}\\
+p(2)&amp;=P(Y=2)=P(\{HH\})=\frac{1}{3}\times\frac{1}{3}=\frac{1}{9}.
+\end{aligned}
+\]</span></p>
+<div id="definition" class="section level5 unnumbered hasAnchor">
+<h5>Definition<a href="intro.html#definition" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><em>Probability distribution</em> of a discrete random variable lists all its possible values and their associated probabilities of a random variable.</p>
+<p>The probability distribution of <span class="math inline">\(Y=\)</span>number of heads observed is</p>
+<p><span class="math display">\[
+\begin{array}{c|c|c|c}
+\hline
+y &amp; 0 &amp; 1 &amp; 2 \\
+\hline
+p(y) &amp; \frac{4}{9} &amp; \frac{4}{9} &amp; \frac{1}{9} \\
+\hline
+\end{array}
+\]</span></p>
+<p>The first row of the table lists all the possible values of the random variable and the second row gives the corresponding probabilities of taking those values. For any discrete probability distribution, the following holds:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(0\le p(y)\le1\)</span> for all <span class="math inline">\(y\)</span>.</li>
+<li><span class="math display">\[
+\sum_{\text{all possible y}} p(y) = 1
+\]</span>
+, the sum of the probabilities of all possible values of <span class="math inline">\(y\)</span> must be 1.</li>
+</ol>
+<p>It is obvious that the probability distribution of <span class="math inline">\(Y=\mbox{number of heads observed if flip a coin twice}\)</span> satisfies these two properties.</p>
+</div>
+</div>
+<div id="expected-value-and-variance-of-a-random-variable-or-a-function-of-a-random-variable" class="section level4 unnumbered hasAnchor">
+<h4>Expected Value and Variance of a Random Variable or a Function of a Random Variable<a href="intro.html#expected-value-and-variance-of-a-random-variable-or-a-function-of-a-random-variable" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Suppose a class has 60 students, the following table summarizes the frequencies of the number of siblings the students have.</p>
+<p><span class="math display">\[
+\begin{array}{c|c}
+\hline
+\text{# of Siblings}&amp;\text{Frequencies}\\
+\hline
+0&amp;6\\
+1&amp;27\\
+2&amp;24\\
+3&amp;3\\
+\hline
+&amp;60\\
+\hline
+\end{array}
+\]</span></p>
+<p>Randomly pick a student from the class, let <span class="math inline">\(Y=\mbox{# of siblings the student has}\)</span>. Six students out of 60 have no sibling, by the equally-likely outcome model,
+<span class="math display">\[
+p(0)=P(Y=0)=\frac{6}{60}=0.1
+\]</span>
+Therefore, the probability distribution of <span class="math inline">\(Y\)</span> is</p>
+<p><span class="math display">\[
+\begin{array}{c|c|c|c|c}
+\hline
+y&amp;0&amp;1&amp;2&amp;3\\
+\hline
+p(y)&amp; \frac{6}{60}&amp; \frac{27}{60}&amp; \frac{24}{60}&amp; \frac{3}{60}\\
+\hline
+\end{array}
+\]</span></p>
+<p>What is average number of siblings those 60 students have? Since we observe 6 zeros, 27 ones, 24 twos, 3 threes, the average <span class="math inline">\(\mu\)</span> is given by
+<span class="math display">\[
+\mu=\frac{0\times 6+1\times 27+2\times 24+3\times 3}{60}=0\times \frac{6}{60}+1\times \frac{27}{60}+2\times \frac{24}{60}+3\times \frac{3}{60}=\sum_{y=0}^3  yp(y)=1.4
+\]</span></p>
+<div id="definition-1" class="section level5 unnumbered hasAnchor">
+<h5>Definition<a href="intro.html#definition-1" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Let <span class="math inline">\(Y\)</span> be a discrete random variable with the probability function <span class="math inline">\(p(y)\)</span>. The <em>expected value</em> of <span class="math inline">\(Y\)</span>, <span class="math inline">\(E(Y)\)</span>, is defined to be
+<span class="math display">\[
+E(Y)=\sum_{\mbox{all } y}yp(y)
+\]</span>
+The expected value of <span class="math inline">\(Y\)</span> is also called the <em>expectation</em> or the <em>mean</em> of <span class="math inline">\(Y\)</span>, denoted by the Geek letter <span class="math inline">\(\mu\)</span>. The expected value is a weighted average over all possible values of the random variable <span class="math inline">\(Y\)</span>, weighted by the probability function <span class="math inline">\(p(y)\)</span>.</p>
+<p>Sometimes we may not be interested in the expected value of <span class="math inline">\(Y\)</span> itself, but in some function of <span class="math inline">\(Y\)</span>, <span class="math inline">\(g(Y)\)</span>. For example, <span class="math inline">\(g(Y)=(Y-\mu)^2\)</span>, the squared deviation of the observation to the mean. The expected value of <span class="math inline">\(g(Y)=(Y-\mu)^2\)</span>, <span class="math inline">\(E[g(Y)]\)</span> measures the variability of the observations and it is called the variance of the random variable.</p>
+</div>
+<div id="definition-2" class="section level5 unnumbered hasAnchor">
+<h5>Definition<a href="intro.html#definition-2" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<ul>
+<li>Let <span class="math inline">\(Y\)</span> be a discrete random variable with the probability function <span class="math inline">\(p(y)\)</span> and <span class="math inline">\(g(Y)\)</span> be a real-valued function of <span class="math inline">\(Y\)</span>. Then the expected value of <span class="math inline">\(g(Y)\)</span> is
+<span class="math display">\[
+E[g(Y)]=\sum_{\mbox{all } y} g(y) p(y).
+\]</span></li>
+<li>If <span class="math inline">\(Y\)</span> is a discrete random variable with mean <span class="math inline">\(E(Y)=\mu\)</span>, the <em>variance</em> of <span class="math inline">\(Y\)</span> is defined as
+<span class="math display">\[
+\mbox{Var}{(Y)}=E[(Y-\mu)^2]
+\]</span>
+and denoted as <span class="math inline">\(\sigma^2\)</span>.</li>
+<li>The positive square root of <span class="math inline">\(Var{Y}\)</span> is the {<span class="math inline">\(\textit{standard deviation}\)</span>} of <span class="math inline">\(Y\)</span>, denoted as <span class="math inline">\(\sigma\)</span>. That is
+<span class="math display">\[
+\sigma=\sqrt{E[(Y-\mu)^2]}.
+\]</span></li>
+</ul>
+<p>The standard deviation <span class="math inline">\(\sigma\)</span> measures the average distance from the observations to the mean <span class="math inline">\(\mu\)</span>. It might be easier to calculate the standard deviation using the following formula:
+<span class="math display">\[
+\sigma=\sqrt{E(Y^2)-\mu^2}.
+\]</span></p>
+</div>
+</div>
+</div>
+<div id="properties-of-expectation-and-variance" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Properties of Expectation and Variance<a href="intro.html#properties-of-expectation-and-variance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Think of the expectation operator <span class="math inline">\(E\)</span> as being a linear operator in linear algebra.</p>
+<ol style="list-style-type: decimal">
+<li>For any constant <span class="math inline">\(c\)</span>,
+<span class="math display">\[
+E(c)=c; \quad \mbox{Var}(c)= 0
+\]</span></li>
+<li>Let <span class="math inline">\(Y\)</span> be a random variable. For any constants <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>
+<span class="math display">\[
+E(aY+b)=aE(Y) + b; \quad \mbox{Var}(aY+b)=a^2\mbox{Var}(Y) + 0
+\]</span></li>
+<li>For any constants <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and function of <span class="math inline">\(Y\)</span>, <span class="math inline">\(g(Y)\)</span>,
+<span class="math display">\[
+E[ag(Y)+b]=aE[g(Y)] + b; \\ \mbox{Var}[ag(Y)+b]=a^2\mbox{Var[g(Y)] + 0}
+\]</span></li>
+<li>For any constants <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and functions <span class="math inline">\(g_1(Y)\)</span> and <span class="math inline">\(g_2(Y)\)</span>,
+<span class="math display">\[
+E[ag_1(Y)+bg_2(Y)]=aE[g_1(Y)] + bE[g_2(Y)]; \\ \mbox{Var}[ag_1(Y)+bg_2(Y)]=a^2\mbox{Var}[g_1(Y)] + b^2\mbox{Var}[g_2(Y)] + 2ab\mbox{Cov}[g_1, g_2]
+\]</span></li>
+</ol>
+<p>Note that for a <strong>nonlinear</strong> function <span class="math inline">\(g\)</span>, we can not switch the order of the two operators. That is
+<span class="math display">\[
+E[g(Y)]\ne g(E(Y)).
+\]</span>
+For example,
+<span class="math display">\[
+E\left[\frac{1}{Y}\right]\ne \frac{1}{E(Y)}.
+\]</span>
+This is a common mistake.</p>
+<p><strong>Example: Expectation and Variance of a Function of Variable</strong></p>
+<p>The probability distribution of random variable <span class="math inline">\(Y\)</span> is given in the following table:
+<span class="math display">\[
+\begin{array}{c|ccc}
+\hline
+y&amp;\quad 0&amp;\quad 1 \quad &amp; \quad 3 \quad\\
+\hline
+p(y)&amp;\quad 0.4&amp;\quad 0.4 \quad&amp;\quad0.2\quad\\
+\hline
+\end{array}
+\]</span></p>
+<p>Find the expected value and variance of <span class="math inline">\(g(Y)=2Y+1\)</span>.</p>
+<p>The expected value is given by:
+<span class="math display">\[
+E[g(Y)] = E[ 2Y + 1 ] = 2E(Y) + 1
+\\
+E(Y) = \Sigma y.p(y) = (0*0.4) + (1*0.4) + (3*0.2) = 0.4 + 0.6 = 1\\
+\therefore E[g(Y)] = 2E(Y) + 1 = 2(1) + 1 = 3 \\
+E[g(Y)] = 3
+\]</span></p>
+<p>The variance is given by:</p>
+<p><span class="math display">\[
+\mbox{Var[g(Y)]} = Var(2Y + 1) =  4\mbox{Var}(Y) + 0 \\
+\mbox{Var}(Y) = E[Y^2] - E[Y]^2 \\
+= \Sigma y^2p(y) - (1^2) = (0^2*0.4) + (1^2*0.4) + (3^2 * 0.2) - 1 \\
+= 0.4 + (1.8) - 1 = 1.2 = \mbox{Var}(Y) \\
+\mbox{Var[g(Y)]} = 4 \mbox{Var}(Y) = 4*1.2 = 4.8 \\
+\mbox{Var}[g(Y)] = 4.8
+\]</span></p>
+</div>
+<div id="continuous-random-variables" class="section level3 hasAnchor" number="2.4.3">
+<h3><span class="header-section-number">2.4.3</span> Continuous Random Variables<a href="intro.html#continuous-random-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We use the so-called <em>density curve</em> and the area under the curve to describe continuous random variables. Let <span class="math inline">\(f(y)\)</span> be the probability density function (pdf) of random variable <span class="math inline">\(Y\)</span>, <span class="math inline">\(f(y)\)</span> has the following properties:</p>
+<ul>
+<li>The total area under the curve is 1. That is <span class="math inline">\(\int f(y)dy=1\)</span>.</li>
+<li>The entire curve is above the horizontal axis. That is <span class="math inline">\(f(y)\ge 0\)</span>.</li>
+<li>Area under the curve=probability. For example, <span class="math inline">\(P(Y\le t)=\int_{-\infty}^tf(y)dy\)</span>; <span class="math inline">\(P(a&lt;Y\le b)=P(a\le Y\le b)=P(a&lt;Y&lt; b)=P(a&lt;Y&lt;b)=\int_{a}^b f(y)dy\)</span>.</li>
+<li><span class="math inline">\(P(Y=a)=0\)</span>.</li>
+</ul>
+<p>Recall that the density function of a normal distribution <span class="math inline">\(Y\sim N(\mu, \sigma)\)</span> is given by
+<span class="math display">\[
+f(y)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(y-\mu)^2}{2\sigma^2}}, -\infty&lt;y&lt;\infty.
+\]</span></p>
+<div id="expected-values-and-variance-for-continuous-random-variables" class="section level4 hasAnchor" number="2.4.3.1">
+<h4><span class="header-section-number">2.4.3.1</span> Expected Values and Variance for Continuous Random Variables<a href="intro.html#expected-values-and-variance-for-continuous-random-variables" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Let <span class="math inline">\(Y\)</span> be a continuous random variable with probability density function <span class="math inline">\(f(y)\)</span>,</p>
+<ul>
+<li>The expected value of <span class="math inline">\(Y\)</span> is defined as
+<span class="math display">\[ \mbox{E}(Y)=\int_{-\infty}^{\infty} yf(y)dy \]</span>
+provided that the integral exists.</li>
+<li>Let <span class="math inline">\(g(Y)\)</span> be a function of <span class="math inline">\(Y\)</span>, then the expected value of <span class="math inline">\(g(Y)\)</span> is given by
+<span class="math display">\[
+\mbox{E}[g(Y)]=\int_{-\infty}^{\infty} g(y)f(y)dy
+\]</span>
+provided that the integral exists.</li>
+<li>The variance of <span class="math inline">\(Y\)</span> is defined as
+<span class="math display">\[
+\mbox{Var}(Y)=\mbox{E}(Y^2)-[\mbox{E}(Y)]^2, \text{ with } \mbox{E}(Y^2)=\int_{-\infty}^{\infty} y^2f(y)dy
+\]</span></li>
+</ul>
+<p><strong>Example</strong>: Binomial Distribution</p>
+<p>A quiz consists of 10 multiple choices questions with four choices A, B, C and D. I did not study and randomly picked one answer for each question.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Find the probability that I got at least one correct answer.</li>
+</ol>
+<p>We can also use R to get the answer.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">dbinom</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="fl">0.25</span>) <span class="co">#1-P(Y=0)</span></span></code></pre></div>
+<pre><code>## [1] 0.9436865</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="intro.html#cb3-1" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="fl">0.25</span>,<span class="at">lower.tail =</span> F) <span class="co">#P(Y&gt;0)</span></span></code></pre></div>
+<pre><code>## [1] 0.9436865</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Find the probability that I got at least 80% correct.</li>
+</ol>
+<p>We can also use R to get the answer.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>),<span class="dv">10</span>,<span class="fl">0.25</span>) <span class="co">#P(Y=8, 9, 10)</span></span></code></pre></div>
+<pre><code>## [1] 3.862381e-04 2.861023e-05 9.536743e-07</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="intro.html#cb7-1" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">dbinom</span>(<span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>),<span class="dv">10</span>,<span class="fl">0.25</span>)) <span class="co">#P(Y=8)+P(Y=9)+P(Y=10)</span></span></code></pre></div>
+<pre><code>## [1] 0.000415802</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="intro.html#cb9-1" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">7</span>,<span class="dv">10</span>,<span class="fl">0.25</span>,<span class="at">lower.tail =</span> F) <span class="co">#P(Y&gt;7)</span></span></code></pre></div>
+<pre><code>## [1] 0.000415802</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Find the probability that I got two to three inclusive correct answers.</li>
+</ol>
+<p>We can also use R to get the answer.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="intro.html#cb11-1" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>),<span class="dv">10</span>,<span class="fl">0.25</span>) <span class="co">#P(Y=2,3)</span></span></code></pre></div>
+<pre><code>## [1] 0.2815676 0.2502823</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="intro.html#cb13-1" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">dbinom</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>),<span class="dv">10</span>,<span class="fl">0.25</span>)) <span class="co">#P(Y=2)+P(Y=3)</span></span></code></pre></div>
+<pre><code>## [1] 0.5318499</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li><p>On average, how many correct answers do I expect to obtain?</p></li>
+<li><p>Find the standard deviation of <span class="math inline">\(Y\)</span> = # of correct answers.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="revisit-learning-learning-outcomes" class="section level2 unnumbered hasAnchor">
+<h2>Revisit Learning Learning Outcomes<a href="intro.html#revisit-learning-learning-outcomes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After finishing this chapter, students should be able to</p>
+<ul>
+<li><p>Classify variables as qualitative/categorical nominal, qualitative/categorical ordinal, quantitative continuous, or quantitative discrete.</p></li>
+<li><p>Calculate the mean (expected value) and variance of a discrete random variable based on its probability distribution.</p></li>
+<li><p>Select the proper discrete probability distribution among Bernoulli, binomial, multinomial and Poisson distributions to model a random variable associated with the given application.</p></li>
+<li><p>Explain the main idea of the maximum likelihood estimation method.</p></li>
+<li><p>Derive the maximum likelihood estimate for the probability of success (proportion) graphically and theoretically based on the Bernoulli distribution.</p></li>
+<li><p>Derive the maximum likelihood estimate for the rate of an event graphically and theoretically based on the Poisson distribution.</p></li>
+<li><p>Explain the trade-off between type-I and type-II error.</p></li>
+<li><p>Relate the power and sample size calculation of a one-sample z test.</p></li>
+<li><p>Use R or an online app to obtain the sample size of a t test.</p></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="matrix-algebra.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

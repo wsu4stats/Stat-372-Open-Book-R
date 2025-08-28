@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Displaying Multivariate Data and Measures of Distance | STAT 372 Open Textbook (R)</title>
+  <meta name="description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Displaying Multivariate Data and Measures of Distance | STAT 372 Open Textbook (R)" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Displaying Multivariate Data and Measures of Distance | STAT 372 Open Textbook (R)" />
+  
+  <meta name="twitter:description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  
+
+<meta name="author" content="Dr. Wanhua Su" />
+
+
+<meta name="date" content="2025-07-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="matrix-algebra.html"/>
+<link rel="next" href="hypothesis-tests-on-mean-vectors.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#learning-outcomes"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#some-examples"><i class="fa fa-check"></i><b>2.2</b> Some Examples</a>
+<ul>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-1-storm-survival-of-sparrows"><i class="fa fa-check"></i>Example 1: Storm Survival of Sparrows</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-2-spam-or-e-mail"><i class="fa fa-check"></i>Example 2: Spam or E-mail?</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-3-classification-of-iris"><i class="fa fa-check"></i>Example 3: Classification of Iris</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#multivariate-methods-covered-in-stat-372"><i class="fa fa-check"></i><b>2.3</b> Multivariate Methods Covered in STAT 372</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#review-univariate-analysis"><i class="fa fa-check"></i><b>2.4</b> Review: Univariate Analysis</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#random-variable-and-its-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Random Variable and Its Distribution</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#properties-of-expectation-and-variance"><i class="fa fa-check"></i><b>2.4.2</b> Properties of Expectation and Variance</a></li>
+<li class="chapter" data-level="2.4.3" data-path="intro.html"><a href="intro.html#continuous-random-variables"><i class="fa fa-check"></i><b>2.4.3</b> Continuous Random Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#revisit-learning-learning-outcomes"><i class="fa fa-check"></i>Revisit Learning Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="matrix-algebra.html"><a href="matrix-algebra.html"><i class="fa fa-check"></i><b>3</b> Matrix Algebra</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrix-algebra.html"><a href="matrix-algebra.html#learning-outcomes-1"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="3.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#vectors"><i class="fa fa-check"></i><b>3.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#some-basic-operations-on-vectors"><i class="fa fa-check"></i><b>3.1.1</b> Some Basic Operations on Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="matrix-algebra.html"><a href="matrix-algebra.html#matrices"><i class="fa fa-check"></i><b>3.2</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#basic-operations-on-matrix"><i class="fa fa-check"></i><b>3.2.1</b> Basic Operations on Matrix</a></li>
+<li class="chapter" data-level="3.2.2" data-path="matrix-algebra.html"><a href="matrix-algebra.html#eigenvalues-and-eigenvectors"><i class="fa fa-check"></i><b>3.2.2</b> Eigenvalues and Eigenvectors</a></li>
+<li class="chapter" data-level="3.2.3" data-path="matrix-algebra.html"><a href="matrix-algebra.html#spectral-eigen-decomposition"><i class="fa fa-check"></i><b>3.2.3</b> Spectral (Eigen) Decomposition</a></li>
+<li class="chapter" data-level="3.2.4" data-path="matrix-algebra.html"><a href="matrix-algebra.html#singular-value-decomposition"><i class="fa fa-check"></i><b>3.2.4</b> Singular-Value Decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="matrix-algebra.html"><a href="matrix-algebra.html#mean-vectors-and-covariance-matrices"><i class="fa fa-check"></i><b>3.3</b> Mean Vectors and Covariance Matrices</a></li>
+<li class="chapter" data-level="3.4" data-path="matrix-algebra.html"><a href="matrix-algebra.html#sample-mean-vector-and-covariance-matrix"><i class="fa fa-check"></i><b>3.4</b> Sample Mean Vector and Covariance Matrix</a></li>
+<li class="chapter" data-level="3.5" data-path="matrix-algebra.html"><a href="matrix-algebra.html#review-exercises"><i class="fa fa-check"></i><b>3.5</b> Review Exercises</a></li>
+<li class="chapter" data-level="" data-path="matrix-algebra.html"><a href="matrix-algebra.html#revisit-the-learning-outcomes"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html"><i class="fa fa-check"></i><b>4</b> Displaying Multivariate Data and Measures of Distance</a>
+<ul>
+<li class="chapter" data-level="" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#learning-outcomes-2"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="4.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#display-multivariate-data"><i class="fa fa-check"></i><b>4.1</b> Display Multivariate Data</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#scatterplot"><i class="fa fa-check"></i><b>4.1.1</b> Scatterplot</a></li>
+<li class="chapter" data-level="4.1.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#graphs-of-growth-curves"><i class="fa fa-check"></i><b>4.1.2</b> Graphs of Growth Curves</a></li>
+<li class="chapter" data-level="4.1.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#star-plots"><i class="fa fa-check"></i><b>4.1.3</b> Star Plots</a></li>
+<li class="chapter" data-level="4.1.4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#chernoff-faces-plot"><i class="fa fa-check"></i><b>4.1.4</b> Chernoff Faces Plot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-in-multivariate-analysis"><i class="fa fa-check"></i><b>4.2</b> Distance in Multivariate Analysis</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distances-for-quantitative-variables"><i class="fa fa-check"></i><b>4.2.1</b> Distances for Quantitative Variables</a></li>
+<li class="chapter" data-level="4.2.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-for-categorical-variables"><i class="fa fa-check"></i><b>4.2.2</b> Distance for Categorical Variables</a></li>
+<li class="chapter" data-level="4.2.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-for-mixed-variable-types"><i class="fa fa-check"></i><b>4.2.3</b> Distance for Mixed Variable Types</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3</b> Multivariate Normal Distribution</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#properties-of-multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.1</b> Properties of Multivariate Normal Distribution</a></li>
+<li class="chapter" data-level="4.3.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#bivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.2</b> Bivariate Normal Distribution</a></li>
+<li class="chapter" data-level="4.3.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#contour-of-multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.3</b> Contour of Multivariate Normal Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#the-sampling-distribution-of-mathbfbar-x-and-boldsymbols"><i class="fa fa-check"></i><b>4.4</b> The Sampling Distribution of <span class="math inline">\(\mathbf{\bar X}\)</span> and <span class="math inline">\(\boldsymbol{S}\)</span></a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distributions-related-to-normal-distribution"><i class="fa fa-check"></i><b>4.4.1</b> Distributions Related to Normal Distribution</a></li>
+<li class="chapter" data-level="4.4.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#applications-to-distributions-related-to-sample-means"><i class="fa fa-check"></i><b>4.4.2</b> Applications to Distributions Related to Sample Means</a></li>
+<li class="chapter" data-level="4.4.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#generalize-to-multivariate-cases"><i class="fa fa-check"></i><b>4.4.3</b> Generalize to Multivariate Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#review-exercises-1"><i class="fa fa-check"></i><b>4.5</b> Review Exercises</a></li>
+<li class="chapter" data-level="" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#revisit-the-learning-outcomes-1"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html"><i class="fa fa-check"></i><b>5</b> Hypothesis Tests on Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#learning-outcomes-3"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="5.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-one-mean-vector"><i class="fa fa-check"></i><b>5.1</b> Hypothesis Test for one Mean Vector</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case"><i class="fa fa-check"></i><b>5.1.1</b> Univariate Case</a></li>
+<li class="chapter" data-level="5.1.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case"><i class="fa fa-check"></i><b>5.1.2</b> Multivariate Case</a></li>
+<li class="chapter" data-level="5.1.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#evaluating-multivariate-normality"><i class="fa fa-check"></i><b>5.1.3</b> Evaluating Multivariate Normality</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-two-mean-vectors"><i class="fa fa-check"></i><b>5.2</b> Hypothesis Test for Two Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-based-on-two-independent-samples"><i class="fa fa-check"></i><b>5.2.1</b> Univariate Case Based on Two Independent Samples</a></li>
+<li class="chapter" data-level="5.2.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-based-on-two-independent-samples"><i class="fa fa-check"></i><b>5.2.2</b> Multivariate Case Based on Two Independent Samples</a></li>
+<li class="chapter" data-level="5.2.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#two-sample-non-pooled-hotellings-t2-test"><i class="fa fa-check"></i><b>5.2.3</b> Two-sample Non-pooled Hotelling’s <span class="math inline">\(T^2\)</span> Test</a></li>
+<li class="chapter" data-level="5.2.4" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#two-sample-hotellings-t2-confidence-interval"><i class="fa fa-check"></i><b>5.2.4</b> Two-sample Hotelling’s <span class="math inline">\(T^2\)</span> Confidence Interval</a></li>
+<li class="chapter" data-level="5.2.5" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-based-on-a-paired-sample"><i class="fa fa-check"></i><b>5.2.5</b> Univariate Case Based on a Paired Sample</a></li>
+<li class="chapter" data-level="5.2.6" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-based-on-a-paired-sample"><i class="fa fa-check"></i><b>5.2.6</b> Multivariate Case Based on a Paired Sample</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-several-mean-vectors"><i class="fa fa-check"></i><b>5.3</b> Hypothesis Test for Several Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-one-way-anova-f-test"><i class="fa fa-check"></i><b>5.3.1</b> Univariate Case: One-Way ANOVA F Test</a></li>
+<li class="chapter" data-level="5.3.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-one-way-manova"><i class="fa fa-check"></i><b>5.3.2</b> Multivariate Case: One-Way MANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#revisit-the-learning-outcomes-2"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html"><i class="fa fa-check"></i><b>6</b> Principal Component Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#learning-outcomes-4"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="6.1" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#finding-the-principal-components"><i class="fa fa-check"></i><b>6.1</b> Finding the Principal Components</a></li>
+<li class="chapter" data-level="6.2" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#scaling-in-principal-component-analysis"><i class="fa fa-check"></i><b>6.2</b> Scaling in Principal Component Analysis</a></li>
+<li class="chapter" data-level="6.3" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#limitations-of-principal-component-analysis"><i class="fa fa-check"></i><b>6.3</b> Limitations of Principal Component Analysis</a></li>
+<li class="chapter" data-level="6.4" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#further-reading"><i class="fa fa-check"></i><b>6.4</b> Further Reading</a></li>
+<li class="chapter" data-level="" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#revisit-the-learning-outcomes-3"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>7</b> Factor Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="factor-analysis.html"><a href="factor-analysis.html#learning-outcomes-5"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="7.1" data-path="factor-analysis.html"><a href="factor-analysis.html#model-of-factor-analysis"><i class="fa fa-check"></i><b>7.1</b> Model of Factor Analysis</a></li>
+<li class="chapter" data-level="7.2" data-path="factor-analysis.html"><a href="factor-analysis.html#estimating-factor-loadings-l_ij-and-specific-variance-psi_i"><i class="fa fa-check"></i><b>7.2</b> Estimating Factor Loadings <span class="math inline">\(l_{ij}\)</span> and Specific Variance <span class="math inline">\(\psi_i\)</span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="factor-analysis.html"><a href="factor-analysis.html#the-principle-component-method"><i class="fa fa-check"></i><b>7.2.1</b> The Principle Component Method</a></li>
+<li class="chapter" data-level="7.2.2" data-path="factor-analysis.html"><a href="factor-analysis.html#the-maximum-likelihood-method"><i class="fa fa-check"></i><b>7.2.2</b> The Maximum Likelihood Method</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="factor-analysis.html"><a href="factor-analysis.html#factor-rotation"><i class="fa fa-check"></i><b>7.3</b> Factor Rotation</a></li>
+<li class="chapter" data-level="7.4" data-path="factor-analysis.html"><a href="factor-analysis.html#factor-scores"><i class="fa fa-check"></i><b>7.4</b> Factor Scores</a></li>
+<li class="chapter" data-level="" data-path="factor-analysis.html"><a href="factor-analysis.html#revisit-the-learning-outcomes-4"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html"><i class="fa fa-check"></i><b>8</b> Discriminant Analysis and Classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#learning-outcomes-6"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="8.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#performance-measure"><i class="fa fa-check"></i><b>8.2</b> Performance Measure</a></li>
+<li class="chapter" data-level="8.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#overfitting-and-cross-validation"><i class="fa fa-check"></i><b>8.3</b> Overfitting and Cross Validation</a></li>
+<li class="chapter" data-level="8.4" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classification-models"><i class="fa fa-check"></i><b>8.4</b> Classification Models</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>8.4.1</b> <span class="math inline">\(K\)</span> Nearest Neighbors</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#logistic-regression-for-binary-response"><i class="fa fa-check"></i><b>8.5</b> Logistic Regression for Binary Response</a>
+<ul>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#interpretation-of-beta_i"><i class="fa fa-check"></i>Interpretation of <span class="math inline">\(\beta_i\)</span></a></li>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#estimation-of-beta_i"><i class="fa fa-check"></i>Estimation of <span class="math inline">\(\beta_i\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#logistic-regression-for-multi-class-nominal-data"><i class="fa fa-check"></i><b>8.6</b> Logistic Regression for Multi-class Nominal Data</a></li>
+<li class="chapter" data-level="8.7" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#cumulative-logit-model-for-multi-class-ordinal-data"><i class="fa fa-check"></i><b>8.7</b> Cumulative Logit Model for Multi-class Ordinal Data</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#cumulative-logit-models-with-proportional-odds"><i class="fa fa-check"></i><b>8.7.1</b> Cumulative Logit Models with Proportional Odds</a></li>
+<li class="chapter" data-level="8.7.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-probability-of-each-category"><i class="fa fa-check"></i><b>8.7.2</b> Model Probability of Each Category</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-selection-for-logistic-regression"><i class="fa fa-check"></i><b>8.8</b> Model Selection for Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#aic-and-bic"><i class="fa fa-check"></i><b>8.8.1</b> AIC and BIC</a></li>
+<li class="chapter" data-level="8.8.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#forward-selection"><i class="fa fa-check"></i><b>8.8.2</b> Forward Selection</a></li>
+<li class="chapter" data-level="8.8.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#backward-elimination"><i class="fa fa-check"></i><b>8.8.3</b> Backward Elimination</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-checking"><i class="fa fa-check"></i><b>8.9</b> Model Checking</a>
+<ul>
+<li class="chapter" data-level="8.9.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#residual-analysis"><i class="fa fa-check"></i><b>8.9.1</b> Residual Analysis</a></li>
+<li class="chapter" data-level="8.9.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#preditive-power-accuracy-and-roc-curve"><i class="fa fa-check"></i><b>8.9.2</b> Preditive Power: Accuracy and ROC Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="8.10" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classification-tree-recursive-partitioning"><i class="fa fa-check"></i><b>8.10</b> Classification Tree (Recursive Partitioning)</a></li>
+<li class="chapter" data-level="8.11" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#regression-tree"><i class="fa fa-check"></i><b>8.11</b> Regression Tree</a></li>
+<li class="chapter" data-level="8.12" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#random-forest"><i class="fa fa-check"></i><b>8.12</b> Random Forest</a></li>
+<li class="chapter" data-level="8.13" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#support-vector-machines"><i class="fa fa-check"></i><b>8.13</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="8.14" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#neural-networks"><i class="fa fa-check"></i><b>8.14</b> Neural Networks</a></li>
+<li class="chapter" data-level="8.15" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classical-methods"><i class="fa fa-check"></i><b>8.15</b> Classical Methods</a>
+<ul>
+<li class="chapter" data-level="8.15.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#mahalanobis-distance-method"><i class="fa fa-check"></i><b>8.15.1</b> Mahalanobis Distance Method</a></li>
+<li class="chapter" data-level="8.15.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#bayes-posterior"><i class="fa fa-check"></i><b>8.15.2</b> Bayes Posterior</a></li>
+<li class="chapter" data-level="8.15.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#fishers-discriminant-analysis"><i class="fa fa-check"></i><b>8.15.3</b> Fisher’s Discriminant Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="8.16" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#summary"><i class="fa fa-check"></i><b>8.16</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#revisit-learning-outcomes"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="clustering-analysis.html"><a href="clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#learning-outcomes-7"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="9.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#introduction-2"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#clustering-methods"><i class="fa fa-check"></i><b>9.2</b> Clustering Methods</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#hierarchical-method"><i class="fa fa-check"></i><b>9.2.1</b> Hierarchical Method</a></li>
+<li class="chapter" data-level="9.2.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#k-means"><i class="fa fa-check"></i><b>9.2.2</b> K-Means</a></li>
+<li class="chapter" data-level="9.2.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#model-based-clustering"><i class="fa fa-check"></i><b>9.2.3</b> Model-Based Clustering</a></li>
+<li class="chapter" data-level="9.2.4" data-path="clustering-analysis.html"><a href="clustering-analysis.html#pros-and-cons-of-clustering-methods"><i class="fa fa-check"></i><b>9.2.4</b> Pros and Cons of Clustering Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#determine-k-number-of-clusters"><i class="fa fa-check"></i><b>9.3</b> Determine <span class="math inline">\(K\)</span>: Number of Clusters</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#the-elbow-plot-method"><i class="fa fa-check"></i><b>9.3.1</b> The Elbow Plot Method</a></li>
+<li class="chapter" data-level="9.3.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#the-silhouette-score"><i class="fa fa-check"></i><b>9.3.2</b> The Silhouette Score</a></li>
+<li class="chapter" data-level="9.3.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#gap-statistics"><i class="fa fa-check"></i><b>9.3.3</b> Gap Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#side-note-on-the-em-algorithm"><i class="fa fa-check"></i>Side-Note on the EM Algorithm</a></li>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#revisit-learning-outcomes-1"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html"><i class="fa fa-check"></i><b>10</b> Canonical Correlation Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#learning-outcomes-8"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="10.1" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#objective"><i class="fa fa-check"></i><b>10.1</b> Objective</a></li>
+<li class="chapter" data-level="10.2" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#obtain-the-canonical-variates-pairs"><i class="fa fa-check"></i><b>10.2</b> Obtain the Canonical Variates Pairs</a></li>
+<li class="chapter" data-level="10.3" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#interpretation"><i class="fa fa-check"></i><b>10.3</b> Interpretation</a></li>
+<li class="chapter" data-level="10.4" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#testing-mathbfsigma_120"><i class="fa fa-check"></i><b>10.4</b> Testing <span class="math inline">\(\mathbf{\Sigma}_{12}=0\)</span></a></li>
+<li class="chapter" data-level="" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#revisit-learning-outcomes-2"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html"><i class="fa fa-check"></i><b>11</b> Multidimensional Scaling</a>
+<ul>
+<li class="chapter" data-level="" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#learning-outcomes-9"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="11.1" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#objective-1"><i class="fa fa-check"></i><b>11.1</b> Objective</a></li>
+<li class="chapter" data-level="11.2" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#methods"><i class="fa fa-check"></i><b>11.2</b> Methods</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#classical-scaling"><i class="fa fa-check"></i><b>11.2.1</b> Classical Scaling</a></li>
+<li class="chapter" data-level="11.2.2" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#metric-scaling"><i class="fa fa-check"></i><b>11.2.2</b> Metric Scaling</a></li>
+<li class="chapter" data-level="11.2.3" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#non-metric-scaling"><i class="fa fa-check"></i><b>11.2.3</b> Non-metric Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#example"><i class="fa fa-check"></i><b>11.3</b> Example</a></li>
+<li class="chapter" data-level="" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#revisit-learning-outcomes-3"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAT 372 Open Textbook (R)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="displaying-multivariate-data-and-measures-of-distance" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Displaying Multivariate Data and Measures of Distance<a href="displaying-multivariate-data-and-measures-of-distance.html#displaying-multivariate-data-and-measures-of-distance" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This note covers four main topics:</p>
+<ul>
+<li><p>How to display multivariate data? We will introduce scatterplot, scatterplot matrix, growth curve, stars plot, and Chernoff faces;</p></li>
+<li><p>How to measure the distance between multivariate observations? Manhattan distance, Euclidean distance, Mahalanobis distance, Hamming distance will be covered;</p></li>
+<li><p>Multivariate normal distribution. We focus on bivariate normal in this course;</p></li>
+<li><p>Sampling distribution of the sample mean vector <span class="math inline">\(\mathbf{\bar X}\)</span> and the sample covariance matrix <span class="math inline">\(\mathbf{S}\)</span>.</p></li>
+</ul>
+<div id="learning-outcomes-2" class="section level2 unnumbered hasAnchor">
+<h2>Learning Outcomes<a href="displaying-multivariate-data-and-measures-of-distance.html#learning-outcomes-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After finishing this chapter, students should be able to</p>
+<ul>
+<li><p>Plot the index scatter plots matrix, draw a stars plot and Chernoff faces plot of a given multivariate data set using R, and interpret the plots.</p></li>
+<li><p>Verify whether a distance function is valid.</p></li>
+<li><p>Choose the proper distance metric to calculate the distance between observations based on the data types for multivariate data.</p></li>
+<li><p>Write down the density function of a multivariate normal distribution.</p></li>
+<li><p>Describe the properties of a multivariate normal distribution.</p></li>
+<li><p>Find a <span class="math inline">\((1-\alpha)\times 100\%\)</span> contour for a given bivariate normal distribution.</p></li>
+<li><p>Explain the distributions related to the sample mean vector and sample covariance matrix.</p></li>
+</ul>
+</div>
+<div id="display-multivariate-data" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Display Multivariate Data<a href="displaying-multivariate-data-and-measures-of-distance.html#display-multivariate-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In multivariate analysis, at least two measurements are taken from the same individuals. Before conducting any data analysis, we should examine the preliminary relationship among the data using graphs. We will cover several popular ways to display multivariate data.</p>
+<div id="scatterplot" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Scatterplot<a href="displaying-multivariate-data-and-measures-of-distance.html#scatterplot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We have seen the 2-dimensional scatter plot in Stat 151 or 141 when two measurements are taken on the same individuals, for example, the age and price of a used car. In a scatter plot, we put one variable in the <span class="math inline">\(x\)</span>-axis and another one in the <span class="math inline">\(y\)</span>-axis. From a scatter plot, we can tell the direction, form and strength of the relationship between the two variables. If three measurements are taken from each individual, a 3-dimensional scatter plot can be used with one variable on the <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span> axis respectively.</p>
+<p>Take the Iris flowers data for example, a 2-dimensional scatter plot based on <span class="math inline">\(\verb`sepal width`\)</span> and <span class="math inline">\(\verb`petal width`\)</span> and a 3-dimensional scatter plot bases on <span class="math inline">\(\verb`sepal width`\)</span>, <span class="math inline">\(\verb`petal width`\)</span> and <span class="math inline">\(\verb`sepal length`\)</span> are given below. Different symbols are used for three different species: red circle for Setosa, green triangle for Versicolor, and blue square for Virginica. A plot with different symbols for distinct groups is called an <em>index plot</em>.</p>
+<p><img src="Plots/2dscatter-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="Plots/3dscatter-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>If there are more than 3 measurements, a matrix of scatter plots is used to explore the relationship between any two variables. Figure 1 shows the scatter plots matrix for the Iris flowers data. The scatter plots suggest that the variable <span class="math inline">\(\verb`petal width`\)</span> might be a useful variable which separates the three species.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:scattermat"></span>
+<img src="Plots/scattermat-1.png" alt="Scatter Plot Matrix of Iris Data" width="78%" />
+<p class="caption">
+Figure 4.1: Scatter Plot Matrix of Iris Data
+</p>
+</div>
+</div>
+<div id="graphs-of-growth-curves" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Graphs of Growth Curves<a href="displaying-multivariate-data-and-measures-of-distance.html#graphs-of-growth-curves" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When the height of a child is measured at each birthday, the points can be plotted and connected by lines to produce a graph. This is an example of <em>growth curve</em> which is widely used for repeated measurements of the same characteristic on the same individuals at different visits. Figure <a href="displaying-multivariate-data-and-measures-of-distance.html#fig:growth">4.2</a> shows the reading ability of six kids at two different ages. Each individual measured twice; therefore, the measurements are repeated measurements. If this information is ignored, a scatter plot of <span class="math inline">\(\verb`reading ability`\)</span> versus <span class="math inline">\(\verb`age`\)</span> (left panel) suggests a negative association; that means reading ability drops when the kids get older, this is intuitively not true. The growth curve connects the two measurements on the same kids and it shows a positive association, that is reading ability grows when the kids get older.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:growth"></span>
+<img src="Plots/growth_curve.png" alt="Growth curves of kid's reading ability at two different ages" width="472px" height="335px" />
+<p class="caption">
+Figure 4.2: Growth curves of kid’s reading ability at two different ages
+</p>
+</div>
+</div>
+<div id="star-plots" class="section level3 hasAnchor" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> Star Plots<a href="displaying-multivariate-data-and-measures-of-distance.html#star-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A <em>star plot</em> (or called radar chart) is a plot that consists of a sequence of equi-angular rays, with each ray representing one of the variables. The data length of a ray is proportional to the magnitude of the variable for the data point relative to the maximum magnitude of the variable across all data points. A line is drawn connecting the data values for each ray. This gives the plot a star-like appearance and the origin of one of the popular names for this plot. The star plot can be used to answer the following questions:</p>
+<ul>
+<li>Which observations are most similar? Are there clusters of observations?<br />
+</li>
+<li>Are there outliers?</li>
+<li>What is the trend of change along time for repeated measurements?</li>
+</ul>
+<p>Figure @(fig:star1) is the stars plot of 36 randomly picked iris flowers, 12 from each species. The numbers under the stars plot are the ID number of the flower, we know that observations 1 to 50 belong to Setosa, 51 to 100 belong to Versicolor and 101 to 150 belong to Virginica. Could you tell how many clusters of flowers?</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:star1"></span>
+<img src="Plots/star.png" alt="Stars plot of 36 observations of the Iris flowers data" width="512px" height="512px" />
+<p class="caption">
+Figure 4.3: Stars plot of 36 observations of the Iris flowers data
+</p>
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(aplpack)</span>
+<span id="cb1-2"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb1-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4061</span>)</span>
+<span id="cb1-3"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb1-3" tabindex="-1"></a>ind<span class="ot">=</span><span class="fu">sort</span>(<span class="fu">c</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">12</span>),<span class="fu">sample</span>(<span class="dv">51</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">12</span>),<span class="fu">sample</span>(<span class="dv">101</span><span class="sc">:</span><span class="dv">150</span>,<span class="dv">12</span>)))</span>
+<span id="cb1-4"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb1-4" tabindex="-1"></a><span class="fu">stars</span>(iris[ind,<span class="sc">-</span><span class="dv">5</span>]) <span class="co">#star plot of the Iris data</span></span></code></pre></div>
+</div>
+<div id="chernoff-faces-plot" class="section level3 hasAnchor" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span> Chernoff Faces Plot<a href="displaying-multivariate-data-and-measures-of-distance.html#chernoff-faces-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Chernoff faces, proposed by Herman Chernoff, is a novel method of representing multivariate data by a cartoon of a face whose features, such as length of nose and curvature of mouth, correspond to the variables. Thus each multivariate observation is visualized as a computer-drawn face. The implementation of Chernoff faces plot in R is able to take up to 15 variables, those variables correspond to the features of the face such as: height of face, width of face, structure of face, height of mouth, width of mouth, smiling, height of eyes, width of eyes, height of hair, width of hair, style of hair, height of nose, width of nose, width of ear, height of ear.</p>
+Similar to stars plot, Chernoff faces are useful for identifying different groups (clusters) and showing changes over time for repeated measurements. Figure <a href="displaying-multivariate-data-and-measures-of-distance.html#fig:face1">4.4</a> shows the faces of 36 randomly picked iris flowers, 12 from each species. The 15 features of the faces correspond to sepal length, sepal width, petal length, petal width in cycles.
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:face1"></span>
+<img src="Plots/face.png" alt="Chernoff face plots of 36 observations of the Iris flowers data" width="512px" height="512px" />
+<p class="caption">
+Figure 4.4: Chernoff face plots of 36 observations of the Iris flowers data
+</p>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb2-1" tabindex="-1"></a><span class="fu">faces</span>(iris[ind,<span class="sc">-</span><span class="dv">5</span>],<span class="at">face.type=</span><span class="dv">0</span>) <span class="co">#face plot of the Iris data</span></span></code></pre></div>
+</div>
+</div>
+<div id="distance-in-multivariate-analysis" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Distance in Multivariate Analysis<a href="displaying-multivariate-data-and-measures-of-distance.html#distance-in-multivariate-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In multivariate analysis, most methods are based on the simple concept of distance. Take clustering analysis for example, we need to group observations that are similar or close to one another. Therefore, we need to calculate the distance between the observations.</p>
+<div id="distances-for-quantitative-variables" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Distances for Quantitative Variables<a href="displaying-multivariate-data-and-measures-of-distance.html#distances-for-quantitative-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In univariate cases, the distance between two observations <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> is defined as <span class="math inline">\(d(x_1,x_2)=|x_1-x_2|=\sqrt{(x_1-x_2)^2}\)</span>. This definition can be extended to the multivariate cases. Suppose <span class="math inline">\(\mathbf{x}=[x_1, x_2, \cdots, x_n]^{T}\)</span> and <span class="math inline">\(\mathbf{y}=[y_1, y_2, \cdots, y_n]^{T}\)</span> are two vectors, their <em>Euclidean</em> distance is defined as
+<span class="math display">\[
+d(\mathbf{x}, \mathbf{y})=\sqrt{(x_1-y_1)^2+(x_2-y_2)^2+\cdots+(x_n-y_n)^2}=\sqrt{(\mathbf{x}-\mathbf{y})^{T}(\mathbf{x}-\mathbf{y})}.
+\]</span>
+And the <em>Manhattan</em> distance is defined as
+<span class="math display">\[
+d(\mathbf{x}, \mathbf{y})=|x_1-y_1|+|x_2-y_2|+\cdots+|x_n-y_n|=\sum_{i=1}^n |x_i-y_i|.
+\]</span></p>
+<p>The <em>Minkowski</em> distance is defined as
+<span class="math display">\[
+d(\mathbf{x}, \mathbf{y})=\left(\sum_{i=1}^n |x_i-y_i|^p\right)^{1/p},
+\]</span>
+which includes the Manhattan distance (when <span class="math inline">\(p=1\)</span>) and the Euclidean distance (when <span class="math inline">\(p=2\)</span>) as special cases.</p>
+<p>Euclidean distance treats each coordinate equally without accounting for the amount of variability in each dimension. A measure that does take into account the variance and covariance of the variables is the <em>Mahalanobis</em> distance
+<span class="math display">\[
+d(\mathbf{x}, \mathbf{y})=\sqrt{(\mathbf{x}-\mathbf{y})^{T}\mathbf{\Sigma}^{-1}(\mathbf{x}-\mathbf{y})}
+\]</span>
+where <span class="math inline">\(\mathbf{\Sigma}\)</span> is the variance-covariance matrix which can be replaced by the sample variance-covariance matrix if it is unknown.</p>
+<p>One can define his own way to calculate distance as long as the function <span class="math inline">\(d(.)\)</span> satisfies the following properties:</p>
+<ol style="list-style-type: decimal">
+<li>Non-negative. For any <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span>, <span class="math inline">\(d(\mathbf{x}, \mathbf{y})\ge 0\)</span>.</li>
+<li>Identified. <span class="math inline">\(d(\mathbf{x}, \mathbf{x})= 0\)</span>.
+For any <span class="math inline">\(\mathbf{x}\ne \mathbf{y}\)</span>, <span class="math inline">\(d(\mathbf{x}, \mathbf{y})&gt; 0\)</span>; if <span class="math inline">\(\mathbf{x}=\mathbf{y}\)</span>, <span class="math inline">\(d(\mathbf{x}, \mathbf{y})=0\)</span></li>
+<li>Symmetric. <span class="math inline">\(d(\mathbf{x}, \mathbf{y})=d(\mathbf{y}, \mathbf{x})\)</span>.</li>
+<li>Definite. If <span class="math inline">\(d(\mathbf{x}, \mathbf{y})=0\)</span>, then <span class="math inline">\(\mathbf{x}=\mathbf{y}\)</span>.</li>
+<li>Triangle inequality. For any <span class="math inline">\(\mathbf{x}\ne \mathbf{y}, \mathbf{z}\)</span>, <span class="math inline">\(d(\mathbf{x}, \mathbf{y})\le d(\mathbf{x}, \mathbf{z})+d(\mathbf{z}, \mathbf{y})\)</span>.</li>
+</ol>
+<p><strong>Note</strong>: If a ‘’unit change’’ means dramatically different things for different variables, we shall standardize the measurements by subtracting its mean and dividing its standard deviation before we calculate the distance.</p>
+<p><strong>Example</strong>: Verify that the Euclidean distance is a valid distance merit.
+</p>
+<p>Example: Verify that the Euclidean distance is a valid distance metric.
+1. <span class="math inline">\(d(\vec{x}, \vec{y}) = \sqrt{\sum (x_i - y_i)^2} \ge 0 \quad \checkmark\)</span>
+2. <span class="math inline">\(d(\vec{x}, \vec{x}) = \sqrt{\sum (x_i - x_i)^2} = 0 \quad \checkmark\)</span>
+3. <span class="math inline">\(d(\vec{x}, \vec{y}) = \sqrt{\sum (x_i - y_i)^2} = \sqrt{\sum (y_i - x_i)^2} = d(\vec{y}, \vec{x}) \quad \checkmark\)</span>
+4. <span class="math inline">\(d(\vec{x}, \vec{y}) = \sqrt{\sum (x_i - y_i)^2} = 0 \iff x_i - y_i = 0 \iff x_i = y_i \iff \vec{x} = \vec{y} \quad \checkmark\)</span></p>
+<ol start="5" style="list-style-type: decimal">
+<li><span class="math inline">\(\forall \vec{x}, \vec{y}, \vec{z}\)</span>, We need to prove
+<span class="math inline">\(d(\vec{x}, \vec{y}) \le d(\vec{x}, \vec{z}) + d(\vec{z}, \vec{y})\)</span></li>
+</ol>
+<p><span class="math inline">\(\iff \sqrt{\sum (x_i - y_i)^2} \le \sqrt{\sum (x_i - z_i)^2} + \sqrt{\sum (z_i - y_i)^2}\)</span></p>
+<p>Squaring both sides:
+<span class="math inline">\(\left(\sqrt{\sum (x_i - z_i + z_i - y_i)^2}\right)^2 \le \left(\sqrt{\sum (x_i - z_i)^2} + \sqrt{\sum (z_i - y_i)^2}\right)^2\)</span></p>
+<p><span class="math inline">\(\iff \sum (x_i - z_i)^2 + \sum (z_i - y_i)^2 + 2 \sum (x_i - z_i)(z_i - y_i)\)</span>
+<span class="math inline">\(\le \sum (x_i - z_i)^2 + \sum (z_i - y_i)^2 + 2 \sqrt{\sum (x_i - z_i)^2} \sqrt{\sum (z_i - y_i)^2}\)</span></p>
+<p><span class="math inline">\(\iff \sum (x_i - z_i)(z_i - y_i) \le \sqrt{\sum (x_i - z_i)^2} \cdot \sqrt{\sum (z_i - y_i)^2}\)</span></p>
+<p>Let <span class="math inline">\(\vec{u} = \vec{x} - \vec{z}\)</span> and <span class="math inline">\(\vec{v} = \vec{z} - \vec{y}\)</span>.
+<span class="math inline">\(\iff (\vec{x} - \vec{z})^T (\vec{z} - \vec{y}) \le \|\vec{x} - \vec{z}\| \cdot \|\vec{z} - \vec{y}\|\)</span></p>
+<p><span class="math inline">\(\iff \frac{(\vec{x} - \vec{z})^T (\vec{z} - \vec{y})}{\|\vec{x} - \vec{z}\| \|\vec{z} - \vec{y}\|} \le 1\)</span></p>
+<p><span class="math inline">\(\iff \cos\theta \le 1 \quad \checkmark\)</span></p>
+</div>
+<div id="distance-for-categorical-variables" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Distance for Categorical Variables<a href="displaying-multivariate-data-and-measures-of-distance.html#distance-for-categorical-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For categorical variables whose values are categories, it is meaningless to calculate the distance using the functions given in the previous section. For example, there are four possible blood types: A, B, O, AB. Even though we can recode the values as 1=A, 2=B, 3=O and 4=AB, we would not say that the distance between types A and B is closer than the distance between types A and O. For categorical measurements, we can use the <em>Hamming</em> distance
+<span class="math display">\[
+d(\mathbf{x}, \mathbf{y})=\sum_{i=1}^p \mbox{I}(x_i\ne y_i),
+\]</span></p>
+<p><span class="math display">\[
+I(x_i \ne y_i) = \begin{cases} 1 &amp; \text{if } x_i \ne y_i \\ 0 &amp; \text{if } x_i = y_i \end{cases}
+\]</span>
+where I(.) is an indicator function which takes the value 1 if the statement is true otherwise 0. Hamming distance between two observations counts the number of not-matched measurements. For example,</p>
+<p><span class="math display">\[
+\begin{array}{c|cc}
+\hline
+&amp;\text{Gender}&amp;\text{Employment Status}\\
+\hline
+Kate&amp;F&amp;\text{employed}\\
+John&amp;M&amp;\text{unemployed}\\
+Adam&amp;M&amp;\text{employed}\\
+\hline
+\end{array}
+\]</span></p>
+<p>The Hamming distance between Kate and John is 2 and between Kate and Adam is 1. One can also standardize the Hamming distance by dividing the number of categorical variables. That is
+<span class="math display">\[
+d(\mathbf{x}, \mathbf{y})=\frac{\sum_{i=1}^p \mbox{I}(x_i\ne y_i)}{p}.
+\]</span></p>
+<p>One special categorical variable is the <em>binary</em> variable which takes only two possible values: 0 (a certain attribute absent) or 1(a certain attribute present). A binary variable is called <em>asymmetric</em> if one of the two states (e.g. state “0”) is interpreted as more informative than the other state. For example, Married (1) or Not Married (0); not married can be single, divorced or widowed. If both observations have value ‘’0’’, we can not say if they are the same or different. Therefore, for asymmetric binary variable, the distance can be calculated as
+<span class="math display">\[
+d(\mathbf{x}, \mathbf{y})=\frac{\sum_{i=1}^p \mbox{I}(x_i\ne y_i)}{p-\mbox{# of 0-0 pairs} }
+\]</span>
+this is also called the <em>Jaccard coefficient</em>.</p>
+</div>
+<div id="distance-for-mixed-variable-types" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> Distance for Mixed Variable Types<a href="displaying-multivariate-data-and-measures-of-distance.html#distance-for-mixed-variable-types" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When the multivariate measurements are mixed of quantitative and categorical data, <em>Gower’s coefficient</em> can be calculated to measure the distance between two observations:
+<span class="math display">\[
+  d(\mathbf{x_i}, \mathbf{x_j})=\frac{\sum_{k=1}^p \delta_{ijk}d_{ijk}}{\sum_{k=1}^p \delta_{ijk}}
+  \]</span>
+where
+<span class="math display">\[
+\delta_{ijk}=\left\{
+\begin{array}{ll}
+1&amp;\mbox{if we could use the variable $k$ to compare observations $i$ and $j$},\\
+0&amp;\mbox{if we could not tell whether observations $i$ and $j$ are the same or not using variable $k$}.
+\end{array}
+\right.
+\]</span>
+and
+<span class="math display">\[
+d_{ijk}=\left\{
+\begin{array}{ll}
+\frac{|x_{ik}-x_{jk}|}{\mbox{range of variable $k$}} &amp;\mbox{for quantitative variables},\\
+\mbox{I}(x_{ik}\ne x_{jk})&amp;\mbox{for categorical variables}.
+\end{array}
+\right.
+\]</span></p>
+<p>To summarize, <span class="math inline">\(\delta_{ijk}=0\)</span> for only 0-0 pairs of asymmetric binary variables.</p>
+<p><strong>Example: Gower’s Coefficient</strong></p>
+<p>Find the Gower’s coefficients for the following three individuals:</p>
+<span class="math display">\[\begin{array}{c|ccccc}
+\hline
+&amp;Gender&amp;Hair Color &amp; Asian&amp;Height&amp;Weight\\
+\hline
+Kate&amp;F&amp;Brown&amp;Yes&amp;60&amp;80\\
+John&amp;M&amp;Grey&amp;No&amp;50&amp;60\\
+Adam&amp;M&amp;Brown&amp;No&amp;70&amp;90\\
+\hline
+\end{array}\]</span>
+<p>Among the categorical variables ‘’Gender’‘,’‘Hair color’‘,’‘Asian’‘,’‘Asian’’ is asymmetric binary. We can construct a working table to find the distance between the observations.</p>
+<p><span class="math inline">\(d(\text{Kate, John}) = \frac{4.167}{5} = 0.8334\)</span>.
+<span class="math inline">\(d(\text{John, Adam}) = \frac{3}{4} = 0.75\)</span>.</p>
+<p><span class="math display">\[\begin{array}{|c|c|c|c|}
+\hline
+\text{k} &amp; \delta_{ijk} &amp; d_{ijk} &amp; \delta_{ijk} \cdot d_{ijk} \\
+\hline
+1 &amp; 1 &amp; 1 &amp; 1 \\
+2 &amp; 1 &amp; 1 &amp; 1 \\
+3 &amp; 1 &amp; 1 &amp; 1 \\
+4 &amp; 1 &amp; 0.5 = \frac{|60-50|}{70-50} &amp; 0.5 \\
+5 &amp; 1 &amp; 0.667 = \frac{|80-60|}{90-60} &amp; 0.667 \\
+\hline
+\text{sum} &amp; 5 &amp; &amp; 4.167 \\
+\hline
+\end{array}
+\qquad
+\begin{array}{|c|c|c|}
+\hline
+\text{k} &amp; \delta_{ijk} &amp; d_{ijk} \\
+\hline
+1 &amp; 1 &amp; 0 \\
+2 &amp; 1 &amp; 1 \\
+3 &amp; 0 &amp; 0 \\
+4 &amp; 1 &amp; \frac{|50-70|}{70-50}=1 \\
+5 &amp; 1 &amp; \frac{|60-90|}{90-60}=1 \\
+\hline
+\text{sum} &amp; 4 &amp; 3 \\
+\hline
+\end{array}
+\]</span></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb3-1" tabindex="-1"></a>gender <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;F&quot;</span>,<span class="st">&quot;M&quot;</span>, <span class="st">&quot;M&quot;</span>))</span>
+<span id="cb3-2"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb3-2" tabindex="-1"></a>haircolor <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Brown&quot;</span>,<span class="st">&quot;Grey&quot;</span>,<span class="st">&quot;Brown&quot;</span>))</span>
+<span id="cb3-3"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb3-3" tabindex="-1"></a>asian <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb3-4"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb3-4" tabindex="-1"></a>height <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">60</span>,<span class="dv">50</span>,<span class="dv">70</span>)</span>
+<span id="cb3-5"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb3-5" tabindex="-1"></a>weight <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>,<span class="dv">60</span>,<span class="dv">90</span>)</span>
+<span id="cb3-6"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb3-6" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">gender=</span>gender,<span class="at">haircolor=</span>haircolor,<span class="at">race=</span>asian,<span class="at">height=</span>height,<span class="at">weight=</span>weight)</span>
+<span id="cb3-7"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb3-8" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
+<span id="cb3-9"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb3-9" tabindex="-1"></a><span class="fu">daisy</span>(df, <span class="at">metric =</span> <span class="st">&quot;gower&quot;</span>) <span class="co">#not correct without indicating asymmetric binary</span></span></code></pre></div>
+<pre><code>## Dissimilarities :
+##           1         2
+## 2 0.8333333          
+## 3 0.5666667 0.6000000
+## 
+## Metric :  mixed ;  Types = N, N, I, I, I 
+## Number of objects : 3</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb5-1" tabindex="-1"></a><span class="fu">daisy</span>(df,<span class="at">metric =</span> <span class="st">&quot;gower&quot;</span>, <span class="at">type=</span><span class="fu">list</span>(<span class="at">asymm =</span><span class="dv">3</span>, <span class="at">symm=</span><span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## Dissimilarities :
+##           1         2
+## 2 0.8333333          
+## 3 0.5666667 0.7500000
+## 
+## Metric :  mixed ;  Types = S, N, A, I, I 
+## Number of objects : 3</code></pre>
+<p>If we were told the range of height is 30 and the range of weight is 50 instead, we can create a fake observation to tell <span class="math inline">\(\textsf{R}\)</span> the information. For the previous example, we need to create a new observation with height=80 and weight=110, so the range of height is 80-50=30 and range for weight is 110-60=50. For the computer output, just ignore the distance between everyone to the fake person.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb7-1" tabindex="-1"></a>fake <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">gender=</span><span class="fu">as.factor</span>(<span class="st">&quot;F&quot;</span>), <span class="at">haircolor=</span><span class="fu">as.factor</span>(<span class="st">&quot;Black&quot;</span>),<span class="at">race=</span><span class="dv">1</span>, <span class="at">height=</span><span class="dv">80</span>, <span class="at">weight=</span><span class="dv">110</span>)</span>
+<span id="cb7-2"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb7-2" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df, fake)</span>
+<span id="cb7-3"><a href="displaying-multivariate-data-and-measures-of-distance.html#cb7-3" tabindex="-1"></a><span class="fu">daisy</span>(df1,<span class="at">metric =</span> <span class="st">&quot;gower&quot;</span>, <span class="at">type=</span><span class="fu">list</span>(<span class="at">asymm =</span><span class="dv">3</span>, <span class="at">symm=</span><span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## Dissimilarities :
+##           1         2         3
+## 2 0.7466667                    
+## 3 0.5066667 0.5666667          
+## 4 0.4533333 1.0000000 0.7466667
+## 
+## Metric :  mixed ;  Types = S, N, A, I, I 
+## Number of objects : 4</code></pre>
+</div>
+</div>
+<div id="multivariate-normal-distribution" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Multivariate Normal Distribution<a href="displaying-multivariate-data-and-measures-of-distance.html#multivariate-normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Most of the inferential statistical methods, such as <span class="math inline">\(t\)</span> tests, one-way ANOVA, are based on the normality assumption in univariate analysis. Similarly, some multivariate analysis techniques are based on the assumption that the data are from a <em>multivariate normal</em> distribution.</p>
+<p>The univariate density function of normal distribution with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span> is
+<span class="math display" id="eq:uninormal">\[\begin{equation}
+f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}, -\infty&lt;x&lt;\infty
+\tag{4.1}
+\end{equation}\]</span></p>
+<p>The term
+<span class="math display">\[
+\left(\frac{x-\mu}{\sigma}\right)^2=(x-\mu)(\sigma^2)^{-1}(x-\mu)
+\]</span>
+in the exponent of the univariate normal density function measures the squared distance between <span class="math inline">\(x\)</span> and <span class="math inline">\(\mu\)</span> in standard deviation units. This can be generalized in vectors for multivariate cases as
+<span class="math display">\[
+(\mathbf{x}-\mathbf{\mu})^{T}\mathbf{\Sigma}^{-1} (\mathbf{x}-\mathbf{\mu})
+\]</span>
+where <span class="math inline">\(\mathbf{\mu}\)</span> and <span class="math inline">\(\mathbf{\Sigma}\)</span> are the mean vector and variance-covariance matrix. It can be shown that the <span class="math inline">\(p\)</span>-dimensional multivariate normal density function is
+<span class="math display" id="eq:multinormal">\[\begin{equation}
+f(\mathbf{x})=\frac{1}{(2\pi)^{p/2}|\mathbf{\Sigma}|^{1/2}}\exp \left\{-\frac{(\mathbf{x}-\mathbf{\mu})^{T}\mathbf{\Sigma}^{-1} (\mathbf{x}-\mathbf{\mu})}{2}\right\}.
+\tag{4.2}
+\end{equation}\]</span></p>
+<p>As the constant <span class="math inline">\(\frac{1}{\sqrt{2\pi}\sigma}\)</span> is the normalizing constant such that the <em>area</em> under the density curve given in Equation <a href="displaying-multivariate-data-and-measures-of-distance.html#eq:uninormal">(4.1)</a> is 1, the constant <span class="math inline">\(\frac{1}{(2\pi)^{p/2}|\mathbf{\Sigma}|^{1/2}}\)</span> is the normalizing constant ensuring that the <em>volume</em> under the surface defined in Equation <a href="displaying-multivariate-data-and-measures-of-distance.html#eq:multinormal">(4.2)</a> is 1.</p>
+<div id="properties-of-multivariate-normal-distribution" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Properties of Multivariate Normal Distribution<a href="displaying-multivariate-data-and-measures-of-distance.html#properties-of-multivariate-normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose that the joint distribution of random variables <span class="math inline">\(X_1, X_2, \cdots, X_p\)</span> is a multivariate normal with mean vector <span class="math inline">\(\boldsymbol{\mu}\)</span> and variance-covariance matrix <span class="math inline">\(\boldsymbol{\Sigma}\)</span>, then we have the following results.</p>
+<ul>
+<li>The marginal distribution of <span class="math inline">\(X_i\)</span> is <span class="math inline">\(N(\mu_i, \sqrt{\sigma_{ii}})\)</span>.</li>
+<li>For any pair of <span class="math inline">\(X_i, X_j\)</span>, they are independent if and only if <span class="math inline">\(Cov(X_i, X_j)=0\)</span>.</li>
+<li>Any linear combination of <span class="math inline">\(X_i\)</span>, <span class="math inline">\(\mathbf{c}^{T}\mathbf{X}=c_1X_1+c_2X_2+\cdots+c_pX_p\)</span> is distributed as <span class="math inline">\(N(\mathbf{c}^{T}\boldsymbol{\mu}, \boldsymbol{c}^{T}\boldsymbol{\Sigma}\mathbf{c})\)</span>.</li>
+<li>All points with the same distance to the mean <span class="math inline">\(\boldsymbol{\mu}\)</span> form a <em>contour</em> of the multivariate normal distribution. Contours for the <span class="math inline">\(p\)</span>-dimensional normal distribution are ellipsoids defined by <span class="math inline">\(\mathbf{x}\)</span> such that
+<span class="math display">\[
+(\mathbf{x}-\boldsymbol{\mu})^{T}\mathbf{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})=c^2.
+\]</span>
+These ellipsoids are centered at <span class="math inline">\(\boldsymbol{\mu}\)</span> and have axes <span class="math inline">\(\pm c\sqrt{\lambda_i}\mathbf{e}_i\)</span>, where <span class="math inline">\(\lambda_i\)</span> and <span class="math inline">\(\mathbf{e}_i\)</span> are the eigenvalues and corresponding unit eigenvectors of the variance-covariance matrix <span class="math inline">\(\mathbf{\Sigma}\)</span>.
+If <span class="math inline">\(|\boldsymbol{\Sigma}|&gt;0\)</span>, that is covariance matrix <span class="math inline">\(\boldsymbol{\Sigma}\)</span> is positive definite, then <span class="math inline">\((\mathbf{x}-\boldsymbol{\mu})^{T}\mathbf{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})\)</span> is distributed as <span class="math inline">\(\chi^2_p\)</span>, a chi-square with degrees of freedom <span class="math inline">\(p\)</span>. The multivariate normal distribution <span class="math inline">\(N(\boldsymbol{\mu}, \boldsymbol{\Sigma})\)</span> assigns probability <span class="math inline">\((1-\alpha)\)</span> to the solid ellipsoid <span class="math inline">\(\{(\mathbf{x}-\boldsymbol{\mu})^{T}\mathbf{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})\le \chi^2_p(\alpha)\}\)</span>, where <span class="math inline">\(\chi^2_p(\alpha)\)</span> is the upper (<span class="math inline">\(100\alpha\)</span>)th percentile of the <span class="math inline">\(\chi^2_p\)</span> distribution.</li>
+</ul>
+</div>
+<div id="bivariate-normal-distribution" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Bivariate Normal Distribution<a href="displaying-multivariate-data-and-measures-of-distance.html#bivariate-normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It can be shown that when <span class="math inline">\(p=2\)</span>, we have the bivariate normal density
+<span class="math display" id="eq:denbivariate">\[\begin{equation}
+\tiny
+f(x_1, x_2)=\frac{1}{2\pi\sqrt{\sigma_{11}\sigma_{22}(1-\rho_{12}^2)}}\exp\left\{-\frac{1}{2(1-\rho_{12}^2)}\left[\left(\frac{x_1-\mu_1}{\sqrt{\sigma_{11}}}\right)^2+\left(\frac{x_2-\mu_2}{\sqrt{\sigma_{22}}}\right)^2-2\rho_{12}\left(\frac{x_1-\mu_1}{\sqrt{\sigma_{11}}}\right)\left(\frac{x_2-\mu_2}{\sqrt{\sigma_{22}}}\right)\right]\right\}
+\tag{4.3}
+\end{equation}\]</span>
+where <span class="math inline">\(\mu_1=E(X_1), \mu_2=E(X_2), \sigma_{11}=Var(X_1), \sigma_{22}=Var(X_2), \rho_{12}=\frac{\sigma_{12}}{\sqrt{\sigma_{11}\sigma_{22}}}.\)</span></p>
+<p><strong>Example: Bivariate Normal Distribution</strong></p>
+<p>If <span class="math inline">\(X_1\sim N(\mu_1, \sigma_1), X_2\sim N(\mu_2, \sigma_2)\)</span>, and they are independent.</p>
+<ol style="list-style-type: decimal">
+<li>Find the joint density of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>.</li>
+</ol>
+<p><span class="math inline">\(\Sigma = \begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) \\ Cov(X_2, X_1) &amp; Var(X_2) \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(= \begin{pmatrix} \sigma_1^2 &amp; 0 \\ 0 &amp; \sigma_2^2 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(|\Sigma| = \sigma_1^2 \sigma_2^2\)</span></p>
+<p><span class="math inline">\(\Sigma^{-1} = \begin{pmatrix} 1/\sigma_1^2 &amp; 0 \\ 0 &amp; 1/\sigma_2^2 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(f(x_1, x_2) = f_1(x_1) \cdot f_2(x_2)\)</span>
+<span class="math inline">\(= \frac{1}{\sqrt{2\pi}\sigma_1} e^{-\frac{(x_1-\mu_1)^2}{2\sigma_1^2}} \cdot \frac{1}{\sqrt{2\pi}\sigma_2} e^{-\frac{(x_2-\mu_2)^2}{2\sigma_2^2}}\)</span>
+<span class="math inline">\(= \frac{1}{(2\pi)^{2/2} \sqrt{\sigma_1^2 \sigma_2^2}} \exp\left\{-\frac{1}{2}\left[\frac{(x_1-\mu_1)^2}{\sigma_1^2} + \frac{(x_2-\mu_2)^2}{\sigma_2^2}\right]\right\}\)</span>
+<span class="math inline">\(= \frac{1}{|\Sigma|^{1/2}} \exp\left\{-\frac{1}{2}(\vec{x}-\vec{\mu})^T \Sigma^{-1} (\vec{x}-\vec{\mu})\right\}\)</span></p>
+<p><span class="math inline">\(\vec{x} = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}\)</span>, <span class="math inline">\(\vec{\mu} = \begin{pmatrix} \mu_1 \\ \mu_2 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\((\vec{x}-\vec{\mu}) = \begin{pmatrix} x_1-\mu_1 \\ x_2-\mu_2 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(\Sigma^{-1} = \begin{pmatrix} 1/\sigma_1^2 &amp; 0 \\ 0 &amp; 1/\sigma_2^2 \end{pmatrix} \begin{pmatrix} x_1-\mu_1 \\ x_2-\mu_2 \end{pmatrix}\)</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Find the joint density of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> using the matrix form.</li>
+</ol>
+<p>Given that <span class="math inline">\(X_1 \sim N(\mu_1, \sigma_1^2)\)</span> and <span class="math inline">\(X_2 \sim N(\mu_2, \sigma_2^2)\)</span> are independent,
+the covariance between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> is <span class="math inline">\(Cov(X_1, X_2) = 0\)</span>.</p>
+<p>The mean vector is <span class="math inline">\(\vec{\mu} = \begin{pmatrix} \mu_1 \\ \mu_2 \end{pmatrix}\)</span>.</p>
+<p>The covariance matrix is <span class="math inline">\(\Sigma = \begin{pmatrix} Var(X_1) &amp; Cov(X_1, X_2) \\ Cov(X_2, X_1) &amp; Var(X_2) \end{pmatrix} = \begin{pmatrix} \sigma_1^2 &amp; 0 \\ 0 &amp; \sigma_2^2 \end{pmatrix}\)</span>.</p>
+<p>The determinant of the covariance matrix is <span class="math inline">\(|\Sigma| = \sigma_1^2 \sigma_2^2\)</span>.</p>
+<p>The inverse of the covariance matrix is <span class="math inline">\(\Sigma^{-1} = \begin{pmatrix} 1/\sigma_1^2 &amp; 0 \\ 0 &amp; 1/\sigma_2^2 \end{pmatrix}\)</span>.</p>
+<p>The vector <span class="math inline">\(\vec{x} = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}\)</span>, and the difference vector is <span class="math inline">\(\vec{x} - \vec{\mu} = \begin{pmatrix} x_1 - \mu_1 \\ x_2 - \mu_2 \end{pmatrix}\)</span>.</p>
+<p>The quadratic form is <span class="math inline">\((\vec{x}-\vec{\mu})^T \Sigma^{-1} (\vec{x}-\vec{\mu})\)</span>.
+<span class="math inline">\(= \begin{pmatrix} x_1 - \mu_1 &amp; x_2 - \mu_2 \end{pmatrix} \begin{pmatrix} 1/\sigma_1^2 &amp; 0 \\ 0 &amp; 1/\sigma_2^2 \end{pmatrix} \begin{pmatrix} x_1 - \mu_1 \\ x_2 - \mu_2 \end{pmatrix}\)</span>
+<span class="math inline">\(= \begin{pmatrix} \frac{x_1 - \mu_1}{\sigma_1^2} &amp; \frac{x_2 - \mu_2}{\sigma_2^2} \end{pmatrix} \begin{pmatrix} x_1 - \mu_1 \\ x_2 - \mu_2 \end{pmatrix}\)</span>
+<span class="math inline">\(= \frac{(x_1 - \mu_1)^2}{\sigma_1^2} + \frac{(x_2 - \mu_2)^2}{\sigma_2^2}\)</span>.</p>
+<p>The joint probability density function for a bivariate normal distribution in matrix form is:
+<span class="math inline">\(f(\vec{x}) = \frac{1}{(2\pi)^{d/2} |\Sigma|^{1/2}} \exp\left\{-\frac{1}{2}(\vec{x}-\vec{\mu})^T \Sigma^{-1} (\vec{x}-\vec{\mu})\right\}\)</span>
+where <span class="math inline">\(d\)</span> is the dimension of the vector, here <span class="math inline">\(d=2\)</span>.</p>
+<p>Substituting the values for the independent case:
+<span class="math inline">\(f(x_1, x_2) = \frac{1}{(2\pi)^{2/2} (\sigma_1^2 \sigma_2^2)^{1/2}} \exp\left\{-\frac{1}{2}\left(\frac{(x_1-\mu_1)^2}{\sigma_1^2} + \frac{(x_2-\mu_2)^2}{\sigma_2^2}\right)\right\}\)</span>
+<span class="math inline">\(f(x_1, x_2) = \frac{1}{2\pi \sigma_1 \sigma_2} \exp\left\{-\frac{1}{2}\left(\frac{(x_1-\mu_1)^2}{\sigma_1^2} + \frac{(x_2-\mu_2)^2}{\sigma_2^2}\right)\right\}\)</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li>How about if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> and not independent and with correlation <span class="math inline">\(\rho\)</span>?</li>
+</ol>
+<p><span class="math inline">\(\Sigma = \begin{pmatrix} \sigma_1^2 &amp; \sigma_{12} \\ \sigma_{21} &amp; \sigma_2^2 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(M = \begin{pmatrix} (-1)^{1+1} \sigma_2^2 &amp; (-1)^{1+2} \sigma_{21} \\ (-1)^{2+1} \sigma_{12} &amp; (-1)^{2+2} \sigma_1^2 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(\Sigma^{-1} = \frac{M^T}{|\Sigma|} = \frac{1}{|\Sigma|} \begin{pmatrix} \sigma_2^2 &amp; -\sigma_{12} \\ -\sigma_{21} &amp; \sigma_1^2 \end{pmatrix}\)</span></p>
+<p><strong>Example: Surface and Contour Plot of Bivariate Normal</strong></p>
+<p>Consider the bivariate normal distributions with the following mean vectors and covariance matrices:
+<span class="math display">\[
+\boldsymbol{\mu_1}=\boldsymbol{\mu_2}=\boldsymbol{\mu_3}=\left[
+\begin{array}{c}
+0\\ 0
+\end{array}
+\right]
+,\quad \boldsymbol{\Sigma_1}=\left[
+\begin{array}{cc}
+1&amp;0\\
+0&amp;1
+\end{array}
+\right], \quad
+\boldsymbol{\Sigma_2}=\left[
+\begin{array}{cc}
+1&amp;0.75\\
+0.75&amp;1
+\end{array}
+\right], \quad
+\boldsymbol{\Sigma_3}=\left[
+\begin{array}{cc}
+1&amp;-0.75\\
+-0.75&amp;1
+\end{array}
+\right].
+\]</span>
+The distributions (surface plots) of the three bivariate normal are shown in the first row of Figure <a href="displaying-multivariate-data-and-measures-of-distance.html#fig:surfContour">4.6</a> and their corresponding contour plots are shown in the second row. The values on the contour paths are the value of density <span class="math inline">\(f(x_1, x_2)\)</span> given in Equation <a href="displaying-multivariate-data-and-measures-of-distance.html#eq:denbivariate">(4.3)</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:bivariateNormalDists"></span>
+<img src="Plots/bivariate_normal_rho0.png" alt="Surface plots of density for three bivariate normal distributions" width="32%" /><img src="Plots/bivariate_normal_rho0.75.png" alt="Surface plots of density for three bivariate normal distributions" width="32%" /><img src="Plots/bivariate_normal_rho_negative0.75.png" alt="Surface plots of density for three bivariate normal distributions" width="32%" />
+<p class="caption">
+Figure 4.5: Surface plots of density for three bivariate normal distributions
+</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:surfContour"></span>
+<img src="Plots/bivariate_normal_contour_rho0.png" alt="Contour plots (2nd row) of density for three bivariate normal distributions" width="32%" /><img src="Plots/bivariate_normal_contour_rho0.75.png" alt="Contour plots (2nd row) of density for three bivariate normal distributions" width="32%" /><img src="Plots/bivariate_normal_contour_rho_negative0.75.png" alt="Contour plots (2nd row) of density for three bivariate normal distributions" width="32%" />
+<p class="caption">
+Figure 4.6: Contour plots (2nd row) of density for three bivariate normal distributions
+</p>
+</div>
+</div>
+<div id="contour-of-multivariate-normal-distribution" class="section level3 hasAnchor" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> Contour of Multivariate Normal Distribution<a href="displaying-multivariate-data-and-measures-of-distance.html#contour-of-multivariate-normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Definition</strong></p>
+<p>Contour at level <span class="math inline">\(c_0^2\)</span> is the collection of all points of <span class="math inline">\(\mathbf{x}\)</span> such that <span class="math inline">\(f(\mathbf{x})=c_0^2\)</span>. Since
+<span class="math display">\[
+f(\mathbf{x})=\frac{1}{(2\pi)^{p/2}|\boldsymbol{\Sigma}|^{1/2}}\exp \left\{-\frac{(\mathbf{x}-\boldsymbol{\mu})^{T}\boldsymbol{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})}{2}\right\}=c_0^2 \Longrightarrow (\mathbf{x}-\boldsymbol{\mu})^{T}\boldsymbol{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})=c^2
+\]</span>
+a <span class="math inline">\((1-\alpha)\times 100\%\)</span> contour is the collection of points <span class="math inline">\(\mathbf{x}\)</span> such that
+<span class="math display">\[
+P((\mathbf{x}-\boldsymbol{\mu})^{T}\boldsymbol{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})\le c^2)=1-\alpha.
+\]</span>
+Since <span class="math inline">\((\mathbf{x}-\boldsymbol{\mu})^{T}\boldsymbol{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})\sim \chi^2_{p}\)</span>, we get <span class="math inline">\(c^2=\chi^2_{p, \alpha}\)</span>. For example, a 95% contour for a bivariate normal distribution is the collection of all points <span class="math inline">\(\mathbf{x}\)</span> such that
+<span class="math display">\[
+(\mathbf{x}-\boldsymbol{\mu})^{T}\boldsymbol{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})\le \chi^2_{2, 0.05}=5.991
+\]</span></p>
+<p><strong>Example: Contour of Multivariate Normal Distribution</strong></p>
+<ul>
+<li>Suppose <span class="math display">\[\boldsymbol{\mu}=\left[
+\begin{array}{c}
+0\\ 0
+\end{array}
+\right]
+,\quad \boldsymbol{\Sigma}=\left[
+\begin{array}{cc}
+1&amp;0\\
+0&amp;1
+\end{array}
+\right]\]</span>, find a 95% contour for the bivariate normal distribution.
+For bivariate normal distribution, a 95% contour is
+<span class="math display">\[
+(\mathbf{x}-\boldsymbol{\mu})^{T}\boldsymbol{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})=5.991
+\]</span></li>
+</ul>
+<p><span class="math display">\[
+\Longrightarrow \left[
+\begin{array}{cc}
+x_1, x_2
+\end{array}
+\right] \left[
+\begin{array}{cc}
+1&amp;0\\
+0&amp;1
+\end{array}
+\right] \left[
+\begin{array}{c}
+x_1\\ x_2
+\end{array}
+\right]=x_1^2+x_2^2=5.991
+\]</span>
+which is a circle with radius <span class="math inline">\(r=\sqrt{5.991}\)</span>.</p>
+<ul>
+<li>Suppose <span class="math inline">\(\boldsymbol{\mu}=\left[ \begin{array}{c} 0\\ 0 \end{array} \right] ,\quad \boldsymbol{\Sigma}=\left[ \begin{array}{cc} 1&amp;0\\ 0&amp;1/4 \end{array} \right]\)</span>, find a 95% contour for the bivariate normal distribution.
+For bivariate normal distribution, a 95% contour is
+<span class="math display">\[
+(\mathbf{x}-\boldsymbol{\mu})^{T}\boldsymbol{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})=5.991 \Longrightarrow \hspace{10cm}
+\]</span></li>
+</ul>
+<p>For bivariate normal distribution, a 95% contour is
+<span class="math inline">\((\vec{x}-\vec{\mu})^T \Sigma^{-1} (\vec{x}-\vec{\mu}) = 5.991\)</span></p>
+<p><span class="math inline">\(\implies \begin{pmatrix} x_1 &amp; x_2 \end{pmatrix} \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 1/4 \end{pmatrix}^{-1} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = 5.991\)</span></p>
+<p><span class="math inline">\(\implies \begin{pmatrix} x_1 &amp; \frac{1}{4x_2} \end{pmatrix} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = x_1^2 + \frac{x_2^2}{4} = 5.991\)</span></p>
+<p><span class="math inline">\(\implies \frac{x_1^2}{5.991} + \frac{x_2^2}{4 \times 5.991} = 1\)</span>.</p>
+<p>This is an ellipse center at <span class="math inline">\((0,0)\)</span>
+with axes <span class="math inline">\(\pm \sqrt{5.991}\)</span> and <span class="math inline">\(\pm \sqrt{4 \times 5.991}\)</span></p>
+<ul>
+<li>Suppose <span class="math display">\[\boldsymbol{\mu}=\left[
+\begin{array}{c}
+0\\ 0
+\end{array}
+\right]
+,\quad \boldsymbol{\Sigma}=\left[
+\begin{array}{cc}
+1&amp;\frac{3}{4}\\
+\frac{3}{4}&amp;1
+\end{array}
+\right]\]</span>, find a 95% contour for the bivariate normal distribution.
+For bivariate normal distribution, a 95% contour is
+<span class="math display">\[
+(\mathbf{x}-\boldsymbol{\mu})^{T}\boldsymbol{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})=5.991 \Longrightarrow
+\]</span></li>
+</ul>
+<p><span class="math display">\[
+\left[
+\begin{array}{cc}
+x_1, x_2
+\end{array}
+\right] \frac{\left[
+\begin{array}{cc}
+1&amp;-\frac{3}{4}\\
+-\frac{3}{4}&amp;1
+\end{array}
+\right]}{1-\frac{9}{16}} \left[
+\begin{array}{c}
+x_1\\ x_2
+\end{array}
+\right]
+\]</span></p>
+<p><span class="math display">\[=\frac{16}{7\times 5.991}x_1^2-\frac{24}{7\times 5.991}x_1x_2+\frac{16}{7\times 5.991}x_2^2=1
+\]</span>
+which is an ellipse center <span class="math inline">\((0, 0)\)</span> with axes <span class="math inline">\(\pm \frac{\sqrt{5.991\times 7}}{2}\)</span> and <span class="math inline">\(\pm \frac{\sqrt{5.991}}{2}\)</span> and rotating counterclockwise 45 degrees.</p>
+<p>Side-note: The generate form of a rotated counterclockwise about the origin through an angle <span class="math inline">\(\theta\)</span> with axes <span class="math inline">\(\pm a\)</span> and <span class="math inline">\(\pm b\)</span> is
+<span class="math display">\[
+x^2\left(\frac{\cos^2\theta}{a^2}+\frac{\sin^2\theta}{b^2}\right)+2xy\left(\frac{\cos \theta \sin \theta}{a^2}-\frac{\cos \theta \sin \theta}{b^2}\right)+y^2\left(\frac{\sin^2 \theta}{a^2}+\frac{\cos^2 \theta}{b^2}\right)=1
+\]</span>
+To find the axes <span class="math inline">\(a^2\)</span>, <span class="math inline">\(b^2\)</span> and the angle <span class="math inline">\(\theta\)</span>, solve for equations
+<span class="math display">\[
+\left\{
+\begin{array}{l}
+\frac{\cos^2\theta}{a^2}+\frac{\sin^2\theta}{b^2}=\frac{16}{7\times 5.991} \\
+\frac{\sin^2 \theta}{a^2}+\frac{\cos^2 \theta}{b^2}=\frac{16}{7\times 5.991}  \\
+\frac{\cos \theta \sin \theta}{a^2}-\frac{\cos \theta \sin \theta}{b^2}=-\frac{12}{7\times 5.991}
+\end{array}
+\right.
+\]</span>
+The solutions are <span class="math inline">\(\theta=45, a^2=\frac{5.991\times 7}{4}, b^2=\frac{5.991}{4}\)</span> or <span class="math inline">\(\theta=135, a^2=\frac{5.991}{4}, b^2=\frac{5.991\times 7}{4}\)</span>. They are the same ellipse.</p>
+<p><strong>Theorem</strong></p>
+<p>The contour <span class="math inline">\((\mathbf{x}-\boldsymbol{\mu})^{T}\boldsymbol{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})\le c^2\)</span> is an ellipsoids centered at <span class="math inline">\(\boldsymbol{\mu}\)</span> and have axes <span class="math inline">\(\pm c\sqrt{\lambda_i}\mathbf{e}_i\)</span>, where <span class="math inline">\(\lambda_i\)</span> and <span class="math inline">\(\mathbf{e}_i\)</span> are the eigenvalues and corresponding unit eigenvectors of the variance-covariance matrix <span class="math inline">\(\boldsymbol{\Sigma}\)</span>.</p>
+<p>We revisit the previous examples to apply the theorem.</p>
+<p><strong>Example: Find contour for the bivariate normal distribution by eigen-pairs of <span class="math inline">\(\boldsymbol{\Sigma}\)</span></strong></p>
+<ul>
+<li>Suppose <span class="math display">\[\boldsymbol{\mu}=\left[
+\begin{array}{c}
+0\\ 0
+\end{array}
+\right]
+,\quad \boldsymbol{\Sigma}=\left[
+\begin{array}{cc}
+1&amp;0\\
+0&amp;4
+\end{array}
+\right]\]</span>, find a 95% contour for the bivariate normal distribution.
+The eigenvalues of <span class="math inline">\(\boldsymbol{\Sigma}\)</span> are
+<span class="math display">\[
+|\mathbf{A}-\lambda \mathbf{I}|=\left|
+\begin{array}{cc}
+1-\lambda&amp; 0\\
+0&amp; 4-\lambda
+\end{array}
+\right|=(1-\lambda)(4-\lambda)=0
+\]</span>
+which gives the eigenvalues are <span class="math inline">\(\lambda_1=4\)</span> and <span class="math inline">\(\lambda_2=1\)</span>. For <span class="math inline">\(\lambda_1=4\)</span>, we have
+<span class="math display">\[
+\left[
+\begin{array}{cc}
+1&amp; 0\\
+0&amp; 4
+\end{array}
+\right] \left[
+\begin{array}{c}
+x_1\\x_2
+\end{array}
+\right]=4\left[
+\begin{array}{c}
+x_1\\x_2
+\end{array}
+\right]
+\]</span>
+which gives <span class="math inline">\(x_1=4x_1, 4x_2=4x_2\)</span>; therefore the eigenvector could be
+<span class="math display">\[\mathbf{e_1}=\left[
+\begin{array}{c}
+0\\1
+\end{array}
+\right]
+\]</span>
+For <span class="math inline">\(\lambda_2=1\)</span>, the eigenvector could be
+<span class="math display">\[
+\mathbf{e_2}=\left[
+\begin{array}{c}
+1\\0
+\end{array}
+\right]
+\]</span></li>
+</ul>
+<p>The axes are <span class="math display">\[\pm c\sqrt{\lambda_1}\mathbf{e}_1=\pm \sqrt{5.991} \sqrt{4} \left[
+\begin{array}{c}
+0\\1
+\end{array}
+\right]=\pm\left[
+\begin{array}{c}
+0\\4.895
+\end{array}
+\right]
+\]</span>
+and
+<span class="math display">\[\pm c\sqrt{\lambda_2}\mathbf{e}_2=\pm \sqrt{5.991} \sqrt{1} \left[
+\begin{array}{c}
+1\\0
+\end{array}
+\right]=\pm\left[
+\begin{array}{c}
+2.448\\0
+\end{array}
+\right]
+\]</span></p>
+<ul>
+<li>Suppose <span class="math display">\[\boldsymbol{\mu}=\left[
+\begin{array}{c}
+0\\ 0
+\end{array}
+\right]
+,\quad \boldsymbol{\Sigma}=\left[
+\begin{array}{cc}
+1&amp;\frac{3}{4}\\
+\frac{3}{4}&amp;1
+\end{array}
+\right]\]</span>, find a 95% contour for the bivariate normal distribution.</li>
+</ul>
+<p><span class="math inline">\(| \Sigma - \lambda I | = \begin{vmatrix} 1-\lambda &amp; 3/4 \\ 3/4 &amp; 1-\lambda \end{vmatrix} = (1-\lambda)^2 - (3/4)^2 = 0\)</span></p>
+<p><span class="math inline">\(1-\lambda = \pm 3/4 \implies \lambda_1 = 7/4 \text{ and } \lambda_2 = 1/4\)</span></p>
+<p>When <span class="math inline">\(\lambda_1 = 7/4\)</span>:
+<span class="math inline">\(\Sigma \vec{x} = \lambda \vec{x} \implies \begin{pmatrix} 1 &amp; 3/4 \\ 3/4 &amp; 1 \end{pmatrix} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = \frac{7}{4} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(\begin{cases} \textbf{1: } x_1 + \frac{3}{4}x_2 = \frac{7}{4}x_1 \\ \textbf{2: } \frac{3}{4}x_1 + x_2 = \frac{7}{4}x_2 \end{cases}\)</span></p>
+<p><span class="math inline">\(\implies \frac{3}{4}x_1 = \frac{3}{4}x_2 \implies x_1 = x_2 \implies x_1 = 1 \text{ and } x_2 = 1\)</span></p>
+<p><span class="math inline">\(\vec{x}_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix} \implies \vec{e}_1 = \begin{pmatrix} 1/\sqrt{2} \\ 1/\sqrt{2} \end{pmatrix}\)</span></p>
+<p>When <span class="math inline">\(\lambda_2 = 1/4\)</span>:
+<span class="math inline">\(\Sigma \vec{x} = \lambda \vec{x} \implies \begin{pmatrix} 1 &amp; 3/4 \\ 3/4 &amp; 1 \end{pmatrix} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = \frac{1}{4} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(x_1 + \frac{3}{4}x_2 = \frac{1}{4}x_1\)</span>
+<span class="math inline">\(\frac{3}{4}x_1 = -\frac{3}{4}x_2\)</span>
+<span class="math inline">\(x_1 = -x_2\)</span></p>
+<p><span class="math inline">\(\vec{x}_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix} \implies \vec{e}_2 = \begin{pmatrix} 1/\sqrt{2} \\ -1/\sqrt{2} \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(\pm C \sqrt{\lambda_i} \vec{e}_i\)</span></p>
+<p><span class="math inline">\(\lambda_1 = \frac{7}{4}\)</span>
+<span class="math inline">\(\pm \sqrt{5.991} \cdot \sqrt{\frac{7}{4}} \times \begin{pmatrix} 1/\sqrt{2} \\ 1/\sqrt{2} \end{pmatrix} = \pm \begin{pmatrix} 2.2896 \\ 2.2896 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(\lambda_2 = \frac{1}{4}\)</span>
+<span class="math inline">\(\pm \sqrt{5.991} \sqrt{\frac{1}{4}} \begin{pmatrix} 1/\sqrt{2} \\ -1/\sqrt{2} \end{pmatrix} = \pm \begin{pmatrix} 0.8654 \\ -0.8654 \end{pmatrix}\)</span></p>
+</div>
+</div>
+<div id="the-sampling-distribution-of-mathbfbar-x-and-boldsymbols" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> The Sampling Distribution of <span class="math inline">\(\mathbf{\bar X}\)</span> and <span class="math inline">\(\boldsymbol{S}\)</span><a href="displaying-multivariate-data-and-measures-of-distance.html#the-sampling-distribution-of-mathbfbar-x-and-boldsymbols" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the univariate case, the sample mean <span class="math inline">\(\bar X\)</span> is an unbiased estimator of the population mean <span class="math inline">\(\mu\)</span>. Inferences on <span class="math inline">\(\mu\)</span> is based on the sampling distribution of <span class="math inline">\(\bar X\)</span>. It is known that <span class="math inline">\(E(\bar X)=\mu, Var(\bar X)=\frac{\sigma^2}{n}\)</span>, where <span class="math inline">\(\sigma^2\)</span> is the population variance. If population distribution is normal, <span class="math inline">\(\bar X\)</span> is also normally distributed; if the population distribution is non-normal, by central limit theorem, when the sample size is large enough, <span class="math inline">\(\bar X\)</span> is approximately normally distributed. As for the sample variance <span class="math inline">\(s^2\)</span>, we have <span class="math inline">\(\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\)</span>. And <span class="math inline">\(\sum_{i=1}^n \frac{(x_i-\mu)^2}{\sigma^2}\sim \chi^2_n\)</span>. Before generalizing to multivariate cases, let’s review distributions related to normal for univariate variables.</p>
+<div id="distributions-related-to-normal-distribution" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Distributions Related to Normal Distribution<a href="displaying-multivariate-data-and-measures-of-distance.html#distributions-related-to-normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Most of the following conclusions can be shown by using the moment-generating function.</p>
+<ul>
+<li>If <span class="math inline">\(X\sim N(\mu, \sigma)\)</span>, then <span class="math inline">\(Z=\frac{X-\mu}{\sigma}\sim N(0, 1)\)</span>.</li>
+<li>If <span class="math inline">\(Z\sim N(0, 1)\)</span>, then <span class="math inline">\(Z^2\sim \chi^2_1\)</span>, a chi-square distribution with degrees of freedom <span class="math inline">\(df=1\)</span>.</li>
+<li>If <span class="math inline">\(W\sim \chi^2_p, V\sim \chi^2_q\)</span>, and they are independent, then
+<span class="math display">\[
+W+V\sim \chi^2_{p+q}  \mbox{    and  } \quad \frac{W/p}{V/q}\sim F_{p, q} \mbox{ (an F distribution with $df_n=p, df_d=q$)}.
+\]</span></li>
+<li>If <span class="math inline">\(Z\sim N(0, 1), W\sim \chi^2_{\gamma}\)</span>, and they are independent, then
+<span class="math display">\[
+\frac{Z}{\sqrt{\frac{W}{\gamma}}}\sim t_{\gamma-1} \quad \mbox{(a $t$ distribution with degrees of freedom $df=\gamma$)}
+\]</span></li>
+</ul>
+</div>
+<div id="applications-to-distributions-related-to-sample-means" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Applications to Distributions Related to Sample Means<a href="displaying-multivariate-data-and-measures-of-distance.html#applications-to-distributions-related-to-sample-means" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose that <span class="math inline">\(X_1, X_2, \cdots, X_n\)</span> are iid from a normal with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>,
+then the sample mean is defined as <span class="math inline">\(\bar X=\frac{\sum X_i}{n}\)</span>. Then we have</p>
+<ul>
+<li><span class="math inline">\(\bar X\sim N(\mu, \frac{\sigma^2}{n})\)</span>.</li>
+<li><span class="math inline">\(\sum_{i=1}^n \left(\frac{X_i-\mu}{\sigma}\right)^2\)</span> follows a chi-square distribution with <span class="math inline">\(df=n\)</span>, denoted as <span class="math inline">\(\chi^2_{n}\)</span>.</li>
+<li><span class="math inline">\(\sum_{i=1}^n \left(\frac{X_i-\bar X}{\sigma}\right)^2=\frac{(n-1)S^2}{\sigma^2}\)</span> follows a chi-square distribution with <span class="math inline">\(df=n-1\)</span>, denoted as <span class="math inline">\(\chi^2_{n-1}\)</span>. It can be shown that <span class="math inline">\(S^2\)</span> and <span class="math inline">\(\bar Y\)</span> are independent.</li>
+<li><span class="math inline">\(T=\frac{\bar X-\mu}{S/\sqrt{n}}=\frac{\frac{\bar X-\mu}{\sigma/\sqrt{n}}}{\sqrt{[\frac{(n-1)S^2}{\sigma^2}]/(n-1)}}\sim t_{n-1}\)</span>. Note that <span class="math inline">\(\frac{\bar X-\mu}{\sigma/\sqrt{n}}\sim N(0, 1)\)</span> and <span class="math inline">\(\frac{(n-1)S^2}{\sigma^2}\sim \chi^2_{n-1}\)</span>, therefore
+<span class="math display">\[
+T^2=\left(\frac{\bar X-\mu}{S/\sqrt{n}}\right)^2=\frac{\frac{n(\bar X-\mu)^2}{\sigma^2}/1}{\frac{(n-1)S^2}{\sigma^2}/(n-1)} \sim F_{1, n-1}
+\]</span></li>
+</ul>
+</div>
+<div id="generalize-to-multivariate-cases" class="section level3 hasAnchor" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> Generalize to Multivariate Cases<a href="displaying-multivariate-data-and-measures-of-distance.html#generalize-to-multivariate-cases" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Review the limit theorems covered in STAT 266. They are useful to prove convergency.</p>
+<ul>
+<li><p>If <span class="math inline">\(X_n\stackrel{P}{\longrightarrow} a\)</span> and <span class="math inline">\(Y_n\stackrel{P}{\longrightarrow} b\)</span>, then <span class="math inline">\(X_n\pm Y_n\stackrel{P}{\longrightarrow} a\pm b\)</span>.</p></li>
+<li><p>If <span class="math inline">\(X_n\stackrel{P}{\longrightarrow} a\)</span> and <span class="math inline">\(Y_n\stackrel{P}{\longrightarrow} b\)</span>, then <span class="math inline">\(X_n Y_n\stackrel{P}{\longrightarrow} a b\)</span>.</p></li>
+<li><p>If <span class="math inline">\(X_n\stackrel{P}{\longrightarrow} X\)</span> and <span class="math inline">\(a\)</span> is a constant, then <span class="math inline">\(aX_n\stackrel{P}{\longrightarrow} aX\)</span>.<br />
+</p></li>
+<li><p>If <span class="math inline">\(X_n\stackrel{P}{\longrightarrow} a\)</span> where <span class="math inline">\(a\)</span> is a fixed constant and <span class="math inline">\(g\)</span> is a real-valued function which is continuous at <span class="math inline">\(a\)</span>, then <span class="math inline">\(g(X_n)\stackrel{P}{\longrightarrow} g(a)\)</span>.</p></li>
+<li><p>If <span class="math inline">\(X_n\stackrel{D}{\longrightarrow}a\)</span> where <span class="math inline">\(a\)</span> is a fixed constant and <span class="math inline">\(g\)</span> is a real-valued function which is continuous at <span class="math inline">\(a\)</span>, then <span class="math inline">\(g(X_n)\stackrel{D}{\longrightarrow} g(a)\)</span>.</p></li>
+<li><p>Slutsky theorem. If <span class="math inline">\(X_n\stackrel{P}{\longrightarrow} a\)</span> and <span class="math inline">\(Y_n\stackrel{D}{\longrightarrow} Y\)</span> then</p></li>
+<li><ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(X_n+Y_n\stackrel{D}{\longrightarrow} a+Y\)</span></li>
+</ol></li>
+<li><ol start="2" style="list-style-type: lower-alpha">
+<li><span class="math inline">\(X_nY_n\stackrel{D}{\longrightarrow}aY\)</span></li>
+</ol></li>
+<li><ol start="3" style="list-style-type: lower-alpha">
+<li><span class="math inline">\(X_n^{-1}Y_n\stackrel{D}{\longrightarrow} a^{-1}Y\)</span></li>
+</ol></li>
+</ul>
+<p>Here we generalize some of limiting distributions from univariate case to multivariate case:</p>
+<p><span class="math display">\[
+\small
+\begin{array}{c|c}
+\hline
+\text{Univariate Case} &amp; \text{Multivariate Case} \\
+\hline
+\sqrt{n}(\bar X-\mu) \stackrel{D}{\longrightarrow} N(0, \sigma^2) &amp; \sqrt{n}(\mathbf{\bar X}-\boldsymbol{\mu}) \stackrel{D}{\longrightarrow} N(\mathbf{0}, \boldsymbol{\Sigma}) \\
+n(\bar X-\mu)(\sigma^2)^{-1}(\bar X-\mu) \stackrel{D}{\longrightarrow} \chi^2_1
+&amp; n(\mathbf{\bar X}-\boldsymbol{\mu})^{T}\boldsymbol{\Sigma}^{-1}(\mathbf{\bar X}-\boldsymbol{\mu}) \stackrel{D}{\longrightarrow} \chi^2_p \\
+n(\bar X-\mu)(S^2)^{-1}(\bar X-\mu) \stackrel{D}{\longrightarrow} \chi^2_1 \: \text{when $n$ is large enough}
+&amp; n(\mathbf{\bar X}-\boldsymbol{\mu})^{T}\mathbf{S}^{-1}(\mathbf{\bar X}-\boldsymbol{\mu}) \stackrel{D}{\longrightarrow} \chi^2_p \:  \text{when $(n-p)$ is large.}
+\end{array}
+\]</span></p>
+</div>
+</div>
+<div id="review-exercises-1" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Review Exercises<a href="displaying-multivariate-data-and-measures-of-distance.html#review-exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>We consider the modified admission data set which contain 400 graduate school admissions decisions. There are five variables: admit/don’t admit to graduate school (1=admitted and 0=not admitted), GRE (Graduate Record Exam scores), GPA (grade point average), prestige of the undergraduate institution (values from 1 to 4 with 1 having the highest prestige), whether the undergraduate institution is in Ontario or not. Use the most proper distance metric to find the distance between the following three individuals:</li>
+</ol>
+<p><span class="math display">\[
+\begin{array}{ccccc}
+\hline
+Admit&amp; GRE&amp;  GPA&amp; Prestige&amp; Ontario\\
+\hline
+     0 &amp;380&amp; 3.61   &amp;     3&amp; Yes\\
+     1&amp; 660&amp; 3.67   &amp;     3&amp; NO\\
+     1&amp; 800&amp; 4.00   &amp;     1&amp; NO\\
+\hline
+\end{array}
+\]</span>
+Suppose the range of GRE is 580 and the range of GPA is 1.74.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Consider a bivariate normal population with <span class="math inline">\(\mu_1=1, \mu_2=3, \sigma_{11}=2, \sigma_{22}=1, \rho_{12}=-0.8\)</span>.</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li>Write out the bivariate normal density.</li>
+<li>Write out the squared Mahalanobis distance <span class="math inline">\((\mathbf{x}-\boldsymbol{\mu})^{T}\mathbf{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})\)</span> as a function of <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>.</li>
+<li>Determine and sketch the constant -density contour that contains 90% of the probability.</li>
+</ol>
+</div>
+<div id="revisit-the-learning-outcomes-1" class="section level2 unnumbered hasAnchor">
+<h2>Revisit the Learning Outcomes<a href="displaying-multivariate-data-and-measures-of-distance.html#revisit-the-learning-outcomes-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After finishing this note, students should be able to</p>
+<ul>
+<li>Plot the index scatter plots matrix, draw a stars plot and Chernoff faces plot of a given multivariate data set using R, and interpret the plots.</li>
+<li>Verify whether a distance function is valid.</li>
+<li>Choose the proper distance metric to calculate the distance between observations based on the data types for multivariate data.</li>
+<li>Write down the density function of a multivariate normal distribution.</li>
+<li>Describe the properties of a multivariate normal distribution.</li>
+<li>Find a <span class="math inline">\((1-\alpha)\times 100\%\)</span> contour for a given bivariate normal distribution.</li>
+<li>Explain the distributions related to the sample mean vector and sample covariance matrix.</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="matrix-algebra.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="hypothesis-tests-on-mean-vectors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

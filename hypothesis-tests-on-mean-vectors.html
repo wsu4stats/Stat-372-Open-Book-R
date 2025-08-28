@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Hypothesis Tests on Mean Vectors | STAT 372 Open Textbook (R)</title>
+  <meta name="description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Hypothesis Tests on Mean Vectors | STAT 372 Open Textbook (R)" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Hypothesis Tests on Mean Vectors | STAT 372 Open Textbook (R)" />
+  
+  <meta name="twitter:description" content="This is an open textbook resource for the STAT372 course at MacEwan University, an introduction to Multivariate Statistics and Machine Learning." />
+  
+
+<meta name="author" content="Dr. Wanhua Su" />
+
+
+<meta name="date" content="2025-07-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="displaying-multivariate-data-and-measures-of-distance.html"/>
+<link rel="next" href="principal-component-analysis.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#learning-outcomes"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#some-examples"><i class="fa fa-check"></i><b>2.2</b> Some Examples</a>
+<ul>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-1-storm-survival-of-sparrows"><i class="fa fa-check"></i>Example 1: Storm Survival of Sparrows</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-2-spam-or-e-mail"><i class="fa fa-check"></i>Example 2: Spam or E-mail?</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#example-3-classification-of-iris"><i class="fa fa-check"></i>Example 3: Classification of Iris</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#multivariate-methods-covered-in-stat-372"><i class="fa fa-check"></i><b>2.3</b> Multivariate Methods Covered in STAT 372</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#review-univariate-analysis"><i class="fa fa-check"></i><b>2.4</b> Review: Univariate Analysis</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#random-variable-and-its-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Random Variable and Its Distribution</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#properties-of-expectation-and-variance"><i class="fa fa-check"></i><b>2.4.2</b> Properties of Expectation and Variance</a></li>
+<li class="chapter" data-level="2.4.3" data-path="intro.html"><a href="intro.html#continuous-random-variables"><i class="fa fa-check"></i><b>2.4.3</b> Continuous Random Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#revisit-learning-learning-outcomes"><i class="fa fa-check"></i>Revisit Learning Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="matrix-algebra.html"><a href="matrix-algebra.html"><i class="fa fa-check"></i><b>3</b> Matrix Algebra</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrix-algebra.html"><a href="matrix-algebra.html#learning-outcomes-1"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="3.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#vectors"><i class="fa fa-check"></i><b>3.1</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#some-basic-operations-on-vectors"><i class="fa fa-check"></i><b>3.1.1</b> Some Basic Operations on Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="matrix-algebra.html"><a href="matrix-algebra.html#matrices"><i class="fa fa-check"></i><b>3.2</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="matrix-algebra.html"><a href="matrix-algebra.html#basic-operations-on-matrix"><i class="fa fa-check"></i><b>3.2.1</b> Basic Operations on Matrix</a></li>
+<li class="chapter" data-level="3.2.2" data-path="matrix-algebra.html"><a href="matrix-algebra.html#eigenvalues-and-eigenvectors"><i class="fa fa-check"></i><b>3.2.2</b> Eigenvalues and Eigenvectors</a></li>
+<li class="chapter" data-level="3.2.3" data-path="matrix-algebra.html"><a href="matrix-algebra.html#spectral-eigen-decomposition"><i class="fa fa-check"></i><b>3.2.3</b> Spectral (Eigen) Decomposition</a></li>
+<li class="chapter" data-level="3.2.4" data-path="matrix-algebra.html"><a href="matrix-algebra.html#singular-value-decomposition"><i class="fa fa-check"></i><b>3.2.4</b> Singular-Value Decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="matrix-algebra.html"><a href="matrix-algebra.html#mean-vectors-and-covariance-matrices"><i class="fa fa-check"></i><b>3.3</b> Mean Vectors and Covariance Matrices</a></li>
+<li class="chapter" data-level="3.4" data-path="matrix-algebra.html"><a href="matrix-algebra.html#sample-mean-vector-and-covariance-matrix"><i class="fa fa-check"></i><b>3.4</b> Sample Mean Vector and Covariance Matrix</a></li>
+<li class="chapter" data-level="3.5" data-path="matrix-algebra.html"><a href="matrix-algebra.html#review-exercises"><i class="fa fa-check"></i><b>3.5</b> Review Exercises</a></li>
+<li class="chapter" data-level="" data-path="matrix-algebra.html"><a href="matrix-algebra.html#revisit-the-learning-outcomes"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html"><i class="fa fa-check"></i><b>4</b> Displaying Multivariate Data and Measures of Distance</a>
+<ul>
+<li class="chapter" data-level="" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#learning-outcomes-2"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="4.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#display-multivariate-data"><i class="fa fa-check"></i><b>4.1</b> Display Multivariate Data</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#scatterplot"><i class="fa fa-check"></i><b>4.1.1</b> Scatterplot</a></li>
+<li class="chapter" data-level="4.1.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#graphs-of-growth-curves"><i class="fa fa-check"></i><b>4.1.2</b> Graphs of Growth Curves</a></li>
+<li class="chapter" data-level="4.1.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#star-plots"><i class="fa fa-check"></i><b>4.1.3</b> Star Plots</a></li>
+<li class="chapter" data-level="4.1.4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#chernoff-faces-plot"><i class="fa fa-check"></i><b>4.1.4</b> Chernoff Faces Plot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-in-multivariate-analysis"><i class="fa fa-check"></i><b>4.2</b> Distance in Multivariate Analysis</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distances-for-quantitative-variables"><i class="fa fa-check"></i><b>4.2.1</b> Distances for Quantitative Variables</a></li>
+<li class="chapter" data-level="4.2.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-for-categorical-variables"><i class="fa fa-check"></i><b>4.2.2</b> Distance for Categorical Variables</a></li>
+<li class="chapter" data-level="4.2.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distance-for-mixed-variable-types"><i class="fa fa-check"></i><b>4.2.3</b> Distance for Mixed Variable Types</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3</b> Multivariate Normal Distribution</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#properties-of-multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.1</b> Properties of Multivariate Normal Distribution</a></li>
+<li class="chapter" data-level="4.3.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#bivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.2</b> Bivariate Normal Distribution</a></li>
+<li class="chapter" data-level="4.3.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#contour-of-multivariate-normal-distribution"><i class="fa fa-check"></i><b>4.3.3</b> Contour of Multivariate Normal Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#the-sampling-distribution-of-mathbfbar-x-and-boldsymbols"><i class="fa fa-check"></i><b>4.4</b> The Sampling Distribution of <span class="math inline">\(\mathbf{\bar X}\)</span> and <span class="math inline">\(\boldsymbol{S}\)</span></a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#distributions-related-to-normal-distribution"><i class="fa fa-check"></i><b>4.4.1</b> Distributions Related to Normal Distribution</a></li>
+<li class="chapter" data-level="4.4.2" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#applications-to-distributions-related-to-sample-means"><i class="fa fa-check"></i><b>4.4.2</b> Applications to Distributions Related to Sample Means</a></li>
+<li class="chapter" data-level="4.4.3" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#generalize-to-multivariate-cases"><i class="fa fa-check"></i><b>4.4.3</b> Generalize to Multivariate Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#review-exercises-1"><i class="fa fa-check"></i><b>4.5</b> Review Exercises</a></li>
+<li class="chapter" data-level="" data-path="displaying-multivariate-data-and-measures-of-distance.html"><a href="displaying-multivariate-data-and-measures-of-distance.html#revisit-the-learning-outcomes-1"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html"><i class="fa fa-check"></i><b>5</b> Hypothesis Tests on Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#learning-outcomes-3"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="5.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-one-mean-vector"><i class="fa fa-check"></i><b>5.1</b> Hypothesis Test for one Mean Vector</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case"><i class="fa fa-check"></i><b>5.1.1</b> Univariate Case</a></li>
+<li class="chapter" data-level="5.1.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case"><i class="fa fa-check"></i><b>5.1.2</b> Multivariate Case</a></li>
+<li class="chapter" data-level="5.1.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#evaluating-multivariate-normality"><i class="fa fa-check"></i><b>5.1.3</b> Evaluating Multivariate Normality</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-two-mean-vectors"><i class="fa fa-check"></i><b>5.2</b> Hypothesis Test for Two Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-based-on-two-independent-samples"><i class="fa fa-check"></i><b>5.2.1</b> Univariate Case Based on Two Independent Samples</a></li>
+<li class="chapter" data-level="5.2.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-based-on-two-independent-samples"><i class="fa fa-check"></i><b>5.2.2</b> Multivariate Case Based on Two Independent Samples</a></li>
+<li class="chapter" data-level="5.2.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#two-sample-non-pooled-hotellings-t2-test"><i class="fa fa-check"></i><b>5.2.3</b> Two-sample Non-pooled Hotelling’s <span class="math inline">\(T^2\)</span> Test</a></li>
+<li class="chapter" data-level="5.2.4" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#two-sample-hotellings-t2-confidence-interval"><i class="fa fa-check"></i><b>5.2.4</b> Two-sample Hotelling’s <span class="math inline">\(T^2\)</span> Confidence Interval</a></li>
+<li class="chapter" data-level="5.2.5" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-based-on-a-paired-sample"><i class="fa fa-check"></i><b>5.2.5</b> Univariate Case Based on a Paired Sample</a></li>
+<li class="chapter" data-level="5.2.6" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-based-on-a-paired-sample"><i class="fa fa-check"></i><b>5.2.6</b> Multivariate Case Based on a Paired Sample</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-several-mean-vectors"><i class="fa fa-check"></i><b>5.3</b> Hypothesis Test for Several Mean Vectors</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#univariate-case-one-way-anova-f-test"><i class="fa fa-check"></i><b>5.3.1</b> Univariate Case: One-Way ANOVA F Test</a></li>
+<li class="chapter" data-level="5.3.2" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-one-way-manova"><i class="fa fa-check"></i><b>5.3.2</b> Multivariate Case: One-Way MANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="hypothesis-tests-on-mean-vectors.html"><a href="hypothesis-tests-on-mean-vectors.html#revisit-the-learning-outcomes-2"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html"><i class="fa fa-check"></i><b>6</b> Principal Component Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#learning-outcomes-4"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="6.1" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#finding-the-principal-components"><i class="fa fa-check"></i><b>6.1</b> Finding the Principal Components</a></li>
+<li class="chapter" data-level="6.2" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#scaling-in-principal-component-analysis"><i class="fa fa-check"></i><b>6.2</b> Scaling in Principal Component Analysis</a></li>
+<li class="chapter" data-level="6.3" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#limitations-of-principal-component-analysis"><i class="fa fa-check"></i><b>6.3</b> Limitations of Principal Component Analysis</a></li>
+<li class="chapter" data-level="6.4" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#further-reading"><i class="fa fa-check"></i><b>6.4</b> Further Reading</a></li>
+<li class="chapter" data-level="" data-path="principal-component-analysis.html"><a href="principal-component-analysis.html#revisit-the-learning-outcomes-3"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>7</b> Factor Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="factor-analysis.html"><a href="factor-analysis.html#learning-outcomes-5"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="7.1" data-path="factor-analysis.html"><a href="factor-analysis.html#model-of-factor-analysis"><i class="fa fa-check"></i><b>7.1</b> Model of Factor Analysis</a></li>
+<li class="chapter" data-level="7.2" data-path="factor-analysis.html"><a href="factor-analysis.html#estimating-factor-loadings-l_ij-and-specific-variance-psi_i"><i class="fa fa-check"></i><b>7.2</b> Estimating Factor Loadings <span class="math inline">\(l_{ij}\)</span> and Specific Variance <span class="math inline">\(\psi_i\)</span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="factor-analysis.html"><a href="factor-analysis.html#the-principle-component-method"><i class="fa fa-check"></i><b>7.2.1</b> The Principle Component Method</a></li>
+<li class="chapter" data-level="7.2.2" data-path="factor-analysis.html"><a href="factor-analysis.html#the-maximum-likelihood-method"><i class="fa fa-check"></i><b>7.2.2</b> The Maximum Likelihood Method</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="factor-analysis.html"><a href="factor-analysis.html#factor-rotation"><i class="fa fa-check"></i><b>7.3</b> Factor Rotation</a></li>
+<li class="chapter" data-level="7.4" data-path="factor-analysis.html"><a href="factor-analysis.html#factor-scores"><i class="fa fa-check"></i><b>7.4</b> Factor Scores</a></li>
+<li class="chapter" data-level="" data-path="factor-analysis.html"><a href="factor-analysis.html#revisit-the-learning-outcomes-4"><i class="fa fa-check"></i>Revisit the Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html"><i class="fa fa-check"></i><b>8</b> Discriminant Analysis and Classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#learning-outcomes-6"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="8.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#performance-measure"><i class="fa fa-check"></i><b>8.2</b> Performance Measure</a></li>
+<li class="chapter" data-level="8.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#overfitting-and-cross-validation"><i class="fa fa-check"></i><b>8.3</b> Overfitting and Cross Validation</a></li>
+<li class="chapter" data-level="8.4" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classification-models"><i class="fa fa-check"></i><b>8.4</b> Classification Models</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>8.4.1</b> <span class="math inline">\(K\)</span> Nearest Neighbors</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#logistic-regression-for-binary-response"><i class="fa fa-check"></i><b>8.5</b> Logistic Regression for Binary Response</a>
+<ul>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#interpretation-of-beta_i"><i class="fa fa-check"></i>Interpretation of <span class="math inline">\(\beta_i\)</span></a></li>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#estimation-of-beta_i"><i class="fa fa-check"></i>Estimation of <span class="math inline">\(\beta_i\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#logistic-regression-for-multi-class-nominal-data"><i class="fa fa-check"></i><b>8.6</b> Logistic Regression for Multi-class Nominal Data</a></li>
+<li class="chapter" data-level="8.7" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#cumulative-logit-model-for-multi-class-ordinal-data"><i class="fa fa-check"></i><b>8.7</b> Cumulative Logit Model for Multi-class Ordinal Data</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#cumulative-logit-models-with-proportional-odds"><i class="fa fa-check"></i><b>8.7.1</b> Cumulative Logit Models with Proportional Odds</a></li>
+<li class="chapter" data-level="8.7.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-probability-of-each-category"><i class="fa fa-check"></i><b>8.7.2</b> Model Probability of Each Category</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-selection-for-logistic-regression"><i class="fa fa-check"></i><b>8.8</b> Model Selection for Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#aic-and-bic"><i class="fa fa-check"></i><b>8.8.1</b> AIC and BIC</a></li>
+<li class="chapter" data-level="8.8.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#forward-selection"><i class="fa fa-check"></i><b>8.8.2</b> Forward Selection</a></li>
+<li class="chapter" data-level="8.8.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#backward-elimination"><i class="fa fa-check"></i><b>8.8.3</b> Backward Elimination</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#model-checking"><i class="fa fa-check"></i><b>8.9</b> Model Checking</a>
+<ul>
+<li class="chapter" data-level="8.9.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#residual-analysis"><i class="fa fa-check"></i><b>8.9.1</b> Residual Analysis</a></li>
+<li class="chapter" data-level="8.9.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#preditive-power-accuracy-and-roc-curve"><i class="fa fa-check"></i><b>8.9.2</b> Preditive Power: Accuracy and ROC Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="8.10" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classification-tree-recursive-partitioning"><i class="fa fa-check"></i><b>8.10</b> Classification Tree (Recursive Partitioning)</a></li>
+<li class="chapter" data-level="8.11" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#regression-tree"><i class="fa fa-check"></i><b>8.11</b> Regression Tree</a></li>
+<li class="chapter" data-level="8.12" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#random-forest"><i class="fa fa-check"></i><b>8.12</b> Random Forest</a></li>
+<li class="chapter" data-level="8.13" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#support-vector-machines"><i class="fa fa-check"></i><b>8.13</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="8.14" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#neural-networks"><i class="fa fa-check"></i><b>8.14</b> Neural Networks</a></li>
+<li class="chapter" data-level="8.15" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#classical-methods"><i class="fa fa-check"></i><b>8.15</b> Classical Methods</a>
+<ul>
+<li class="chapter" data-level="8.15.1" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#mahalanobis-distance-method"><i class="fa fa-check"></i><b>8.15.1</b> Mahalanobis Distance Method</a></li>
+<li class="chapter" data-level="8.15.2" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#bayes-posterior"><i class="fa fa-check"></i><b>8.15.2</b> Bayes Posterior</a></li>
+<li class="chapter" data-level="8.15.3" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#fishers-discriminant-analysis"><i class="fa fa-check"></i><b>8.15.3</b> Fisher’s Discriminant Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="8.16" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#summary"><i class="fa fa-check"></i><b>8.16</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="discriminant-analysis-and-classification.html"><a href="discriminant-analysis-and-classification.html#revisit-learning-outcomes"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="clustering-analysis.html"><a href="clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#learning-outcomes-7"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="9.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#introduction-2"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#clustering-methods"><i class="fa fa-check"></i><b>9.2</b> Clustering Methods</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#hierarchical-method"><i class="fa fa-check"></i><b>9.2.1</b> Hierarchical Method</a></li>
+<li class="chapter" data-level="9.2.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#k-means"><i class="fa fa-check"></i><b>9.2.2</b> K-Means</a></li>
+<li class="chapter" data-level="9.2.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#model-based-clustering"><i class="fa fa-check"></i><b>9.2.3</b> Model-Based Clustering</a></li>
+<li class="chapter" data-level="9.2.4" data-path="clustering-analysis.html"><a href="clustering-analysis.html#pros-and-cons-of-clustering-methods"><i class="fa fa-check"></i><b>9.2.4</b> Pros and Cons of Clustering Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#determine-k-number-of-clusters"><i class="fa fa-check"></i><b>9.3</b> Determine <span class="math inline">\(K\)</span>: Number of Clusters</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="clustering-analysis.html"><a href="clustering-analysis.html#the-elbow-plot-method"><i class="fa fa-check"></i><b>9.3.1</b> The Elbow Plot Method</a></li>
+<li class="chapter" data-level="9.3.2" data-path="clustering-analysis.html"><a href="clustering-analysis.html#the-silhouette-score"><i class="fa fa-check"></i><b>9.3.2</b> The Silhouette Score</a></li>
+<li class="chapter" data-level="9.3.3" data-path="clustering-analysis.html"><a href="clustering-analysis.html#gap-statistics"><i class="fa fa-check"></i><b>9.3.3</b> Gap Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#side-note-on-the-em-algorithm"><i class="fa fa-check"></i>Side-Note on the EM Algorithm</a></li>
+<li class="chapter" data-level="" data-path="clustering-analysis.html"><a href="clustering-analysis.html#revisit-learning-outcomes-1"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html"><i class="fa fa-check"></i><b>10</b> Canonical Correlation Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#learning-outcomes-8"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="10.1" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#objective"><i class="fa fa-check"></i><b>10.1</b> Objective</a></li>
+<li class="chapter" data-level="10.2" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#obtain-the-canonical-variates-pairs"><i class="fa fa-check"></i><b>10.2</b> Obtain the Canonical Variates Pairs</a></li>
+<li class="chapter" data-level="10.3" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#interpretation"><i class="fa fa-check"></i><b>10.3</b> Interpretation</a></li>
+<li class="chapter" data-level="10.4" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#testing-mathbfsigma_120"><i class="fa fa-check"></i><b>10.4</b> Testing <span class="math inline">\(\mathbf{\Sigma}_{12}=0\)</span></a></li>
+<li class="chapter" data-level="" data-path="canonical-correlation-analysis.html"><a href="canonical-correlation-analysis.html#revisit-learning-outcomes-2"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html"><i class="fa fa-check"></i><b>11</b> Multidimensional Scaling</a>
+<ul>
+<li class="chapter" data-level="" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#learning-outcomes-9"><i class="fa fa-check"></i>Learning Outcomes</a></li>
+<li class="chapter" data-level="11.1" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#objective-1"><i class="fa fa-check"></i><b>11.1</b> Objective</a></li>
+<li class="chapter" data-level="11.2" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#methods"><i class="fa fa-check"></i><b>11.2</b> Methods</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#classical-scaling"><i class="fa fa-check"></i><b>11.2.1</b> Classical Scaling</a></li>
+<li class="chapter" data-level="11.2.2" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#metric-scaling"><i class="fa fa-check"></i><b>11.2.2</b> Metric Scaling</a></li>
+<li class="chapter" data-level="11.2.3" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#non-metric-scaling"><i class="fa fa-check"></i><b>11.2.3</b> Non-metric Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#example"><i class="fa fa-check"></i><b>11.3</b> Example</a></li>
+<li class="chapter" data-level="" data-path="multidimensional-scaling.html"><a href="multidimensional-scaling.html#revisit-learning-outcomes-3"><i class="fa fa-check"></i>Revisit Learning Outcomes</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAT 372 Open Textbook (R)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="hypothesis-tests-on-mean-vectors" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">5</span> Hypothesis Tests on Mean Vectors<a href="hypothesis-tests-on-mean-vectors.html#hypothesis-tests-on-mean-vectors" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In the univariate case, a one-sample <span class="math inline">\(t\)</span> test is used for the hypothesis test for one population mean, the test statistic is <span class="math inline">\(t=\frac{\bar x-\mu_0}{s/\sqrt{n}}\)</span>. We apply the one-sample <span class="math inline">\(t\)</span> test on the paired differences when comparing two population means with paired samples. When comparing two population means with two independent samples, we use a non-pooled two-sample <span class="math inline">\(t\)</span> test. The test statistic is
+<span class="math display">\[
+t=\frac{(\bar x_1-\bar x_2)-\Delta_0}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}
+\]</span>
+If the two population variances <span class="math inline">\(\sigma_1^2, \sigma_2^2\)</span> are the same, we can combine the two samples and the common variance can be estimated as
+<span class="math display">\[
+s_p^2=\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}
+\]</span>
+and the test statistic becomes
+<span class="math display">\[
+t=\frac{(\bar x_1-\bar x_2)-\Delta_0}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}
+\]</span>
+When comparing more than two population means, we use one-way ANOVA. This note covers how to conduct hypothesis tests on the mean vector for multivariate data.</p>
+<div id="learning-outcomes-3" class="section level2 unnumbered hasAnchor">
+<h2>Learning Outcomes<a href="hypothesis-tests-on-mean-vectors.html#learning-outcomes-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After finishing this note, students should be able to</p>
+<ul>
+<li>Explain the main idea of using a chi-square Q-Q plot to assess the multivariate normality assumption.</li>
+<li>Assess the multivariate normality through a chi-square Q-Q plot and casual procedures using R.</li>
+<li>Conduct a Hotelling’s <span class="math inline">\(T^2\)</span> test on one mean vector based on one sample or paired sample.</li>
+<li>Conduct a Hotelling’s <span class="math inline">\(T^2\)</span> test on two mean vectors based on two independent samples.</li>
+<li>Conduct a one-way MANOVA test on at least two mean vectors based on at least two independent samples.</li>
+<li>Obtain <span class="math inline">\((1-\alpha)\times 100\%\)</span> Bonferroni confidence intervals associated with a certain test if applicable.</li>
+</ul>
+</div>
+<div id="hypothesis-test-for-one-mean-vector" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Hypothesis Test for one Mean Vector<a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-one-mean-vector" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s first review hypothesis tests for one population mean in the univarite case.</p>
+<div id="univariate-case" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Univariate Case<a href="hypothesis-tests-on-mean-vectors.html#univariate-case" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For one population mean in the univariate case, the hypotheses for a two-tailed test are:
+<span class="math display">\[
+H_0: \mu=\mu_0 \mbox{  versus  } H_a: \mu\ne \mu_0.
+\]</span>
+By the critical value approach, we reject <span class="math inline">\(H_0: \mu=\mu_0\)</span> at the significance level <span class="math inline">\(\alpha\)</span> if the observed test statistic
+<span class="math display">\[
+t_o=\frac{\bar x-\mu_0}{\frac{s}{\sqrt{n}}}\ge t_{n-1} (\frac{\alpha}{2}) \mbox{  or   } t_o\le -t_{n-1} (\frac{\alpha}{2})
+\]</span>
+where <span class="math inline">\(t_{n-1} (\frac{\alpha}{2})\)</span> is the <span class="math inline">\(t\)</span>-score with an area <span class="math inline">\(\frac{\alpha}{2}\)</span> to its right under a <span class="math inline">\(t\)</span> density curve with <span class="math inline">\(df=n-1\)</span>. It is equivalent to reject <span class="math inline">\(H_0\)</span> if
+<span class="math display">\[
+|t_o|=\frac{|\bar x-\mu_0|}{s/\sqrt{n}}\ge t_{n-1} (\frac{\alpha}{2}) \mbox{ or if  } t_o^2=\frac{(\bar x-\mu_0)^2}{s^2/n} \ge F_{1, n-1}(\alpha).
+\]</span>
+Note that
+<span class="math display">\[
+T^2=\frac{(\bar X-\mu)^2}{s^2/n}=\frac{\left(\frac{\bar X-\mu}{\sigma/\sqrt{n}}\right)^2}{s^2/\sigma^2}\sim F_{1, n-1}
+\]</span>
+because <span class="math inline">\(\left(\frac{\bar X-\mu}{\sigma/\sqrt{n}}\right)^2\sim \chi^2_1\)</span> and <span class="math inline">\(\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\)</span>. The term <span class="math inline">\(T^2=\frac{(\bar X-\mu)^2}{s^2/n}\)</span> can be rewritten as
+<span class="math display">\[
+T^2=n(\bar X-\mu)(s^2)^{-1}(\bar X-\mu).
+\]</span></p>
+</div>
+<div id="multivariate-case" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Multivariate Case<a href="hypothesis-tests-on-mean-vectors.html#multivariate-case" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The one-sample t test can be generalized to the multivariate case for one population mean vector.</p>
+<div id="one-sample-hotellings-t2-test" class="section level4 unnumbered hasAnchor">
+<h4>One-sample Hotelling’s <span class="math inline">\(T^2\)</span> Test<a href="hypothesis-tests-on-mean-vectors.html#one-sample-hotellings-t2-test" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>For multivariate cases, each observation has multiple measurements in a vector form. The hypotheses for a two-tailed test are:
+<span class="math display">\[
+H_0: \boldsymbol{\mu}=\boldsymbol{\mu}_0 \mbox{  versus  } H_a: \boldsymbol{\mu}\ne \boldsymbol{\mu}_0.
+\]</span>
+Reject <span class="math inline">\(H_0: \boldsymbol{\mu}=\boldsymbol{\mu}_0\)</span> if the test statistic <span class="math inline">\(T^2=n(\mathbf{\bar X}-\boldsymbol{\mu}_0)^T\mathbf{S}^{-1}(\mathbf{\bar X}-\boldsymbol{\mu}_0)\)</span> is too large, where <span class="math inline">\(\mathbf{\bar X}_{p \times 1}\)</span> is the sample mean vector and <span class="math inline">\(\mathbf{S}_{p\times p}\)</span> is the sample covariance matrix respectively based on the observation matrix <span class="math inline">\(\mathbf{X}_{n \times p}\)</span>. The test statistic <span class="math inline">\(T^2\)</span> follows a <em>Hotelling’s</em> <span class="math inline">\(T^2\)</span> distribution with degrees of freedom <span class="math inline">\(p\)</span> and <span class="math inline">\(n-1\)</span>. It can be shown that
+<span class="math display">\[
+\frac{n-p}{p(n-1)}T^2_{p, n-1}\sim F_{p, n-p}.
+\]</span>
+Therefore, we reject <span class="math inline">\(H_0: \boldsymbol{\mu}=\boldsymbol{\mu}_0\)</span> at significance level <span class="math inline">\(\alpha\)</span> if
+<span class="math display">\[
+\frac{n(n-p)}{p(n-1)}(\mathbf{\bar x}-\boldsymbol{\mu}_0)^T\mathbf{S}^{-1}(\mathbf{\bar x}-\boldsymbol{\mu}_0)\ge F_{p, n-p}(\alpha)
+\]</span>
+where <span class="math inline">\(F_{p, n-p}(\alpha)\)</span> is the upper <span class="math inline">\(100\alpha\)</span>th percentile of the <span class="math inline">\(F_{p, n-p}\)</span> distribution.</p>
+<p>A <span class="math inline">\((1-\alpha)\times 100 \%\)</span> <em>confidence region</em> for the mean vector <span class="math inline">\(\boldsymbol{\mu}\)</span> is the ellipsoid such that
+<span class="math display">\[
+(\mathbf{\bar x}-\boldsymbol{\mu})^T\mathbf{S}^{-1}(\mathbf{\bar x}-\boldsymbol{\mu})\le c^2=\frac{p(n-1)}{n(n-p)} F_{p, n-p}(\alpha).
+\]</span>
+The ellipsoid is centered at <span class="math inline">\(\mathbf{\bar x}\)</span> and has axes <span class="math inline">\(\pm \sqrt{\frac{p(n-1)}{n(n-p)} F_{p, n-p}(\alpha)}\sqrt{\lambda_i}\mathbf{e}_i\)</span>, where <span class="math inline">\(\lambda_i\)</span> and <span class="math inline">\(\mathbf{e}_i\)</span> are the eigenvalues and corresponding unit eigenvectors of the sample covariance matrix <span class="math inline">\(\mathbf{S}\)</span>. We should reject <span class="math inline">\(H_0: \boldsymbol{\mu}=\boldsymbol{\mu}_0\)</span> if <span class="math inline">\(\boldsymbol{\mu}_0\)</span> is outside the confidence region, i.e., if the distance
+<span class="math display">\[
+(\mathbf{\bar x}-\boldsymbol{\mu}_0)^T\mathbf{S}^{-1}(\mathbf{\bar x}-\boldsymbol{\mu}_0) &gt;\frac{p(n-1)}{n(n-p)} F_{p, n-p}(\alpha).
+\]</span></p>
+<p><span class="math inline">\(\textbf{Side note}\)</span>: The derivation of the distribution of <span class="math inline">\(T^2\)</span> is based on the Wishart distribution and its properties, which is outside the scope of this course. Some more details are provided here and are not required for exams.</p>
+<ul>
+<li>If <span class="math inline">\(\mathbf{y}_1, \mathbf{y}_2, \cdots, \mathbf{y}_n\)</span> are identically independently follow a multivariate normal distribution <span class="math inline">\(N_p(\mathbf{0}, \boldsymbol{\Sigma})\)</span>, then <span class="math inline">\(\mathbf{A}=\sum_{i=1}^n \mathbf{y}_i \mathbf{y}_i^T\sim W_p(n, \boldsymbol{\Sigma})\)</span>, a <span class="math inline">\(p\)</span> dimensional Wishart distribution with parameters <span class="math inline">\(n\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}\)</span>.</li>
+<li>If <span class="math inline">\(\mathbf{A} \sim W_p(n, \boldsymbol{\Sigma})\)</span> and <span class="math inline">\(\mathbf{y}\)</span> is a <span class="math inline">\(p\times 1\)</span> random vector independent of <span class="math inline">\(\mathbf{A}\)</span>, then
+<span class="math display">\[
+\frac{\mathbf{y}^T\boldsymbol{\Sigma}^{-1} \mathbf{y}}{\mathbf{y}^T\mathbf{A}^{-1} \mathbf{y}}\sim \chi_{n-(p-1)}^2 \mbox{    and independent of $\mathbf{y}$.}
+\]</span></li>
+</ul>
+<p>Given the definition of Wishart distribution and its property, the distribution of <span class="math inline">\(T^2\)</span> can be obtained as follows:</p>
+<ul>
+<li>Suppose <span class="math inline">\(\mathbf{x}_1, \mathbf{x}_2, \cdots, \mathbf{x}_n\)</span> are identically independently follow a multivariate normal distribution <span class="math inline">\(N_p(\boldsymbol{\mu}, \boldsymbol{\Sigma})\)</span>, then the sample mean vector <span class="math inline">\(\mathbf{\bar x}\)</span> and the sample covariance matrix <span class="math inline">\(\mathbf{S}\)</span> have the following distributions
+<span class="math display">\[
+\mathbf{\bar x}\sim N_p\left(\boldsymbol{\mu},  \frac{\boldsymbol{\Sigma}}{n}\right), \quad \quad (n-1)\mathbf{S}=\sum_{i=1}^n (\mathbf{x}_i-\mathbf{\bar x})(\mathbf{x}_i-\mathbf{\bar x})^T\sim W_p(n-1, \boldsymbol{\Sigma})
+\]</span>
+and the sample mean vector <span class="math inline">\(\mathbf{\bar x}\)</span> and the sample covariance matrix <span class="math inline">\(\mathbf{S}\)</span> are independent. This implies random vector <span class="math inline">\(\mathbf{\bar x}-\boldsymbol{\mu}\sim N_p\left(\boldsymbol{0}, \frac{\boldsymbol{\Sigma}}{n}\right)\)</span> and independent of <span class="math inline">\(\mathbf{S}\)</span>.
+Since
+<span class="math display">\[
+\begin{aligned}
+U&amp;=(\mathbf{\bar x}-\boldsymbol{\mu})^T\left(\frac{\boldsymbol{\Sigma}}{n}\right)^{-1}(\mathbf{\bar x}-\boldsymbol{\mu})=n(\mathbf{\bar x}-\boldsymbol{\mu})^T\boldsymbol{\Sigma}^{-1}(\mathbf{\bar x}-\boldsymbol{\mu})\sim \chi_p^2\\
+V&amp;=\frac{(\mathbf{\bar x}-\boldsymbol{\mu})^T\boldsymbol{\Sigma}^{-1}(\mathbf{\bar x}-\boldsymbol{\mu})}{(\mathbf{\bar x}-\boldsymbol{\mu})^T[(n-1)\mathbf{S}]^{-1}(\mathbf{\bar x}-\boldsymbol{\mu})}=\frac{(n-1)(\mathbf{\bar x}-\boldsymbol{\mu})^T\boldsymbol{\Sigma}^{-1}(\mathbf{\bar x}-\boldsymbol{\mu})}{(\mathbf{\bar x}-\boldsymbol{\mu})^T\mathbf{S}^{-1}(\mathbf{\bar x}-\boldsymbol{\mu})}\sim \chi_{(n-1)-(p-1)}^2
+\end{aligned}
+\]</span>
+and <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are independent,
+<span class="math display">\[
+\frac{U/p}{V/(n-p)}\sim F_{p, n-p}\Longrightarrow \left(\frac{n-p}{p}\right)\left(\frac{n}{n-1}\right)(\mathbf{\bar x}-\boldsymbol{\mu})^T\mathbf{S}^{-1}(\mathbf{\bar x}-\boldsymbol{\mu})=\frac{n-p}{p(n-1)}T^2\sim F_{p, n-p}.
+\]</span></li>
+</ul>
+</div>
+<div id="one-sample-hotellings-t2-confidence-interval" class="section level4 unnumbered hasAnchor">
+<h4>One-sample Hotelling’s <span class="math inline">\(T^2\)</span> Confidence Interval<a href="hypothesis-tests-on-mean-vectors.html#one-sample-hotellings-t2-confidence-interval" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Recall the one-way ANOVA F test, we will follow up with a posthoc test to figure out which pairs are significantly different if we reject the null hypothesis that all means are equal. Similarly, for a one-mean Hotelling’s <span class="math inline">\(T^2\)</span> test, if we reject <span class="math inline">\(H_0: \boldsymbol{\mu}=\boldsymbol{\mu}_0\)</span>, we would like to figure out in which variables the means are different.</p>
+<ul>
+<li>A <span class="math inline">\((1-\alpha)\times 100 \%\)</span> simultaneous confidence interval for the <span class="math inline">\(i\)</span>th variable <span class="math inline">\(X_i\)</span> is given by
+<span class="math display">\[
+\bar x_i \pm \sqrt{\frac{p(n-1)}{(n-p)} F_{p, n-p}(\alpha)}\sqrt{\frac{s_i^2}{n}}, i=1, 2, \cdots, p
+\]</span>
+where <span class="math inline">\(\bar x_i\)</span> and <span class="math inline">\(s_i^2\)</span> are the sample mean and sample variance of <span class="math inline">\(X_i\)</span>.</li>
+<li>A <span class="math inline">\((1-\alpha)\times 100 \%\)</span> Bonferroni interval\
+The problem with the simultaneous confidence intervals is that if we are not interested in all <span class="math inline">\(p\)</span> variables, the simultaneous confidence interval may be too wide, and, hence, too conservative. This is called the {} problem. We can adopt the Bonferroni adjustment to fix this problem. A <span class="math inline">\((1-\alpha)\times 100 \%\)</span> Bonferroni interval is given by
+<span class="math display">\[
+\bar x_i \pm t_{n-1}(\frac{\alpha}{2p})\sqrt{\frac{s_i^2}{n}}, i=1, 2, \cdots, p,
+\]</span>
+where <span class="math inline">\(t_{n-1}(\frac{\alpha}{2p})\)</span> is the <span class="math inline">\(\frac{\alpha}{2p}\times 100\)</span>th upper-tailed quantile of the <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(df=n-1\)</span>.The mean vector differs in <span class="math inline">\(X_i\)</span> if <span class="math inline">\(\mu_{0,i}\)</span> is outside the interval.</li>
+</ul>
+<p><span class="math inline">\(\textbf{Example: One-sample Hotelling&#39;s } \boldsymbol{T^2} \textbf{ Test}\)</span></p>
+<p>Given the data matrix
+<span class="math display">\[
+\mathbf{X}=
+\left[
+\begin{array}{cc}
+6&amp; 9\\
+10&amp; 6\\
+8&amp;3
+\end{array}
+\right]
+\]</span></p>
+<ul>
+<li>Find the sample mean vector and covariance matrix.</li>
+</ul>
+<p><span class="math inline">\(X_1 = (6,10,8)\)</span> and <span class="math inline">\(X_2 = (9,6,3)\)</span></p>
+<p><span class="math inline">\(\tilde{x} = \begin{pmatrix} \tilde{x}_1 \\ \tilde{x}_2 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(\tilde{x}_1 = \frac{6+10+8}{3} = 8\)</span>
+<span class="math inline">\(\tilde{x}_2 = \frac{9+6+3}{3} = 6\)</span>
+<span class="math inline">\(\tilde{x} = \begin{pmatrix} 8 \\ 6 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(S = \begin{pmatrix} S_{1}^2 &amp; S_{12} \\ S_{21} &amp; S_{2}^2 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(S = \sqrt{\frac{\sum x^2 - (\sum x)^2/n}{n-1}}\)</span></p>
+<p><span class="math inline">\(S_1^2 = \frac{(6^2 + 10^2 + 8^2) - (6+10+8)^2/3}{3-1} = 4\)</span></p>
+<p><span class="math inline">\(S_2^2 = \frac{(9^2 + 6^2 + 3^2) - (9+6+3)^2/3}{3-1} = 9\)</span></p>
+<p><span class="math inline">\(S_1^2 = \frac{\sum x^2 - (\sum x)^2/n}{n-1}\)</span></p>
+<p><span class="math inline">\(S_2^2 = \frac{\sum y^2 - (\sum y)^2/n}{n-1}\)</span></p>
+<p><span class="math inline">\(S_{12} = \frac{(6 \times 9 + 10 \times 6 + 8 \times 3) - (6+10+8)(9+6+3)/3}{3-1} = -3\)</span></p>
+<p><span class="math inline">\(S_{12} = \frac{\sum xy - (\sum x)(\sum y)/n}{n-1}\)</span></p>
+<p><span class="math inline">\(\therefore S = \begin{pmatrix} S_1^2 &amp; S_{12} \\ S_{21} &amp; S_2^2 \end{pmatrix} = \begin{pmatrix} 4 &amp; -3 \\ -3 &amp; 9 \end{pmatrix}_{2 \times 2}.\)</span></p>
+<ul>
+<li>Test at the 5% significance level
+<span class="math display">\[
+H_0: \boldsymbol{\mu}=\left[
+\begin{array}{c}
+9\\
+5
+\end{array}
+\right]
+\text{versus } H_a: \boldsymbol{\mu}\ne\left[
+\begin{array}{c}
+9\\
+5
+\end{array}
+\right].
+\]</span></li>
+</ul>
+<p><span class="math inline">\(\tilde{\vec{x}} = \begin{pmatrix} 8 \\ 6 \end{pmatrix}\)</span>
+<span class="math inline">\(\therefore \tilde{\vec{x}} - \vec{\mu}_0 = \begin{pmatrix} 8 \\ 6 \end{pmatrix} - \begin{pmatrix} 9 \\ 5 \end{pmatrix} = \begin{pmatrix} 8-9 \\ 6-5 \end{pmatrix} = \begin{pmatrix} -1 \\ 1 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(n=3 \text{ (rows)}\)</span>
+<span class="math inline">\(p=2 \text{ (columns)}\)</span>
+<span class="math inline">\(H_0: \vec{\mu} = \begin{pmatrix} 9 \\ 5 \end{pmatrix} \text{ versus } H_a: \vec{\mu} \ne \begin{pmatrix} 9 \\ 5 \end{pmatrix}\)</span>
+<span class="math inline">\(\alpha = 0.05\)</span></p>
+<p><span class="math inline">\(\textbf{3: }\)</span> test statistic
+<span class="math inline">\(F_0 = \frac{n(n-p)}{p(n-1)} (\tilde{\vec{x}} - \vec{\mu}_0)^T S^{-1} (\tilde{\vec{x}} - \vec{\mu}_0)\)</span>
+<span class="math inline">\(= \frac{3(3-2)}{2(3-1)} \begin{pmatrix} -1 &amp; 1 \end{pmatrix} \begin{pmatrix} 4 &amp; -3 \\ -3 &amp; 9 \end{pmatrix}^{-1} \begin{pmatrix} -1 \\ 1 \end{pmatrix}\)</span></p>
+<p><span class="math inline">\(\begin{pmatrix} 4 &amp; -3 \\ -3 &amp; 9 \end{pmatrix}^{-1}\)</span>
+<span class="math inline">\(M = \begin{pmatrix} 9 &amp; (-1)(-3) \\ (-1)(-3) &amp; 4 \end{pmatrix}^T = \begin{pmatrix} 9 &amp; 3 \\ 3 &amp; 4 \end{pmatrix}^T = \begin{pmatrix} 9 &amp; 3 \\ 3 &amp; 4 \end{pmatrix}\)</span>
+<span class="math inline">\(|S| = 4 \times 9 - (-3)(-3) = 36 - 9 = 27\)</span></p>
+<p><span class="math inline">\(= \frac{3 \times 1}{2 \times 2} \begin{pmatrix} -1 &amp; 1 \end{pmatrix} \frac{1}{27} \begin{pmatrix} 9 &amp; 3 \\ 3 &amp; 4 \end{pmatrix} \begin{pmatrix} -1 \\ 1 \end{pmatrix}\)</span>
+<span class="math inline">\(= \frac{3}{4 \times 27} \begin{pmatrix} -1 &amp; 1 \end{pmatrix} \begin{pmatrix} (9)(-1) + (3)(1) \\ (3)(-1) + (4)(1) \end{pmatrix}\)</span>
+<span class="math inline">\(= \frac{3}{108} \begin{pmatrix} -1 &amp; 1 \end{pmatrix} \begin{pmatrix} -6 \\ 1 \end{pmatrix}\)</span>
+<span class="math inline">\(= \frac{3}{108} ((-6) \times (-1) + 1 \times 1)\)</span>
+<span class="math inline">\(= \frac{3}{108} (6+1)\)</span>
+<span class="math inline">\(= \frac{3}{108} \times 7 = \frac{21}{108} = 0.1944\)</span>.</p>
+<p><span class="math inline">\(\textbf{4: }\)</span> rejection region <span class="math inline">\(F &gt; F_{p, n-p}(\alpha) = F_{2, 3-2}(0.05) = F_{2,1}(0.05) = 199.5\)</span></p>
+<p><span class="math inline">\(\textbf{5: }\)</span> Since <span class="math inline">\(F_0 = 0.1944 &lt; 199.5\)</span>, can’t reject <span class="math inline">\(H_0\)</span>.</p>
+<ol start="6" style="list-style-type: decimal">
+<li>Conclusion: at the 5% significance level, we don’t have sufficient evidence that <span class="math inline">\(\vec{\mu} \ne \begin{pmatrix} 9 \\ 5 \end{pmatrix}\)</span>.</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="hypothesis-tests-on-mean-vectors.html#cb1-1" tabindex="-1"></a>(xmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">6</span>,<span class="dv">3</span>),<span class="dv">3</span>,<span class="dv">2</span>)) <span class="co">#assign the data matrix</span></span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    6    9
+## [2,]   10    6
+## [3,]    8    3</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="hypothesis-tests-on-mean-vectors.html#cb3-1" tabindex="-1"></a>(mvec <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(xmat))</span></code></pre></div>
+<pre><code>## [1] 8 6</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="hypothesis-tests-on-mean-vectors.html#cb5-1" tabindex="-1"></a>(smat <span class="ot">&lt;-</span> <span class="fu">cov</span>(xmat))</span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    4   -3
+## [2,]   -3    9</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="hypothesis-tests-on-mean-vectors.html#cb7-1" tabindex="-1"></a><span class="fu">library</span>(ICSNP) <span class="co">#load the package</span></span>
+<span id="cb7-2"><a href="hypothesis-tests-on-mean-vectors.html#cb7-2" tabindex="-1"></a><span class="fu">HotellingsT2</span>(xmat, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">9</span>,<span class="dv">5</span>)) <span class="co">#Hotelling&#39;s test</span></span></code></pre></div>
+<pre><code>## 
+##  Hotelling&#39;s one sample T2-test
+## 
+## data:  xmat
+## T.2 = 0.19444, df1 = 2, df2 = 1, p-value = 0.8485
+## alternative hypothesis: true location is not equal to c(9,5)</code></pre>
+</div>
+</div>
+<div id="evaluating-multivariate-normality" class="section level3 hasAnchor" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> Evaluating Multivariate Normality<a href="hypothesis-tests-on-mean-vectors.html#evaluating-multivariate-normality" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>One of the assumptions for a one-sample <span class="math inline">\(t\)</span> test in the univariate case is that we either have a normal population or a large sample. A normal probability plot is used to check the normality assumption. If the distribution of the data is roughly normal, the points will roughly fall on a straight line. Deviations from a straight line indicate that the underlying distribution is not normal.</p>
+<p>The rationale behind the normal probability plot is as follows. If the data follow a normal distribution with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, their <span class="math inline">\(z\)</span>-scores given by
+<span class="math display">\[
+z_i=\frac{y_i-\mu}{\sigma}=-\frac{\mu}{\sigma}+\frac{1}{\sigma}y_i
+\]</span>
+should follow a standard normal distribution. If we plot the normal scores <span class="math inline">\(z_i\)</span> versus the observed values <span class="math inline">\(y_i\)</span>, the data are roughly on a straight line with intercept <span class="math inline">\(-\frac{\mu}{\sigma}\)</span> and slope <span class="math inline">\(\frac{1}{\sigma}\)</span>. Therefore, if the data are from a normal population, plotting the normal scores (theoretical quantiles) obtained from Table III in the appendix of the recommended textbook (Weiss) versus the observations (observed quantiles) gives a straight line. The normal probability plot is also called the normal Q-Q plot; “Q” stands for “quantile”. The following example shows the steps to construct a normal probability plot.</p>
+<p></p>
+<p>Suppose the data are 75, 80, 90, 85, 75, and 40.</p>
+<p>Here is the code for a normal Q-Q plot</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="hypothesis-tests-on-mean-vectors.html#cb9-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">85</span>, <span class="dv">75</span>, <span class="dv">40</span>)</span>
+<span id="cb9-2"><a href="hypothesis-tests-on-mean-vectors.html#cb9-2" tabindex="-1"></a><span class="fu">qqnorm</span>(x, <span class="at">main=</span><span class="st">&quot;Normal QQ Plot of Grade&quot;</span>)</span>
+<span id="cb9-3"><a href="hypothesis-tests-on-mean-vectors.html#cb9-3" tabindex="-1"></a><span class="fu">qqline</span>(x)</span></code></pre></div>
+<p><img src="Plots/qqplotgrade-1.png" width="70%" /></p>
+<p>If we use the <span class="math inline">\(\texttt{ggplot2}\)</span>,</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="hypothesis-tests-on-mean-vectors.html#cb10-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb10-2"><a href="hypothesis-tests-on-mean-vectors.html#cb10-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">grade=</span><span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">85</span>, <span class="dv">75</span>, <span class="dv">40</span>))</span>
+<span id="cb10-3"><a href="hypothesis-tests-on-mean-vectors.html#cb10-3" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">sample =</span> grade)) <span class="sc">+</span> <span class="fu">stat_qq</span>() <span class="sc">+</span> <span class="fu">stat_qq_line</span>()<span class="sc">+</span></span>
+<span id="cb10-4"><a href="hypothesis-tests-on-mean-vectors.html#cb10-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Normal QQ Plot for Grade&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Theoretical Quantiles&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Sample Quantiles&quot;</span>)</span></code></pre></div>
+<p><img src="Plots/ggplotQQ-1.png" width="60%" /></p>
+<p>The six points do not fall in a straight line; the data do not seem to come from a normal distribution. The point on the lower left corner might be an outlier. If we remove this potential outlier, the other five points roughly fall on a straight line.</p>
+<p><img src="Plots/TableIII.png" width="75%" style="display: block; margin: auto;" /></p>
+<p>The following section explains how the normal scores given in Table III were calculated.</p>
+<ul>
+<li>Sort the observations <span class="math inline">\(x_1, x_2 \cdots, x_n\)</span> from the smallest to the largest, we have <span class="math inline">\(x_{(1)}, x_{(2)}, \cdots, x_{(n)}\)</span>, where <span class="math inline">\(x_{(1)}\)</span> denotes the smallest observation, <span class="math inline">\(x_{(2)}\)</span> the second smallest and <span class="math inline">\(x_{(n)}\)</span> the largest value.</li>
+<li>Let
+<span class="math display">\[
+a_i=\frac{i-\frac{3}{8}}{n+\frac{1}{4}}, i=1, 2, \ldots, n.
+\]</span>
+As we can see, <span class="math inline">\(a_i\)</span> is roughly the percentage of values that lie below the <span class="math inline">\(i\)</span>th smallest, the fractions <span class="math inline">\(\frac{3}{8}\)</span> and <span class="math inline">\(\frac{1}{4}\)</span> is for continuity correction.</li>
+<li>Using Table II to find the normal scores <span class="math inline">\(z_1, z_2, \cdots, z_n\)</span>, such that
+<span class="math display">\[
+P(Z\le z_i)=\mbox{Area}(Z\le z_i)=a_i, i=1, 2, \cdots, n.
+\]</span></li>
+</ul>
+<p>Use the previous example with six grades, the normal scores for <span class="math inline">\(n=6\)</span> are:</p>
+<span class="math display">\[\begin{array}{c|c|c|c}
+\hline
+\text{Grade} (x_{(i)}) &amp;i&amp;a_i=\frac{i-\frac{3}{8}}{n+\frac{1}{4}}&amp;\text{Normal score} (z_i)\\
+\hline
+40&amp;1&amp;(1-3/8)/(6+1/4)=0.10&amp;-1.28\\
+75&amp;2&amp;(2-3/8)/(6+1/4)=0.26&amp;-0.64\\
+75&amp;3&amp;(3-3/8)/(6+1/4)=0.42&amp;-0.20\\
+80&amp;4&amp;(4-3/8)/(6+1/4)=0.58&amp;0.20\\
+85&amp;5&amp;(5-3/8)/(6+1/4)=0.74&amp;0.64\\
+90&amp;6&amp;(6-3/8)/(6+1/4)=0.90&amp;1.28\\
+\hline
+\end{array}\]</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="hypothesis-tests-on-mean-vectors.html#cb11-1" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
+<span id="cb11-2"><a href="hypothesis-tests-on-mean-vectors.html#cb11-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(i)</span>
+<span id="cb11-3"><a href="hypothesis-tests-on-mean-vectors.html#cb11-3" tabindex="-1"></a>avec <span class="ot">&lt;-</span> (i<span class="dv">-3</span><span class="sc">/</span><span class="dv">8</span>)<span class="sc">/</span>(n<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>)</span>
+<span id="cb11-4"><a href="hypothesis-tests-on-mean-vectors.html#cb11-4" tabindex="-1"></a>zvec <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(avec)</span>
+<span id="cb11-5"><a href="hypothesis-tests-on-mean-vectors.html#cb11-5" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">round</span>(zvec,<span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## [1] -1.28 -0.64 -0.20  0.20  0.64  1.28</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="hypothesis-tests-on-mean-vectors.html#cb13-1" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb13-2"><a href="hypothesis-tests-on-mean-vectors.html#cb13-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(i)</span>
+<span id="cb13-3"><a href="hypothesis-tests-on-mean-vectors.html#cb13-3" tabindex="-1"></a>avec <span class="ot">&lt;-</span> (i<span class="dv">-3</span><span class="sc">/</span><span class="dv">8</span>)<span class="sc">/</span>(n<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>)</span>
+<span id="cb13-4"><a href="hypothesis-tests-on-mean-vectors.html#cb13-4" tabindex="-1"></a>zvec <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(avec)</span>
+<span id="cb13-5"><a href="hypothesis-tests-on-mean-vectors.html#cb13-5" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">round</span>(zvec,<span class="dv">2</span>))</span></code></pre></div>
+<pre><code>##  [1] -1.55 -1.00 -0.66 -0.38 -0.12  0.12  0.38  0.66  1.00  1.55</code></pre>
+<p><span class="math inline">\(\textbf{Note: }\)</span></p>
+<ol style="list-style-type: decimal">
+<li>the normal probability plots in the Stat 151 textbook are generated by Minitab, which plots the normal scores versus the sorted observations. It does not matter whether we plot the observed data in the <span class="math inline">\(x\)</span>-axis or in the <span class="math inline">\(y\)</span>-axis. The points will fall on a straight line if the data are from a normal population.</li>
+<li>Different formulas can be used to calculate <span class="math inline">\(a_i\)</span>. Another more popular choice is <span class="math inline">\(a_i=\frac{i-0.5}{n}\)</span>, which is used in <span class="math inline">\(\textsf{R.}\)</span></li>
+</ol>
+<p>A similar idea can be applied to the multivariate case. Suppose <span class="math inline">\(\mathbf{x}_1, \mathbf{x}_2, \cdots, \mathbf{x}_n\)</span> is a simple random sample of size <span class="math inline">\(n\)</span> from a multivariate normal distribution <span class="math inline">\(N_p(\boldsymbol{\mu}, \boldsymbol{\Sigma})\)</span>, then <span class="math inline">\((\mathbf{x}_i-\boldsymbol{\mu})^T\boldsymbol{\Sigma}^{-1}(\mathbf{x}_i-\boldsymbol{\mu})\sim \chi_p^2\)</span>. If the observations follow a multivariate normal distribution <span class="math inline">\(N_p(\boldsymbol{\mu}, \boldsymbol{\Sigma})\)</span>, <span class="math inline">\((\mathbf{x}_i-\mathbf{\bar x})^T\mathbf{S}^{-1}(\mathbf{x}_i-\mathbf{\bar x})\)</span> should also roughly follows a <span class="math inline">\(\chi_p^2\)</span> distribution. Therefore, we could use the theoretical quantiles from a <span class="math inline">\(\chi_p^2\)</span> distribution to test multivariate normality. The steps are as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Calculate the sample mean vector <span class="math inline">\(\mathbf{\bar x}\)</span> and the sample covariance matrix <span class="math inline">\(\mathbf{S}\)</span>.</li>
+<li>Calculate the Mahalanobis distance from each observation <span class="math inline">\(\mathbf{x}_i\)</span> to the sample mean <span class="math inline">\(\mathbf{\bar x}\)</span>, denoted as <span class="math inline">\(d_i^2\)</span>.</li>
+<li>Sort the distances <span class="math inline">\(d_i^2\)</span> from the smallest to the largest, denoted as <span class="math inline">\(d_{(1)}^2, d_{(2)}^2, \cdots, d_{(n)}^2\)</span>. These are the observed quantiles. Obtain the theoretical quantiles from a <span class="math inline">\(\chi_p^2\)</span> distribution, denoted as <span class="math inline">\(q_{(i)}=\chi_p^2(1-\frac{i-0.5}{n})\)</span>, i.e., the <span class="math inline">\(\frac{i-0.5}{n}\times 100\)</span>th percentile.</li>
+<li>Draw a scatter plot of the observed quantiles <span class="math inline">\(d_{(i)}^2\)</span> versus the theoretical quantiles <span class="math inline">\(q_{(i)}\)</span>. If the data are from a multivariate normal distribution, the data points should roughly fall on a 45-degree straight line.</li>
+</ol>
+<p>Figure <a href="hypothesis-tests-on-mean-vectors.html#fig:chiqqplot">5.1</a> is the chi-square probability plot on the 50 iris (setosa) flowers and the table to its right compares the Mahanalobis distance (observed quantiles) and the theoretical quantiles obtained from a <span class="math inline">\(\chi_4^2\)</span> distribution. The sample mean vector is <span class="math inline">\(\mathbf{\bar x}=[5.006, 3.428, 1.462, 0.246]^T\)</span>. Except for the last ten observations, most of the points are roughly on the 45-degree line. There is no strong evidence against the null hypothesis: data follow a chi-square distribution.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="hypothesis-tests-on-mean-vectors.html#cb15-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="sc">-</span><span class="dv">5</span>]</span>
+<span id="cb15-2"><a href="hypothesis-tests-on-mean-vectors.html#cb15-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
+<span id="cb15-3"><a href="hypothesis-tests-on-mean-vectors.html#cb15-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb15-4"><a href="hypothesis-tests-on-mean-vectors.html#cb15-4" tabindex="-1"></a>mvec <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(x)</span>
+<span id="cb15-5"><a href="hypothesis-tests-on-mean-vectors.html#cb15-5" tabindex="-1"></a>D2 <span class="ot">&lt;-</span> <span class="fu">mahalanobis</span>(x, mvec, <span class="fu">cov</span>(x))</span>
+<span id="cb15-6"><a href="hypothesis-tests-on-mean-vectors.html#cb15-6" tabindex="-1"></a>qvec <span class="ot">&lt;-</span> ((<span class="dv">1</span><span class="sc">:</span>n)<span class="sc">-</span><span class="fl">0.5</span>)<span class="sc">/</span>n</span>
+<span id="cb15-7"><a href="hypothesis-tests-on-mean-vectors.html#cb15-7" tabindex="-1"></a>qtheo_chisq <span class="ot">&lt;-</span> <span class="fu">qchisq</span>(qvec,p)</span>
+<span id="cb15-8"><a href="hypothesis-tests-on-mean-vectors.html#cb15-8" tabindex="-1"></a>qobs_chisq <span class="ot">&lt;-</span> <span class="fu">sort</span>(D2)</span>
+<span id="cb15-9"><a href="hypothesis-tests-on-mean-vectors.html#cb15-9" tabindex="-1"></a><span class="fu">plot</span>(qtheo_chisq, qobs_chisq, <span class="at">xlab=</span><span class="st">&quot;Theoretical Quantile&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Observed Quantile&quot;</span>, <span class="at">pch=</span><span class="dv">16</span>)</span>
+<span id="cb15-10"><a href="hypothesis-tests-on-mean-vectors.html#cb15-10" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb15-11"><a href="hypothesis-tests-on-mean-vectors.html#cb15-11" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Chi-square Q-Q Plot&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:chiqqplot"></span>
+<img src="Plots/chiqqplot-1.png" alt="Chi-squre Q-Q Plot for Setosa" width="60%" />
+<p class="caption">
+Figure 5.1: Chi-squre Q-Q Plot for Setosa
+</p>
+</div>
+<p>We can apply the Kolmogorov-Smirnov (KS) test to check whether the Mahanalobis distances follow a chi-square distribution with <span class="math inline">\(df=4\)</span>. The Kolmogorov-Smirnov is a non-parametric statistical test used to determine if a sample of data follows a specified probability distribution or if two samples come from the same underlying distribution. The main idea behind the KS test is to compare the empirical cumulative distribution function (ECDF) of the sample data to the cumulative distribution function (CDF) of the target distribution. Since the p-value of the test is 0.4337, there is no strong evidence against the null hypothesis: data follow a chi-square distribution.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="hypothesis-tests-on-mean-vectors.html#cb16-1" tabindex="-1"></a><span class="fu">ks.test</span>(D2,<span class="st">&quot;pchisq&quot;</span>, <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## 
+##  Exact one-sample Kolmogorov-Smirnov test
+## 
+## data:  D2
+## D = 0.12001, p-value = 0.4337
+## alternative hypothesis: two-sided</code></pre>
+<p>The following table compares the observed and theoretical quantiles.</p>
+<span class="math display">\[\begin{array}{c|c|c|c|c|c}
+\hline
+\text{Sepal}    &amp;   \text{Sepal} &amp;  \text{Petal}&amp;   \text{Petal}&amp;   \text{Observed} &amp;   \text{Theoretical}\\
+\text{Length}&amp;\text{Width}&amp;\text{Length}&amp;\text{Width}&amp;\text{Quantiles} d_{(i)}^2 &amp;\text{Quantiles} q_{(i)}\\
+\hline
+5   &amp;   3.4 &amp;   1.5 &amp;   0.2 &amp;   0.343   &amp;   0.297   \\
+5.1 &amp;   3.5 &amp;   1.4 &amp;   0.2 &amp;   0.449   &amp;   0.535   \\
+5   &amp;   3.3 &amp;   1.4 &amp;   0.2 &amp;   0.495   &amp;   0.711   \\
+5.1 &amp;   3.4 &amp;   1.5 &amp;   0.2 &amp;   0.589   &amp;   0.862   \\
+5.1 &amp;   3.5 &amp;   1.4 &amp;   0.3 &amp;   0.636   &amp;   0.999   \\
+5   &amp;   3.6 &amp;   1.4 &amp;   0.2 &amp;   0.762   &amp;   1.127   \\
+5.2 &amp;   3.5 &amp;   1.5 &amp;   0.2 &amp;   0.829   &amp;   1.249   \\
+\vdots&amp;\vdots&amp;\vdots&amp;\vdots&amp;\vdots&amp;\vdots\\
+5.2 &amp;   4.1 &amp;   1.5 &amp;   0.1 &amp;   7.699   &amp;   7.114   \\
+5.1 &amp;   3.8 &amp;   1.9 &amp;   0.4 &amp;   8.601   &amp;   7.539   \\
+4.8 &amp;   3.4 &amp;   1.9 &amp;   0.2 &amp;   9.748   &amp;   8.043   \\
+5.8 &amp;   4   &amp;   1.2 &amp;   0.2 &amp;   10.222  &amp;   8.666   \\
+4.6 &amp;   3.6 &amp;   1   &amp;   0.2 &amp;   11.044  &amp;   9.488   \\
+5   &amp;   3.5 &amp;   1.6 &amp;   0.6 &amp;   12.310  &amp;   10.712  \\
+4.5 &amp;   2.3 &amp;   1.3 &amp;   0.3 &amp;   12.328  &amp;   13.277  \\
+\hline
+\end{array}\]</span>
+<p>We can also employ the following diagnostic procedures to assess the multivariate normal assumption in a more casual way.</p>
+<ul>
+<li>Produce a normal probability plot (Q-Q plot ) for each variable. What we should look for is whether the points are roughly on a straight line.</li>
+<li>Produce scatter plots for each pair of variables. Under multivariate normality, we should see an elliptical cloud of points.</li>
+<li>Produce a three-dimensional rotating scatter plot. Again, we should see an elliptical cloud of points.</li>
+</ul>
+<p>Figure <a href="hypothesis-tests-on-mean-vectors.html#fig:qqplotSetosa">5.2</a> shows a normal Q-Q plot for each of the four variables of the Setosa Iris data. Except for Petal Width which has only six distinct values, all other three variables roughly follow normal distributions.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="hypothesis-tests-on-mean-vectors.html#cb18-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb18-2"><a href="hypothesis-tests-on-mean-vectors.html#cb18-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb18-3"><a href="hypothesis-tests-on-mean-vectors.html#cb18-3" tabindex="-1"></a><span class="cf">for</span> (col <span class="cf">in</span> <span class="fu">colnames</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="sc">-</span><span class="dv">5</span>])) {</span>
+<span id="cb18-4"><a href="hypothesis-tests-on-mean-vectors.html#cb18-4" tabindex="-1"></a>    <span class="fu">qqnorm</span>(iris[[col]], <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;QQ Plot for&quot;</span>, col))</span>
+<span id="cb18-5"><a href="hypothesis-tests-on-mean-vectors.html#cb18-5" tabindex="-1"></a>    <span class="fu">qqline</span>(iris[[col]])</span>
+<span id="cb18-6"><a href="hypothesis-tests-on-mean-vectors.html#cb18-6" tabindex="-1"></a>}</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:qqplotSetosa"></span>
+<img src="Plots/qqplotSetosa-1.png" alt="Normal Q-Q Plot for Setosa" width="90%" />
+<p class="caption">
+Figure 5.2: Normal Q-Q Plot for Setosa
+</p>
+</div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="hypothesis-tests-on-mean-vectors.html#cb19-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p>Figure <a href="hypothesis-tests-on-mean-vectors.html#fig:scatterSetosa">5.3</a> is the scatter plots matrix of those 50 Setosa iris flowers. Sepal Length and Sepal Width form an elliptical cloud. Sepal Length and Petal Length, Sepal Width and Petal Length form a roughly elliptical cloud. Due to the sparse values of Petal Width, it does not form elliptical cloud of points with any other variables.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="hypothesis-tests-on-mean-vectors.html#cb20-1" tabindex="-1"></a><span class="fu">pairs</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="sc">-</span><span class="dv">5</span>])</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:scatterSetosa"></span>
+<img src="Plots/scatterSetosa-1.png" alt="Scatter Plot Matrix for Setosa" width="90%" />
+<p class="caption">
+Figure 5.3: Scatter Plot Matrix for Setosa
+</p>
+</div>
+<p><span class="math inline">\(\textbf{Example: Inference on One Mean Vector with Admission Data}\)</span></p>
+<p>The admission data set contains 397 graduate school admissions decisions, among which <span class="math inline">\(n_1=271\)</span> were not admitted and <span class="math inline">\(n_2=126\)</span> were admitted. The explanatory variables are the student’s GRE (Graduate Record Exam scores), GPA (grade point average) and prestige of the undergraduate institution (values from 1 to 4 with 1 having the highest prestige). The response variable, admit/don’t admit, is a binary variable with 1=admitted and 0=not admitted.</p>
+<p>Let’s focus on the admitted students with the first two quantitative explanatory variables, GRE and GPA. This creates a one-sample scenario. Given that the sample mean vector <span class="math inline">\(\mathbf{\bar x}=[618.571, 3.489]^T\)</span> and the sample covariance matrix and its inverse
+<span class="math display">\[
+\mathbf{S}=\left[
+\begin{array}{cc}
+11937.143&amp; 9.452\\
+9.452&amp; 0.138
+\end{array}
+\right]; \quad \quad
+\mathbf{S}^{-1}=\left[
+\begin{array}{cc}
+8.857592\times 10^{-5} &amp; -0.006066809\\
+-0.006066809 &amp; 7.661909264
+\end{array}
+\right]
+\]</span></p>
+<p>We could check whether the two variables GRE and GPA are bivariate normally distributed based on the following four graphs.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="hypothesis-tests-on-mean-vectors.html#cb21-1" tabindex="-1"></a>mydist <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb21-2"><a href="hypothesis-tests-on-mean-vectors.html#cb21-2" tabindex="-1"></a>mvec <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(x) </span>
+<span id="cb21-3"><a href="hypothesis-tests-on-mean-vectors.html#cb21-3" tabindex="-1"></a>D2 <span class="ot">&lt;-</span> <span class="fu">mahalanobis</span>(x, mvec, <span class="fu">cov</span>(x))</span>
+<span id="cb21-4"><a href="hypothesis-tests-on-mean-vectors.html#cb21-4" tabindex="-1"></a><span class="fu">return</span>(D2)</span>
+<span id="cb21-5"><a href="hypothesis-tests-on-mean-vectors.html#cb21-5" tabindex="-1"></a>}</span>
+<span id="cb21-6"><a href="hypothesis-tests-on-mean-vectors.html#cb21-6" tabindex="-1"></a>adf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/admission.csv&quot;</span>)</span>
+<span id="cb21-7"><a href="hypothesis-tests-on-mean-vectors.html#cb21-7" tabindex="-1"></a>cadf <span class="ot">&lt;-</span> adf[<span class="fu">complete.cases</span>(adf),]</span>
+<span id="cb21-8"><a href="hypothesis-tests-on-mean-vectors.html#cb21-8" tabindex="-1"></a>xx <span class="ot">&lt;-</span> cadf[,<span class="fu">c</span>(<span class="st">&quot;gre&quot;</span>,<span class="st">&quot;gpa&quot;</span>)]</span>
+<span id="cb21-9"><a href="hypothesis-tests-on-mean-vectors.html#cb21-9" tabindex="-1"></a>dvec <span class="ot">&lt;-</span> <span class="fu">mydist</span>(xx)</span>
+<span id="cb21-10"><a href="hypothesis-tests-on-mean-vectors.html#cb21-10" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">nrow</span>(xx)</span>
+<span id="cb21-11"><a href="hypothesis-tests-on-mean-vectors.html#cb21-11" tabindex="-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">ncol</span>(xx)</span>
+<span id="cb21-12"><a href="hypothesis-tests-on-mean-vectors.html#cb21-12" tabindex="-1"></a>qvec <span class="ot">&lt;-</span> ((<span class="dv">1</span><span class="sc">:</span>nn)<span class="sc">-</span><span class="fl">0.5</span>)<span class="sc">/</span>nn</span>
+<span id="cb21-13"><a href="hypothesis-tests-on-mean-vectors.html#cb21-13" tabindex="-1"></a>qtheo_chisq <span class="ot">&lt;-</span> <span class="fu">qchisq</span>(qvec,pp)</span>
+<span id="cb21-14"><a href="hypothesis-tests-on-mean-vectors.html#cb21-14" tabindex="-1"></a>qobs_chisq <span class="ot">&lt;-</span> <span class="fu">sort</span>(dvec)</span>
+<span id="cb21-15"><a href="hypothesis-tests-on-mean-vectors.html#cb21-15" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb21-16"><a href="hypothesis-tests-on-mean-vectors.html#cb21-16" tabindex="-1"></a><span class="fu">plot</span>(cadf<span class="sc">$</span>gre,cadf<span class="sc">$</span>gpa,<span class="at">xlab=</span><span class="st">&quot;GRE&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;GPA&quot;</span>, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">main=</span><span class="st">&quot;Scatter Plot of GPA vs GRE&quot;</span>)</span>
+<span id="cb21-17"><a href="hypothesis-tests-on-mean-vectors.html#cb21-17" tabindex="-1"></a><span class="fu">qqnorm</span>(cadf<span class="sc">$</span>gre, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">main=</span><span class="st">&quot;Normal Q-Q Plot for GRE&quot;</span>)</span>
+<span id="cb21-18"><a href="hypothesis-tests-on-mean-vectors.html#cb21-18" tabindex="-1"></a><span class="fu">qqline</span>(cadf<span class="sc">$</span>gre, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb21-19"><a href="hypothesis-tests-on-mean-vectors.html#cb21-19" tabindex="-1"></a><span class="fu">qqnorm</span>(cadf<span class="sc">$</span>gpa, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">main=</span><span class="st">&quot;Normal Q-Q Plot for GPA&quot;</span>)</span>
+<span id="cb21-20"><a href="hypothesis-tests-on-mean-vectors.html#cb21-20" tabindex="-1"></a><span class="fu">qqline</span>(cadf<span class="sc">$</span>gpa, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb21-21"><a href="hypothesis-tests-on-mean-vectors.html#cb21-21" tabindex="-1"></a><span class="fu">plot</span>(qtheo_chisq, qobs_chisq, <span class="at">xlab=</span><span class="st">&quot;Theoretical Quantile&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Observed Quantile&quot;</span>, <span class="at">pch=</span><span class="dv">16</span>)</span>
+<span id="cb21-22"><a href="hypothesis-tests-on-mean-vectors.html#cb21-22" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb21-23"><a href="hypothesis-tests-on-mean-vectors.html#cb21-23" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Chi-square Q-Q Plot for Admission Data&quot;</span>)</span></code></pre></div>
+<p><img src="Plots/distancefunctions-1.png" width="90%" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="hypothesis-tests-on-mean-vectors.html#cb22-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<ul>
+<li>Based on graphs above, address whether the bivariate normality assumption is satisfied.
+</li>
+<li>Test at the 5% significance level
+<span class="math display">\[
+H_0: \boldsymbol{\mu}=\left[
+\begin{array}{c}
+600\\
+3.4
+\end{array}
+\right]
+\text{ versus } H_a: \boldsymbol{\mu}\ne\left[
+\begin{array}{c}
+600\\
+3.4
+\end{array}
+\right].
+\]</span></li>
+</ul>
+<p><span class="math inline">\(\textbf{1: }\)</span> Use <span class="math inline">\(T^2=(\mathbf{\bar x}-\boldsymbol{\mu}_0)^T\mathbf{S}^{-1}(\mathbf{\bar x}-\boldsymbol{\mu}_0)=0.07137872\)</span>.</p>
+<p><span class="math inline">\(n = 126\)</span>
+<span class="math inline">\(p = 2\)</span></p>
+<p><span class="math inline">\(\textbf{2: }\)</span> <span class="math inline">\(\alpha = 0.05\)</span></p>
+<p><span class="math inline">\(\textbf{3: }\)</span> <span class="math inline">\(F_0 = \frac{n(n-p)}{p(n-1)} (\tilde{\vec{x}} - \vec{\mu}_0)^T S^{-1} (\tilde{\vec{x}} - \vec{\mu}_0)\)</span>
+<span class="math inline">\(= \frac{126(126-2)}{2(126-1)} \times 0.07137872\)</span>
+<span class="math inline">\(= 4.461\)</span></p>
+<p><span class="math inline">\(\textbf{4: }\)</span> P-value <span class="math inline">\(= P(F \ge F_0) = P(F \ge 4.461)\)</span>
+<span class="math inline">\(df_n = p = 2\)</span>, <span class="math inline">\(df_d = n-p = 126-2 = 124\)</span>
+<span class="math inline">\(P(4.461, 2, 124, \text{lower.tail} = F)\)</span></p>
+<p><span class="math inline">\(\textbf{5: }\)</span> reject <span class="math inline">\(H_0\)</span> since P-value $ = 0.0135 &lt; 0.05 ()$</p>
+<ol start="6" style="list-style-type: decimal">
+<li>Conclusion: at the 5% significance level, we have sufficient evidence that
+<span class="math inline">\(\vec{\mu} \ne \begin{pmatrix} 600 \\ 3.4 \end{pmatrix}\)</span>.</li>
+</ol>
+<ul>
+<li>Shall we follow up with a post hoc test at 5% significance level?</li>
+</ul>
+<p>Yes, since we reject <span class="math inline">\(H_0: \tilde{\mu}=\left[\begin{array}{c}600\\3.4\end{array}\right]\)</span></p>
+<ul>
+<li>Obtain a 95% confidence interval for GRE and GPA respectively using the Bonferroni method.</li>
+</ul>
+<p><span class="math inline">\(1-\alpha = 0.95 \implies \alpha = 0.05\)</span>
+<span class="math inline">\(df = n-1 = 126-1 = 125\)</span>
+<span class="math inline">\(t_{n-1}(\alpha/2p) = t_{125}(0.05 / 2 \times 2) = t_{125}(0.05/4) = 2.2687\)</span> (by R)</p>
+<p>For GRE
+<span class="math inline">\(\bar{x}_1 \pm t_{125}(0.05/4) \cdot \sqrt{\frac{S_1^2}{n}}\)</span>
+<span class="math inline">\(= 618.571 \pm 2.2687 \times \sqrt{\frac{11937.143}{126}}\)</span>
+<span class="math inline">\(= (596.489, 640.653)\)</span> contains <span class="math inline">\(600\)</span>.</p>
+<p>For GPA
+<span class="math inline">\(\bar{x}_2 \pm t_{125}(0.05/4) \times \sqrt{\frac{S_2^2}{n}}\)</span>
+<span class="math inline">\(= 3.489 \pm 2.2687 \times \sqrt{\frac{0.138}{126}}\)</span>
+<span class="math inline">\(= (3.414, 3.564)\)</span> exclude <span class="math inline">\(3.4\)</span>.</p>
+<ul>
+<li>Obtain a 95% simultaneous confidence interval for GRE and GPA respectively. Compare the intervals with Bonferroni intervals above.</li>
+</ul>
+<p><span class="math inline">\(1-\alpha = 0.95\)</span>
+<span class="math inline">\(\alpha = 0.05\)</span>
+<span class="math inline">\(F_{p, n-p}(0.05) = F_{2, 124}(0.05) = 3.0693 \text{ (by R)}\)</span></p>
+<p>For GRE
+<span class="math inline">\(\bar{x}_1 \pm \sqrt{\frac{p(n-1)}{n-p}} \times 3.0693 \cdot \sqrt{\frac{S_1^2}{n}}\)</span>
+<span class="math inline">\(= 618.571 \pm \sqrt{\frac{2(126-1)}{126-2}} \times 3.0693 \times \sqrt{\frac{11937.143}{126}}\)</span>
+<span class="math inline">\(= (594.358, 642.784)\)</span> Contains <span class="math inline">\(600\)</span>.</p>
+<p>For GPA
+<span class="math inline">\(\bar{x}_2 \pm \sqrt{\frac{2(126-1)}{126-2}} \times 3.0693 \times \sqrt{\frac{0.138}{126}}\)</span>
+<span class="math inline">\(= 3.489 \pm \sqrt{\frac{2(126-1)}{126-2}} \times 3.0693 \times \sqrt{\frac{0.138}{126}}\)</span>
+<span class="math inline">\(= (3.407, 3.574)\)</span> exclude <span class="math inline">\(3.4\)</span>.</p>
+<p>We can conduct the Hotelling’s T-square test using the built-in function.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="hypothesis-tests-on-mean-vectors.html#cb23-1" tabindex="-1"></a>axx <span class="ot">&lt;-</span> cadf[cadf<span class="sc">$</span>admit<span class="sc">==</span><span class="dv">1</span>, <span class="fu">c</span>(<span class="st">&quot;gre&quot;</span>,<span class="st">&quot;gpa&quot;</span>)]</span>
+<span id="cb23-2"><a href="hypothesis-tests-on-mean-vectors.html#cb23-2" tabindex="-1"></a>mvec <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(axx)</span>
+<span id="cb23-3"><a href="hypothesis-tests-on-mean-vectors.html#cb23-3" tabindex="-1"></a>smat <span class="ot">&lt;-</span> <span class="fu">cov</span>(axx)</span>
+<span id="cb23-4"><a href="hypothesis-tests-on-mean-vectors.html#cb23-4" tabindex="-1"></a><span class="fu">solve</span>(smat)</span></code></pre></div>
+<pre><code>##               gre          gpa
+## gre  8.857087e-05 -0.006060649
+## gpa -6.060649e-03  7.654407799</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="hypothesis-tests-on-mean-vectors.html#cb25-1" tabindex="-1"></a><span class="fu">HotellingsT2</span>(axx, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">600</span>,<span class="fl">3.4</span>)) </span></code></pre></div>
+<pre><code>## 
+##  Hotelling&#39;s one sample T2-test
+## 
+## data:  axx
+## T.2 = 4.4609, df1 = 2, df2 = 124, p-value = 0.01346
+## alternative hypothesis: true location is not equal to c(600,3.4)</code></pre>
+<p>We can use to confirm the Bonferroni interval and the simultaneous confidence interval.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="hypothesis-tests-on-mean-vectors.html#cb27-1" tabindex="-1"></a><span class="co">#Bonferroni intervals</span></span>
+<span id="cb27-2"><a href="hypothesis-tests-on-mean-vectors.html#cb27-2" tabindex="-1"></a>mybinterval1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x,alpha){</span>
+<span id="cb27-3"><a href="hypothesis-tests-on-mean-vectors.html#cb27-3" tabindex="-1"></a>  <span class="co">#function to obtain bonferroni corrected interval for each variable</span></span>
+<span id="cb27-4"><a href="hypothesis-tests-on-mean-vectors.html#cb27-4" tabindex="-1"></a>  <span class="co">#x:n by p matrix, alpha is the type I error rate </span></span>
+<span id="cb27-5"><a href="hypothesis-tests-on-mean-vectors.html#cb27-5" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb27-6"><a href="hypothesis-tests-on-mean-vectors.html#cb27-6" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
+<span id="cb27-7"><a href="hypothesis-tests-on-mean-vectors.html#cb27-7" tabindex="-1"></a>  mvec <span class="ot">&lt;-</span> <span class="fu">apply</span>(x,<span class="dv">2</span>,mean) <span class="co">#sample mean vector</span></span>
+<span id="cb27-8"><a href="hypothesis-tests-on-mean-vectors.html#cb27-8" tabindex="-1"></a>  svec <span class="ot">&lt;-</span> <span class="fu">apply</span>(x,<span class="dv">2</span>,sd) <span class="co">#sample SD vector of the sample (si)</span></span>
+<span id="cb27-9"><a href="hypothesis-tests-on-mean-vectors.html#cb27-9" tabindex="-1"></a>  tscore <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>p),n<span class="dv">-1</span>)</span>
+<span id="cb27-10"><a href="hypothesis-tests-on-mean-vectors.html#cb27-10" tabindex="-1"></a>  lvec <span class="ot">&lt;-</span> mvec<span class="sc">-</span>tscore<span class="sc">*</span>svec<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb27-11"><a href="hypothesis-tests-on-mean-vectors.html#cb27-11" tabindex="-1"></a>  uvec <span class="ot">&lt;-</span> mvec<span class="sc">+</span>tscore<span class="sc">*</span>svec<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb27-12"><a href="hypothesis-tests-on-mean-vectors.html#cb27-12" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">cbind</span>(lvec,uvec))</span>
+<span id="cb27-13"><a href="hypothesis-tests-on-mean-vectors.html#cb27-13" tabindex="-1"></a>}</span>
+<span id="cb27-14"><a href="hypothesis-tests-on-mean-vectors.html#cb27-14" tabindex="-1"></a>(cib <span class="ot">&lt;-</span> <span class="fu">mybinterval1</span>(axx,<span class="fl">0.05</span>))</span></code></pre></div>
+<pre><code>##          lvec       uvec
+## gre 596.48903 640.653831
+## gpa   3.41409   3.564323</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="hypothesis-tests-on-mean-vectors.html#cb29-1" tabindex="-1"></a><span class="co">#simultaneous intervals</span></span>
+<span id="cb29-2"><a href="hypothesis-tests-on-mean-vectors.html#cb29-2" tabindex="-1"></a>mysinterval1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x,alpha){</span>
+<span id="cb29-3"><a href="hypothesis-tests-on-mean-vectors.html#cb29-3" tabindex="-1"></a><span class="co">#function to obtain simultaneous interval for each variable</span></span>
+<span id="cb29-4"><a href="hypothesis-tests-on-mean-vectors.html#cb29-4" tabindex="-1"></a><span class="co">#x:n by p matrix, alpha is the type I error rate </span></span>
+<span id="cb29-5"><a href="hypothesis-tests-on-mean-vectors.html#cb29-5" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb29-6"><a href="hypothesis-tests-on-mean-vectors.html#cb29-6" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
+<span id="cb29-7"><a href="hypothesis-tests-on-mean-vectors.html#cb29-7" tabindex="-1"></a>mvec <span class="ot">&lt;-</span> <span class="fu">apply</span>(x,<span class="dv">2</span>,mean) <span class="co">#sample mean vector</span></span>
+<span id="cb29-8"><a href="hypothesis-tests-on-mean-vectors.html#cb29-8" tabindex="-1"></a>svec <span class="ot">&lt;-</span> <span class="fu">apply</span>(x,<span class="dv">2</span>,sd) <span class="co">#sample SD vector of the sample (si)</span></span>
+<span id="cb29-9"><a href="hypothesis-tests-on-mean-vectors.html#cb29-9" tabindex="-1"></a>fscore <span class="ot">&lt;-</span> <span class="fu">qf</span>(<span class="dv">1</span><span class="sc">-</span>alpha,p,n<span class="sc">-</span>p)</span>
+<span id="cb29-10"><a href="hypothesis-tests-on-mean-vectors.html#cb29-10" tabindex="-1"></a>lvec <span class="ot">&lt;-</span> mvec<span class="sc">-</span><span class="fu">sqrt</span>(fscore<span class="sc">*</span>p<span class="sc">*</span>(n<span class="dv">-1</span>)<span class="sc">/</span>(n<span class="sc">-</span>p))<span class="sc">*</span>svec<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb29-11"><a href="hypothesis-tests-on-mean-vectors.html#cb29-11" tabindex="-1"></a>uvec <span class="ot">&lt;-</span> mvec<span class="sc">+</span><span class="fu">sqrt</span>(fscore<span class="sc">*</span>p<span class="sc">*</span>(n<span class="dv">-1</span>)<span class="sc">/</span>(n<span class="sc">-</span>p))<span class="sc">*</span>svec<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb29-12"><a href="hypothesis-tests-on-mean-vectors.html#cb29-12" tabindex="-1"></a><span class="fu">return</span>(<span class="fu">cbind</span>(lvec,uvec))</span>
+<span id="cb29-13"><a href="hypothesis-tests-on-mean-vectors.html#cb29-13" tabindex="-1"></a>}</span>
+<span id="cb29-14"><a href="hypothesis-tests-on-mean-vectors.html#cb29-14" tabindex="-1"></a>(cis <span class="ot">&lt;-</span> <span class="fu">mysinterval1</span>(axx,<span class="fl">0.05</span>))</span></code></pre></div>
+<pre><code>##           lvec       uvec
+## gre 594.358752 642.784105
+## gpa   3.406843   3.571569</code></pre>
+<p>We can construct simultaneous confidence region, simultaneous confidence interval, and Bonferroni interval to compare the two intervals. The confidence region is an ellipsoid centered at the mean vector. Since the hypothesized value <span class="math inline">\(\boldsymbol{\mu}_0=[600, 3.4]^T\)</span> is outside the confidence region, we should reject the null hypothesis.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="hypothesis-tests-on-mean-vectors.html#cb31-1" tabindex="-1"></a><span class="fu">library</span>(ellipse)</span>
+<span id="cb31-2"><a href="hypothesis-tests-on-mean-vectors.html#cb31-2" tabindex="-1"></a>myCR1<span class="ot">=</span><span class="cf">function</span>(xmat,mu0,lev){</span>
+<span id="cb31-3"><a href="hypothesis-tests-on-mean-vectors.html#cb31-3" tabindex="-1"></a><span class="co">#lev: significance level  </span></span>
+<span id="cb31-4"><a href="hypothesis-tests-on-mean-vectors.html#cb31-4" tabindex="-1"></a>  p<span class="ot">=</span><span class="fu">ncol</span>(xmat)</span>
+<span id="cb31-5"><a href="hypothesis-tests-on-mean-vectors.html#cb31-5" tabindex="-1"></a>  n<span class="ot">=</span><span class="fu">nrow</span>(xmat)</span>
+<span id="cb31-6"><a href="hypothesis-tests-on-mean-vectors.html#cb31-6" tabindex="-1"></a>  mvec<span class="ot">=</span><span class="fu">apply</span>(xmat,<span class="dv">2</span>,mean)</span>
+<span id="cb31-7"><a href="hypothesis-tests-on-mean-vectors.html#cb31-7" tabindex="-1"></a>  smat<span class="ot">=</span><span class="fu">cov</span>(xmat)</span>
+<span id="cb31-8"><a href="hypothesis-tests-on-mean-vectors.html#cb31-8" tabindex="-1"></a>  fscore<span class="ot">=</span><span class="fu">qf</span>(<span class="dv">1</span><span class="sc">-</span>lev,p,n<span class="sc">-</span>p)</span>
+<span id="cb31-9"><a href="hypothesis-tests-on-mean-vectors.html#cb31-9" tabindex="-1"></a>  obj<span class="ot">=</span><span class="fu">ellipse</span>(smat,<span class="at">centre=</span>mvec,<span class="at">level=</span>lev,<span class="at">t=</span><span class="fu">sqrt</span>(p<span class="sc">*</span>(n<span class="dv">-1</span>)<span class="sc">/</span>(n<span class="sc">*</span>(n<span class="sc">-</span>p))<span class="sc">*</span>fscore))</span>
+<span id="cb31-10"><a href="hypothesis-tests-on-mean-vectors.html#cb31-10" tabindex="-1"></a>  mv<span class="ot">=</span><span class="fu">apply</span>(obj,<span class="dv">2</span>,mean)</span>
+<span id="cb31-11"><a href="hypothesis-tests-on-mean-vectors.html#cb31-11" tabindex="-1"></a>  svec<span class="ot">=</span><span class="fu">apply</span>(obj,<span class="dv">2</span>,sd)</span>
+<span id="cb31-12"><a href="hypothesis-tests-on-mean-vectors.html#cb31-12" tabindex="-1"></a>  <span class="fu">plot</span>(obj,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">xlim=</span><span class="fu">c</span>(mv[<span class="dv">1</span>]<span class="sc">-</span><span class="dv">4</span><span class="sc">*</span>svec[<span class="dv">1</span>],mv[<span class="dv">1</span>]<span class="sc">+</span><span class="dv">4</span><span class="sc">*</span>svec[<span class="dv">1</span>]),<span class="at">ylim=</span><span class="fu">c</span>(mv[<span class="dv">2</span>]<span class="sc">-</span><span class="dv">4</span><span class="sc">*</span>svec[<span class="dv">2</span>],mv[<span class="dv">2</span>]<span class="sc">+</span><span class="dv">4</span><span class="sc">*</span>svec[<span class="dv">2</span>]))</span>
+<span id="cb31-13"><a href="hypothesis-tests-on-mean-vectors.html#cb31-13" tabindex="-1"></a>  <span class="fu">points</span>(mu0[<span class="dv">1</span>],mu0[<span class="dv">2</span>],<span class="at">pch=</span><span class="dv">19</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb31-14"><a href="hypothesis-tests-on-mean-vectors.html#cb31-14" tabindex="-1"></a>}</span>
+<span id="cb31-15"><a href="hypothesis-tests-on-mean-vectors.html#cb31-15" tabindex="-1"></a>mu0<span class="ot">=</span><span class="fu">c</span>(<span class="dv">600</span>,<span class="fl">3.4</span>)</span>
+<span id="cb31-16"><a href="hypothesis-tests-on-mean-vectors.html#cb31-16" tabindex="-1"></a><span class="fu">myCR1</span>(axx,mu0,<span class="fl">0.05</span>)</span>
+<span id="cb31-17"><a href="hypothesis-tests-on-mean-vectors.html#cb31-17" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>cis[<span class="dv">1</span>,],<span class="at">lty=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb31-18"><a href="hypothesis-tests-on-mean-vectors.html#cb31-18" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>cis[<span class="dv">2</span>,],<span class="at">lty=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb31-19"><a href="hypothesis-tests-on-mean-vectors.html#cb31-19" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>cib[<span class="dv">1</span>,],<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb31-20"><a href="hypothesis-tests-on-mean-vectors.html#cb31-20" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>cib[<span class="dv">2</span>,],<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb31-21"><a href="hypothesis-tests-on-mean-vectors.html#cb31-21" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">645</span>,<span class="fl">3.7</span>,<span class="fu">c</span>(<span class="st">&quot;Simultaneous&quot;</span>,<span class="st">&quot;Bonferroni&quot;</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;black&quot;</span>,<span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
+<p><img src="Plots/confintervalsb-1.png" width="70%" /></p>
+</div>
+</div>
+<div id="hypothesis-test-for-two-mean-vectors" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Hypothesis Test for Two Mean Vectors<a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-two-mean-vectors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Before diving to the multivariate case, let’s review how we compare two population means in the univariate case.</p>
+<div id="univariate-case-based-on-two-independent-samples" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Univariate Case Based on Two Independent Samples<a href="hypothesis-tests-on-mean-vectors.html#univariate-case-based-on-two-independent-samples" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose there are two populations; we want to compare whether the two population means are the same or not based on two independent samples.
+<img src="Plots/two_sample_t.png" width="60%" style="display: block; margin: auto;" /></p>
+<p><span class="math inline">\(\textbf{Two-sample t Tests}\)</span></p>
+<p>Hypotheses: <span class="math inline">\(H_0: \mu_1-\mu_2=\Delta_0 \mbox{ versus } H_a: \mu_1-\mu_2\ne \Delta_0\)</span></p>
+[
+<span class="math display">\[\begin{array}{c|c}
+
+\text{Two-sample Pooled t Test} &amp; \text{Two-sample Non-pooled t Test} \\
+----- &amp; ----- \\
+\text{Assumptions} &amp; \text{Assumptions} \\
+\text{- Simple Random Samples} &amp; \text{- Simple Random Samples} \\
+\text{- Two independent samples} &amp; \text{- Two independent samples} \\
+\text{- Normal populations or large samples} &amp; \text{- Normal populations or large samples} \\
+\frac{\max\{s_1, s_2\}}{\min\{s_1,s_2\}}&lt;2 &amp; \\
+
+\bullet{\text{ Test Statistic:}} &amp; \bullet{\text{ Test Statistic:}} \\
+
+
+t_o=\frac{(\bar x_1-\bar x_2)-\Delta_0}{\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}, df=n_1+n_2-2
+
+&amp;
+
+t_o=\frac{(\bar x_1-\bar x_2)-\Delta_0}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}
+
+
+\\ \\
+
+\text{Reject $H_0$ if $|t_o|\ge t_{n1+n2-2}(\alpha/2)$.} &amp; \text{Reject $H_0$ if $|t_o|\ge t_{df^{\ast}}(\alpha/2)$.}
+\\
+
+\end{array}\]</span>
+<p>]</p>
+</div>
+<div id="multivariate-case-based-on-two-independent-samples" class="section level3 hasAnchor" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Multivariate Case Based on Two Independent Samples<a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-based-on-two-independent-samples" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We generalize the ideas to the multivariate case, we want to compare whether the two mean vectors are the same, that is,
+<span class="math display">\[
+H_0: \boldsymbol{\mu_1}-\boldsymbol{\mu_2}=\boldsymbol{\Delta_0} \mbox{  versus } \boldsymbol{\mu_1}-\boldsymbol{\mu_2}=\boldsymbol{\Delta_0}.
+\]</span></p>
+<p>If the two populations have the same covariance matrix, we could pool the two samples and obtain a better estimate of the common covariance matrix
+<span class="math display">\[
+\mathbf{S}_{\mbox{pooled}}=\frac{(n_1-1)\mathbf{S_1}+(n_2-1)\mathbf{S_2}}{n_1+n_2-2}
+\]</span>
+As a result,
+<span class="math display">\[
+\left(\frac{1}{n_1}+\frac{1}{n_2}\right)\mathbf{S}_{\mbox{pooled}}
+\]</span>
+is an estimator of <span class="math inline">\(\boldsymbol{\Sigma}_1=\boldsymbol{\Sigma}_2=\boldsymbol{\Sigma}=\text{Var}(\mathbf{\bar x_1}-\mathbf{\bar x_2})\)</span>. And we can use the pooled Hotelling’s <span class="math inline">\(T^2\)</span> test.</p>
+<p><span class="math inline">\(\textbf{Assumptions}:\)</span></p>
+<ul>
+<li>Simple random samples</li>
+<li>Two independent samples</li>
+<li>Multivariate normal populations or large samples.</li>
+</ul>
+<p>We could use the chi-square probability plot to assess the multivariate normality assumption. One plot for one sample. If the multivariate normal populations’ assumption is satisfied, the data points should roughly fall on a 45-degree straight line for both samples.</p>
+<p>Note that the Central Limit Theorem implies that the sample mean vectors are going to be approximately multivariate normally distributed regardless of the distribution of the original variables when the sample sizes are large enough. Therefore, in general, Hotelling’s <span class="math inline">\(T^2\)</span> is not going to be sensitive to violations of the multivariate normal assumption.
+* <span class="math inline">\(\boldsymbol{\Sigma}_1=\boldsymbol{\Sigma}_2\)</span>.</p>
+<p>This assumption may be assessed using Barlett’s Test. The hypotheses are <span class="math inline">\(H_0: \boldsymbol{\Sigma}_1=\boldsymbol{\Sigma}_2\)</span> versus <span class="math inline">\(H_a: \boldsymbol{\Sigma}_1\ne \boldsymbol{\Sigma}_2\)</span>. The test statistic for Bartlett’s Test is given by L prime as shown below:
+<span class="math display">\[
+L^{&#39;}=c\{(n_1+n_2-2)\log|\mathbf{S}_{\mbox{pooled}}|-(n_1-1)\log|\boldsymbol{\Sigma}_1|-(n_2-1)\log|\boldsymbol{\Sigma}_2|\} \mbox{     with}
+\]</span>
+<span class="math display">\[
+c=1-\frac{2p^2+3p-1}{6(p-1)}\left[\frac{1}{n_1-1}+\frac{1}{n_2-1}-\frac{1}{n_1+n_2-2}\right].
+\]</span>
+Under the null hypothesis, the Bartlett’s test statistic is approximately chi-square distributed with <span class="math inline">\(df=\frac{p(p+1)}{2}\)</span>. Therefore, we reject <span class="math inline">\(H_0: \boldsymbol{\Sigma}_1=\boldsymbol{\Sigma}_2\)</span> at significance level <span class="math inline">\(\alpha\)</span> if <span class="math inline">\(L^{&#39;}\ge \chi_{\frac{p(p+1)}{2}}^2 (\alpha)\)</span>. Note that Bartlett’s test is not robust to the violations of multivariate assumption and should not be used if there is any indication that the data are not multivariate normally distributed.</p>
+<p>The test statistic of the Hotelling’s <span class="math inline">\(T^2\)</span> test for comparing two mean vectors is
+<span class="math display">\[
+T^2=[(\mathbf{\bar x_1}-\mathbf{\bar x_2})-\boldsymbol{\Delta}_0]^{T}\left[\left(\frac{1}{n_1}+\frac{1}{n_2}\right)\mathbf{S}_{\mbox{pooled}}\right]^{-1}[(\mathbf{\bar x_1}-\mathbf{\bar x_2})-\boldsymbol{\Delta}_0]
+\]</span>
+with
+<span class="math display">\[
+\widehat{\boldsymbol{\Sigma}}=\mathbf{S}_{\mbox{pooled}}=\frac{(n_1-1)\mathbf{S}_1+(n_2-1)\mathbf{S}_2}{n_1+n_2-2}.
+\]</span>
+It can be shown that <span class="math inline">\(T^2\sim \frac{(n_1+n_2-2)p}{n_1+n_2-p-1}F_{p, n_1+n_2-p-1}\)</span>. Therefore, we can reject <span class="math inline">\(H_0\)</span> if
+<span class="math display">\[
+\frac{n_1+n_2-p-1}{(n_1+n_2-2)p}T^2\ge F_{p, n_1+n_2-p-1}(\alpha).
+\]</span></p>
+</div>
+<div id="two-sample-non-pooled-hotellings-t2-test" class="section level3 hasAnchor" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> Two-sample Non-pooled Hotelling’s <span class="math inline">\(T^2\)</span> Test<a href="hypothesis-tests-on-mean-vectors.html#two-sample-non-pooled-hotellings-t2-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If <span class="math inline">\(\boldsymbol{\Sigma}_1\ne \boldsymbol{\Sigma}_2\)</span> and the sample sizes <span class="math inline">\(n_1\)</span>, <span class="math inline">\(n_2\)</span> are not large enough, the test statistic becomes
+<span class="math display">\[
+T^2=[(\mathbf{\bar x_1}-\mathbf{\bar x_2})-\boldsymbol{\Delta}_0]^{T}\left[\frac{1}{n_1}\mathbf{S}_1+\frac{1}{n_2}\mathbf{S}_2\right]^{-1}[(\mathbf{\bar x_1}-\mathbf{\bar x_2})-\boldsymbol{\Delta}_0].
+\]</span>
+It can be shown that <span class="math inline">\(T^2\sim \frac{(n_1+n_2-2)p}{n_1+n_2-p-1}F_{p, \gamma}\)</span>, where
+<span class="math display">\[
+\frac{1}{\gamma}=\sum_{i=1}^2 \frac{1}{n_i-1}\left\{\frac{[(\mathbf{\bar x_1}-\mathbf{\bar x_2})-\boldsymbol{\Delta}_0]^{T}\mathbf{S}_T^{-1}(\frac{1}{n_i} \mathbf{S}_i) \mathbf{S}_T^{-1} [(\mathbf{\bar x_1}-\mathbf{\bar x_2})-\boldsymbol{\Delta}_0]}{T^2}\right\}^2
+\]</span>
+where <span class="math inline">\(\mathbf{S}_T=\frac{1}{n_1}\mathbf{S}_1+\frac{1}{n_2}\mathbf{S}_2\)</span>. Therefore, we can reject <span class="math inline">\(H_0\)</span> if
+<span class="math display">\[
+\frac{n_1+n_2-p-1}{(n_1+n_2-2)p}T^2\ge F_{p, \gamma}(\alpha).
+\]</span></p>
+<p>If sample sizes <span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_2\)</span> are large enough such that <span class="math inline">\(n_1-p\)</span> and <span class="math inline">\(n_2-p\)</span> are large, then we should reject <span class="math inline">\(H_0: \boldsymbol{\mu_1}-\boldsymbol{\mu_2}=\boldsymbol{\Delta_0}\)</span> if
+<span class="math display">\[
+[(\mathbf{\bar x_1}-\mathbf{\bar x_2})-\boldsymbol{\Delta_0}]^{T}\left[\frac{1}{n_1}\mathbf{S_1}+\frac{1}{n_2}\mathbf{S_2}\right]^{-1}[(\mathbf{\bar x_1}-\mathbf{\bar x_2})-\boldsymbol{\Delta_0}]\ge \chi^2_{p}(\alpha).
+\]</span></p>
+</div>
+<div id="two-sample-hotellings-t2-confidence-interval" class="section level3 hasAnchor" number="5.2.4">
+<h3><span class="header-section-number">5.2.4</span> Two-sample Hotelling’s <span class="math inline">\(T^2\)</span> Confidence Interval<a href="hypothesis-tests-on-mean-vectors.html#two-sample-hotellings-t2-confidence-interval" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If we reject <span class="math inline">\(H_0: \boldsymbol{\mu}_1-\boldsymbol{\mu}_2=\boldsymbol{\Delta}_0\)</span>, we would like to figure out in which variables the means are different.</p>
+<ul>
+<li>A <span class="math inline">\((1-\alpha)\times 100 \%\)</span> simultaneous confidence interval for the <span class="math inline">\(i\)</span>th variable <span class="math inline">\(X_i\)</span> is given by
+<span class="math display">\[
+(\bar x_{1i}-\bar x_{2i}) \pm \sqrt{\frac{(n_1+n_2-2)p}{n_1+n_2-p-1}F_{p, n_1+n_2-p-1}(\alpha)}\sqrt{s_{\mbox{ ${pooled}$ },i}^2(\frac{1}{n_1}+\frac{1}{n_2})}, i=1, 2, \cdots, p
+\]</span>
+where <span class="math inline">\(\bar x_{1i}\)</span> and <span class="math inline">\(\bar x_{2i}\)</span> are the sample mean of <span class="math inline">\(X_i\)</span> based on the first and the second sample respectively. That is
+<span class="math display">\[
+\bar x_{1i}=\frac{1}{n_1}\sum_{k=1}^{n_1} x_{1ik}, \bar x_{2i}=\frac{1}{n_2}\sum_{k=1}^{n_2} x_{2ik}.
+\]</span>
+And $s_{,i}^2$ is the pooled sample variance of the <span class="math inline">\(X_i\)</span>. That is
+<span class="math display">\[
+\small
+s_{\mbox{ ${pooled}$ },i}^2=\frac{(n_1-1)s_{1i}^2+(n_2-1)s_{2i}^2}{n_1+n_2-2}, s_{1i}^2=\frac{1}{n_1-1}\sum_{k=1}^{n_1}(x_{1ik}-\bar x_{1i})^2, s_{2i}^2=\frac{1}{n_2-1}\sum_{k=1}^{n_2}(x_{2ik}-\bar x_{2i})^2.
+\]</span></li>
+<li>A <span class="math inline">\((1-\alpha)\times 100 \%\)</span> Bonferroni interval</li>
+</ul>
+<p>To address the <em>multiple comparisons</em> problem, a <span class="math inline">\((1-\alpha)\times 100 \%\)</span> Bonferroni interval is given by
+<span class="math display">\[
+(\bar x_{1i}-\bar x_{2i}) \pm t_{n_1+n_2-2}(\frac{\alpha}{2p})\sqrt{s_{\mbox{ ${pooled}$ },i}^2(\frac{1}{n_1}+\frac{1}{n_2})}, i=1, 2, \cdots, p,
+\]</span>
+where <span class="math inline">\(t_{n_1+n_2-2}(\frac{\alpha}{2p})\)</span> is the <span class="math inline">\(\frac{\alpha}{2p}\times 100\)</span>th upper-tailed quantile of the <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(df=n_1+n_2-2\)</span>. The mean vector is different in <span class="math inline">\(X_i\)</span> by <span class="math inline">\(\Delta_{0, i}\)</span> if <span class="math inline">\(\Delta_{0,i}\)</span> is outside the interval.</p>
+<p><span class="math inline">\(\textbf{Example: Comparing Two Mean Vectors with Birds Data}\)</span></p>
+<p>For Bumpus’s bird data, at the 5% significance level, test whether the survivors and non-survivors are different in the five measurements.</p>
+<ul>
+<li>Hypotheses. <span class="math inline">\(H_0: \boldsymbol{\mu_1}-\boldsymbol{\mu_2}=\mathbf{0}\)</span>, <span class="math inline">\(H_a: \mbox{at least one } \mu_{1i}\ne \mu_{2i}, i=1, 2, \cdots, p\)</span>.</li>
+<li>Find the sample mean vectors and covariance matrices for the survivors and non-survivors.
+<span class="math display">\[
+\mathbf{\bar x_1}=\left[
+\begin{array}{c}
+157.381\\
+241.000\\
+31.433\\
+18.500\\
+20.810
+\end{array}
+\right], \mathbf{S_1}=\left[
+\begin{array}{rrrrr}
+11.048 &amp; 9.10&amp; 1.557&amp; 0.870&amp; 1.286\\
+9.100&amp; 17.50&amp; 1.910&amp; 1.310&amp; 0.880\\
+1.557 &amp; 1.91&amp; 0.531&amp; 0.189&amp; 0.240\\
+0.870&amp;  1.31&amp; 0.189&amp; 0.176&amp; 0.133\\
+1.286 &amp; 0.88&amp; 0.240&amp; 0.133&amp; 0.575
+\end{array}
+\right]
+\]</span>
+<span class="math display">\[
+\mathbf{\bar x_2}=\left[
+\begin{array}{c}
+158.429\\
+241.571\\
+31.479\\
+18.446\\
+20.839
+\end{array}
+\right], \mathbf{S_2}=\left[
+\begin{array}{rrrrr}
+15.069&amp; 17.190&amp; 2.243&amp; 1.746&amp; 2.931\\
+17.190&amp; 32.550&amp; 3.398&amp; 2.950 &amp;4.066\\
+2.243 &amp; 3.398&amp; 0.728 &amp;0.470 &amp;0.559\\
+1.746 &amp; 2.950&amp; 0.470&amp; 0.434&amp; 0.506\\
+2.931&amp;  4.066&amp; 0.559&amp; 0.506 &amp;1.321
+\end{array}
+\right]
+\]</span></li>
+<li>Calculate the observed value of the test statistic <span class="math inline">\(T^2\)</span>. The pooled covariance matrix is
+<span class="math display">\[
+\mathbf{S}_{\mbox{pooled}}=\left[
+\begin{array}{rrrrr}
+13.358&amp; 13.747&amp; 1.951&amp; 1.373&amp; 2.231\\
+13.747&amp; 26.146&amp; 2.765&amp; 2.252&amp; 2.710\\
+1.951&amp;  2.765&amp; 0.644&amp; 0.350&amp; 0.423\\
+1.373&amp;  2.252&amp;0.350&amp; 0.324&amp; 0.347\\
+2.231&amp;  2.710&amp;0.423&amp; 0.347&amp; 1.004
+\end{array}
+\right]
+\]</span>
+and
+<span class="math display">\[
+\left[\left(\frac{1}{n_1}+\frac{1}{n_2}\right)\mathbf{S}_{\mbox{pooled}}\right]^{-1}=\left[
+\begin{array}{rrrrr}
+2.473&amp; -0.832&amp;  -2.883 &amp;  0.950&amp;  -2.362\\
+-0.832&amp;  1.482&amp;  -0.448&amp;  -6.648&amp;   0.337\\
+-2.883&amp; -0.448&amp;  50.793&amp; -39.335&amp;  -0.190\\
+0.950&amp; -6.648&amp; -39.335&amp; 138.136&amp; -15.336\\
+-2.362&amp;  0.337&amp;  -0.190&amp; -15.336&amp;  21.673
+\end{array}
+\right],
+\]</span>
+<span class="math display">\[
+\small
+\begin{aligned}
+T^2&amp;=[(\mathbf{\bar x_1}-\mathbf{\bar x_2})-(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})]^{T}\left[\left(\frac{1}{n_1}+\frac{1}{n_2}\right)\mathbf{S}_{\mbox{pooled}}\right]^{-1}[(\mathbf{\bar x_1}-\mathbf{\bar x_2})-(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})]\\
+&amp;=[-1.048, -0.571, -0.046, 0.054, -0.029]\left[
+\begin{array}{rrrrr}
+2.473&amp; -0.832&amp;  -2.883 &amp;  0.950&amp;  -2.362\\
+-0.832&amp;  1.482&amp;  -0.448&amp;  -6.648&amp;   0.337\\
+-2.883&amp; -0.448&amp;  50.793&amp; -39.335&amp;  -0.190\\
+0.950&amp; -6.648&amp; -39.335&amp; 138.136&amp; -15.336\\
+-2.362&amp;  0.337&amp;  -0.190&amp; -15.336&amp;  21.673
+\end{array}
+\right] \left[
+\begin{array}{c}
+-1.048\\
+-0.571\\
+-0.046\\
+0.054\\
+-0.029
+\end{array}
+\right]\\
+&amp;=2.843
+\end{aligned}
+\]</span></li>
+<li>Since <span class="math inline">\(F_o=\frac{n_1+n_2-p-1}{(n_1+n_2-2)p}T^2=\frac{21+28-5-1}{(21+28-2)5}\times 2.843=0.52&lt;F_{p, n_1+n_2-p-1}(\alpha)=F_{5, 43}(0.05)=2.432\)</span>, there is no sufficient evidence to conclude that the survivors and non-survivors are different in the five body measurements at the 5% significance level.</li>
+</ul>
+<p>Use <span class="math inline">\(\textsf{R}\)</span> to confirm the result.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="hypothesis-tests-on-mean-vectors.html#cb32-1" tabindex="-1"></a>bird <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/bumpus.txt&quot;</span>,<span class="at">header=</span>T)</span>
+<span id="cb32-2"><a href="hypothesis-tests-on-mean-vectors.html#cb32-2" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">21</span> <span class="co">#birds 1 to 21 are survivors</span></span>
+<span id="cb32-3"><a href="hypothesis-tests-on-mean-vectors.html#cb32-3" tabindex="-1"></a>xmat1 <span class="ot">&lt;-</span> bird[ind,<span class="sc">-</span><span class="dv">1</span>] <span class="co">#body measurements for survivors</span></span>
+<span id="cb32-4"><a href="hypothesis-tests-on-mean-vectors.html#cb32-4" tabindex="-1"></a>xmat2 <span class="ot">&lt;-</span> bird[<span class="sc">-</span>ind,<span class="sc">-</span><span class="dv">1</span>] <span class="co">#body measurements for non-survivors</span></span>
+<span id="cb32-5"><a href="hypothesis-tests-on-mean-vectors.html#cb32-5" tabindex="-1"></a><span class="fu">HotellingsT2</span>(xmat1, xmat2) <span class="co">#report the F score</span></span></code></pre></div>
+<pre><code>## 
+##  Hotelling&#39;s two sample T2-test
+## 
+## data:  xmat1 and xmat2
+## T.2 = 0.51668, df1 = 5, df2 = 43, p-value = 0.7622
+## alternative hypothesis: true location difference is not equal to c(0,0,0,0,0)</code></pre>
+<p></p>
+<p>The admission data set contains 397 graduate school admissions decisions, among which <span class="math inline">\(n_1=271\)</span> were not admitted and <span class="math inline">\(n_2=126\)</span> were admitted. The explanatory variables are the student’s GRE (Graduate Record Exam scores), GPA (grade point average) and prestige of the undergraduate institution (values from 1 to 4 with 1 having the highest prestige). The response variable, admit/don’t admit, is a binary variable with 1=admitted and 0=not admitted. Test at the 1% significance level whether the non-admitted and admitted students have different GRE and/or GPA scores.</p>
+<p>We first check the assumptions of the test.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="hypothesis-tests-on-mean-vectors.html#cb34-1" tabindex="-1"></a>chiqq <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb34-2"><a href="hypothesis-tests-on-mean-vectors.html#cb34-2" tabindex="-1"></a>  <span class="co">#input x is a n*p observation matrix  </span></span>
+<span id="cb34-3"><a href="hypothesis-tests-on-mean-vectors.html#cb34-3" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb34-4"><a href="hypothesis-tests-on-mean-vectors.html#cb34-4" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
+<span id="cb34-5"><a href="hypothesis-tests-on-mean-vectors.html#cb34-5" tabindex="-1"></a>  pvec <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">:</span>n<span class="fl">-0.5</span>)<span class="sc">/</span>n</span>
+<span id="cb34-6"><a href="hypothesis-tests-on-mean-vectors.html#cb34-6" tabindex="-1"></a>  qvec <span class="ot">&lt;-</span> <span class="fu">qchisq</span>(pvec,p)</span>
+<span id="cb34-7"><a href="hypothesis-tests-on-mean-vectors.html#cb34-7" tabindex="-1"></a>  mvec <span class="ot">&lt;-</span> <span class="fu">apply</span>(x,<span class="dv">2</span>,mean)</span>
+<span id="cb34-8"><a href="hypothesis-tests-on-mean-vectors.html#cb34-8" tabindex="-1"></a>  smat <span class="ot">&lt;-</span> <span class="fu">cov</span>(x)</span>
+<span id="cb34-9"><a href="hypothesis-tests-on-mean-vectors.html#cb34-9" tabindex="-1"></a>  dvec <span class="ot">&lt;-</span> <span class="fu">mahalanobis</span>(x,mvec,smat)</span>
+<span id="cb34-10"><a href="hypothesis-tests-on-mean-vectors.html#cb34-10" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">sort</span>(dvec),qvec,<span class="at">xlab=</span><span class="st">&quot;Observed Quantile&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Theoretical Quantile&quot;</span>,<span class="at">pch=</span><span class="dv">19</span>)</span>
+<span id="cb34-11"><a href="hypothesis-tests-on-mean-vectors.html#cb34-11" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb34-12"><a href="hypothesis-tests-on-mean-vectors.html#cb34-12" tabindex="-1"></a>}</span>
+<span id="cb34-13"><a href="hypothesis-tests-on-mean-vectors.html#cb34-13" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb34-14"><a href="hypothesis-tests-on-mean-vectors.html#cb34-14" tabindex="-1"></a>adf0 <span class="ot">&lt;-</span> cadf <span class="sc">%&gt;%</span></span>
+<span id="cb34-15"><a href="hypothesis-tests-on-mean-vectors.html#cb34-15" tabindex="-1"></a>  <span class="fu">filter</span>(admit<span class="sc">==</span><span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-16"><a href="hypothesis-tests-on-mean-vectors.html#cb34-16" tabindex="-1"></a>  <span class="fu">select</span>(gre, gpa)</span>
+<span id="cb34-17"><a href="hypothesis-tests-on-mean-vectors.html#cb34-17" tabindex="-1"></a>adf1 <span class="ot">&lt;-</span> cadf <span class="sc">%&gt;%</span></span>
+<span id="cb34-18"><a href="hypothesis-tests-on-mean-vectors.html#cb34-18" tabindex="-1"></a>  <span class="fu">filter</span>(admit<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-19"><a href="hypothesis-tests-on-mean-vectors.html#cb34-19" tabindex="-1"></a>  <span class="fu">select</span>(gre, gpa)</span>
+<span id="cb34-20"><a href="hypothesis-tests-on-mean-vectors.html#cb34-20" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb34-21"><a href="hypothesis-tests-on-mean-vectors.html#cb34-21" tabindex="-1"></a><span class="fu">chiqq</span>(adf0)</span>
+<span id="cb34-22"><a href="hypothesis-tests-on-mean-vectors.html#cb34-22" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Chi-squre Q-Q Plot for Non-admitted&quot;</span>)</span>
+<span id="cb34-23"><a href="hypothesis-tests-on-mean-vectors.html#cb34-23" tabindex="-1"></a><span class="fu">chiqq</span>(adf1)</span>
+<span id="cb34-24"><a href="hypothesis-tests-on-mean-vectors.html#cb34-24" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Chi-squre Q-Q Plot for Admitted&quot;</span>)</span></code></pre></div>
+<p><img src="Plots/chiassumpt-1.png" width="672" /></p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="hypothesis-tests-on-mean-vectors.html#cb35-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p>Both chi-square Q-Q plots do not show strong evidence against the bivariate normality assumption for both the non-admitted and admitted groups. We use Box’s M-test for Homogeneity of Covariance Matrices with <span class="math inline">\(H_0: \boldsymbol{\Sigma}_1=\boldsymbol{\Sigma}_2\)</span>.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="hypothesis-tests-on-mean-vectors.html#cb36-1" tabindex="-1"></a><span class="fu">library</span>(biotools)</span>
+<span id="cb36-2"><a href="hypothesis-tests-on-mean-vectors.html#cb36-2" tabindex="-1"></a><span class="fu">boxM</span>(cadf[,<span class="fu">c</span>(<span class="st">&quot;gre&quot;</span>,<span class="st">&quot;gpa&quot;</span>)],cadf[,<span class="st">&quot;admit&quot;</span>])</span></code></pre></div>
+<pre><code>## 
+##  Box&#39;s M-test for Homogeneity of Covariance Matrices
+## 
+## data:  cadf[, c(&quot;gre&quot;, &quot;gpa&quot;)]
+## Chi-Sq (approx.) = 3.8935, df = 3, p-value = 0.2732</code></pre>
+<p>The P-value of the Box’s M-test is <span class="math inline">\(0.2732\)</span>, so there is not sufficient evidence to reject <span class="math inline">\(H_0\)</span>, we could use the pooled procedure.</p>
+<p>Steps:</p>
+<ol style="list-style-type: decimal">
+<li>Hypotheses. <span class="math inline">\(H_0: \boldsymbol{\mu_1}-\boldsymbol{\mu_2}=\mathbf{0}\)</span>, <span class="math inline">\(H_a: \mbox{at least one } \mu_{1i}\ne \mu_{2i}, i=1, 2\)</span>.</li>
+<li>Significance level <span class="math inline">\(\alpha=0.01\)</span>.</li>
+<li>Test statistic. First find the sample mean vectors and sample covariance matrices.
+<span class="math display">\[
+\mathbf{\bar x_1}=\left[
+\begin{array}{c}
+573.579\\
+3.347
+\end{array}
+\right], \mathbf{S_1}=\left[
+\begin{array}{rrrrr}
+3468.252&amp; 18.265\\
+18.265 &amp; 0.1412
+\end{array}
+\right]
+\]</span>
+<span class="math display">\[
+\mathbf{\bar x_2}=\left[
+\begin{array}{c}
+618.571\\
+3.4892
+\end{array}
+\right], \mathbf{S_2}=\left[
+\begin{array}{rrrrr}
+11937.143&amp; 9.452\\
+9.452&amp; 0.138
+\end{array}
+\right]
+\]</span></li>
+</ol>
+<p>The pooled covariance matrix is
+<span class="math display">\[
+\mathbf{S}_{\mbox{pooled}}=\left[
+\begin{array}{rrrrr}
+12983.724&amp; 15.476\\
+15.476&amp;  0.141
+\end{array}
+\right]
+\]</span>
+and
+<span class="math display">\[
+\left[\left(\frac{1}{n_1}+\frac{1}{n_2}\right)\mathbf{S}_{\mbox{pooled}}\right]^{-1}=\left[
+\begin{array}{rrrrr}
+0.007625356&amp;  -0.8397307\\
+-0.839730679&amp; 704.5116072
+\end{array}
+\right],
+\]</span>
+<span class="math display">\[
+\begin{aligned}
+T^2&amp;=[(\mathbf{\bar x_1}-\mathbf{\bar x_2})-(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})]^{T}\left[\left(\frac{1}{n_1}+\frac{1}{n_2}\right)\mathbf{S}_{\mbox{pooled}}\right]^{-1}[(\mathbf{\bar x_1}-\mathbf{\bar x_2})-(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})]\\
+&amp;=[-44.992, -0.142]\left[
+\begin{array}{rrrrr}
+0.007625356&amp;  -0.8397307\\
+-0.839730679&amp; 704.5116072
+\end{array}
+\right] \left[
+\begin{array}{c}
+-44.992\\
+-0.142
+\end{array}
+\right]\\
+&amp;=18.918
+\end{aligned}
+\]</span></p>
+<p><span class="math inline">\(F_o=\frac{n_1+n_2-p-1}{(n_1+n_2-2)p}T^2=\hspace{10cm}\)</span>.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>P-value or rejection region.
+<span class="math inline">\(F_0 = 9.435\)</span> is greater than <span class="math inline">\(F_{2,394} = 4.6594\)</span>, so it lies in the rejection region.</li>
+<li>Decision:
+Reject <span class="math inline">\(H_0\)</span></li>
+<li>Conclusion:
+At the 1% significance level we have strong evidence that <span class="math inline">\(\mu_1 - \mu_2 \neq 0\)</span></li>
+</ol>
+<p>Double check with <span class="math inline">\(\textsf{R}.\)</span></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="hypothesis-tests-on-mean-vectors.html#cb38-1" tabindex="-1"></a><span class="fu">HotellingsT2</span>(adf0, adf1)</span></code></pre></div>
+<pre><code>## 
+##  Hotelling&#39;s two sample T2-test
+## 
+## data:  adf0 and adf1
+## T.2 = 9.4349, df1 = 2, df2 = 394, p-value = 9.944e-05
+## alternative hypothesis: true location difference is not equal to c(0,0)</code></pre>
+<p>Obtain 99% Bonferroni intervals for the mean difference in GRE and GPA.
+<span class="math display">\[
+(\bar x_{1i}-\bar x_{2i}) \pm t_{n_1+n_2-2}(\frac{\alpha}{2p})\sqrt{s_{\mbox{ ${pooled}$ },i}^2(\frac{1}{n_1}+\frac{1}{n_2})}, i=1, 2
+\]</span></p>
+<p>[
+t_{n1+n2-p}() = t_{395}() = 2.823 </p>
+<p>\</p>
+<p>n_1 = 271, n_2 = 126, p=2, 1-= 0.99, = 0.01</p>
+<p>]</p>
+<p>For GRE <span class="math inline">\((573.579 - 618.571) \pm 2.823 \sqrt{12983.724 \times (\frac{1}{271} + \frac{1}{126})}\)</span>
+<span class="math inline">\(= (-79.677, -10.307)\)</span> which excludes <span class="math inline">\(0\)</span></p>
+<p>For GPA <span class="math inline">\((3.347 - 3.4892) \pm 2.823 \sqrt{0.141 \times (\frac{1}{271} + \frac{1}{126})}\)</span>
+<span class="math inline">\(= (-0.256, -0.028)\)</span> which excludes <span class="math inline">\(0\)</span>.</p>
+<p>We can use <span class="math inline">\(\textsf{R}\)</span> to obtain a Bonferroni interval.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="hypothesis-tests-on-mean-vectors.html#cb40-1" tabindex="-1"></a>mysinterval2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y,alpha){</span>
+<span id="cb40-2"><a href="hypothesis-tests-on-mean-vectors.html#cb40-2" tabindex="-1"></a><span class="co">#function to obtain simultaneous interval for each variable</span></span>
+<span id="cb40-3"><a href="hypothesis-tests-on-mean-vectors.html#cb40-3" tabindex="-1"></a><span class="co">#x:n by p matrix, y:m by p matrix, alpha is the type I error rate </span></span>
+<span id="cb40-4"><a href="hypothesis-tests-on-mean-vectors.html#cb40-4" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb40-5"><a href="hypothesis-tests-on-mean-vectors.html#cb40-5" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(y)</span>
+<span id="cb40-6"><a href="hypothesis-tests-on-mean-vectors.html#cb40-6" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
+<span id="cb40-7"><a href="hypothesis-tests-on-mean-vectors.html#cb40-7" tabindex="-1"></a>xmvec <span class="ot">&lt;-</span> <span class="fu">apply</span>(x,<span class="dv">2</span>,mean) <span class="co">#sample mean vector of x</span></span>
+<span id="cb40-8"><a href="hypothesis-tests-on-mean-vectors.html#cb40-8" tabindex="-1"></a>ymvec <span class="ot">&lt;-</span> <span class="fu">apply</span>(y,<span class="dv">2</span>,mean) <span class="co">#sample mean vector of y</span></span>
+<span id="cb40-9"><a href="hypothesis-tests-on-mean-vectors.html#cb40-9" tabindex="-1"></a>xsvec <span class="ot">&lt;-</span> <span class="fu">apply</span>(x,<span class="dv">2</span>,sd) <span class="co">#sample SD vector of the first sample (s1i)</span></span>
+<span id="cb40-10"><a href="hypothesis-tests-on-mean-vectors.html#cb40-10" tabindex="-1"></a>ysvec <span class="ot">&lt;-</span> <span class="fu">apply</span>(y,<span class="dv">2</span>,sd) <span class="co">#sample SD vector of the second sample (s2i)</span></span>
+<span id="cb40-11"><a href="hypothesis-tests-on-mean-vectors.html#cb40-11" tabindex="-1"></a>fscore <span class="ot">&lt;-</span> <span class="fu">qf</span>(<span class="dv">1</span><span class="sc">-</span>alpha,p, n1<span class="sc">+</span>n2<span class="sc">-</span>p<span class="dv">-1</span>)</span>
+<span id="cb40-12"><a href="hypothesis-tests-on-mean-vectors.html#cb40-12" tabindex="-1"></a>sp <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(((n1<span class="dv">-1</span>)<span class="sc">*</span>xsvec<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(n2<span class="dv">-1</span>)<span class="sc">*</span>ysvec<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(n1<span class="sc">+</span>n2<span class="dv">-2</span>))</span>
+<span id="cb40-13"><a href="hypothesis-tests-on-mean-vectors.html#cb40-13" tabindex="-1"></a>lvec <span class="ot">&lt;-</span> (xmvec<span class="sc">-</span>ymvec)<span class="sc">-</span><span class="fu">sqrt</span>(fscore<span class="sc">*</span>(n1<span class="sc">+</span>n2<span class="dv">-2</span>)<span class="sc">*</span>p<span class="sc">/</span>(n1<span class="sc">+</span>n2<span class="sc">-</span>p<span class="dv">-1</span>))<span class="sc">*</span>sp<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">/</span>n1<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n2)</span>
+<span id="cb40-14"><a href="hypothesis-tests-on-mean-vectors.html#cb40-14" tabindex="-1"></a>uvec <span class="ot">&lt;-</span> (xmvec<span class="sc">-</span>ymvec)<span class="sc">+</span><span class="fu">sqrt</span>(fscore<span class="sc">*</span>(n1<span class="sc">+</span>n2<span class="dv">-2</span>)<span class="sc">*</span>p<span class="sc">/</span>(n1<span class="sc">+</span>n2<span class="sc">-</span>p<span class="dv">-1</span>))<span class="sc">*</span>sp<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">/</span>n1<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n2)</span>
+<span id="cb40-15"><a href="hypothesis-tests-on-mean-vectors.html#cb40-15" tabindex="-1"></a><span class="fu">return</span>(<span class="fu">cbind</span>(lvec,uvec))</span>
+<span id="cb40-16"><a href="hypothesis-tests-on-mean-vectors.html#cb40-16" tabindex="-1"></a>}</span>
+<span id="cb40-17"><a href="hypothesis-tests-on-mean-vectors.html#cb40-17" tabindex="-1"></a></span>
+<span id="cb40-18"><a href="hypothesis-tests-on-mean-vectors.html#cb40-18" tabindex="-1"></a>mybinterval2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y,alpha){</span>
+<span id="cb40-19"><a href="hypothesis-tests-on-mean-vectors.html#cb40-19" tabindex="-1"></a><span class="co">#function to obtain bonferroni corrected interval for each variable</span></span>
+<span id="cb40-20"><a href="hypothesis-tests-on-mean-vectors.html#cb40-20" tabindex="-1"></a><span class="co">#x:n by p matrix, y:m by p matrix, alpha is the type I error rate </span></span>
+<span id="cb40-21"><a href="hypothesis-tests-on-mean-vectors.html#cb40-21" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb40-22"><a href="hypothesis-tests-on-mean-vectors.html#cb40-22" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(y)</span>
+<span id="cb40-23"><a href="hypothesis-tests-on-mean-vectors.html#cb40-23" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
+<span id="cb40-24"><a href="hypothesis-tests-on-mean-vectors.html#cb40-24" tabindex="-1"></a>xmvec <span class="ot">&lt;-</span> <span class="fu">apply</span>(x,<span class="dv">2</span>,mean) <span class="co">#mean vector of the first sample</span></span>
+<span id="cb40-25"><a href="hypothesis-tests-on-mean-vectors.html#cb40-25" tabindex="-1"></a>ymvec <span class="ot">&lt;-</span> <span class="fu">apply</span>(y,<span class="dv">2</span>,mean) <span class="co">#mean vector of the second sample</span></span>
+<span id="cb40-26"><a href="hypothesis-tests-on-mean-vectors.html#cb40-26" tabindex="-1"></a>xsvec <span class="ot">&lt;-</span> <span class="fu">apply</span>(x,<span class="dv">2</span>,sd) <span class="co">#sample SD vector of the first sample (s1i)</span></span>
+<span id="cb40-27"><a href="hypothesis-tests-on-mean-vectors.html#cb40-27" tabindex="-1"></a>ysvec <span class="ot">&lt;-</span> <span class="fu">apply</span>(y,<span class="dv">2</span>,sd) <span class="co">#sample SD vector of the second sample (s2i)</span></span>
+<span id="cb40-28"><a href="hypothesis-tests-on-mean-vectors.html#cb40-28" tabindex="-1"></a>tscore1 <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>p),n1<span class="sc">+</span>n2<span class="dv">-2</span>)</span>
+<span id="cb40-29"><a href="hypothesis-tests-on-mean-vectors.html#cb40-29" tabindex="-1"></a>sp <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(((n1<span class="dv">-1</span>)<span class="sc">*</span>xsvec<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(n2<span class="dv">-1</span>)<span class="sc">*</span>ysvec<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(n1<span class="sc">+</span>n2<span class="dv">-2</span>))</span>
+<span id="cb40-30"><a href="hypothesis-tests-on-mean-vectors.html#cb40-30" tabindex="-1"></a>lvec1 <span class="ot">&lt;-</span> (xmvec<span class="sc">-</span>ymvec)<span class="sc">-</span>tscore1<span class="sc">*</span>sp<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">/</span>n1<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n2)</span>
+<span id="cb40-31"><a href="hypothesis-tests-on-mean-vectors.html#cb40-31" tabindex="-1"></a>uvec1 <span class="ot">&lt;-</span> (xmvec<span class="sc">-</span>ymvec)<span class="sc">+</span>tscore1<span class="sc">*</span>sp<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">/</span>n1<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n2)</span>
+<span id="cb40-32"><a href="hypothesis-tests-on-mean-vectors.html#cb40-32" tabindex="-1"></a>df <span class="ot">&lt;-</span> ((xsvec<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n1)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(ysvec<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n2)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>((<span class="dv">1</span><span class="sc">/</span>(n1<span class="dv">-1</span>)<span class="sc">*</span>(xsvec<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n1)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span>(n2<span class="dv">-1</span>)<span class="sc">*</span>(ysvec<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n2)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb40-33"><a href="hypothesis-tests-on-mean-vectors.html#cb40-33" tabindex="-1"></a>tscore2 <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>p),df)</span>
+<span id="cb40-34"><a href="hypothesis-tests-on-mean-vectors.html#cb40-34" tabindex="-1"></a>lvec2 <span class="ot">&lt;-</span> (xmvec<span class="sc">-</span>ymvec)<span class="sc">-</span>tscore2<span class="sc">*</span><span class="fu">sqrt</span>(xsvec<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n1<span class="sc">+</span>ysvec<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n2)</span>
+<span id="cb40-35"><a href="hypothesis-tests-on-mean-vectors.html#cb40-35" tabindex="-1"></a>uvec2 <span class="ot">&lt;-</span> (xmvec<span class="sc">-</span>ymvec)<span class="sc">+</span>tscore2<span class="sc">*</span><span class="fu">sqrt</span>(xsvec<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n1<span class="sc">+</span>ysvec<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n2)</span>
+<span id="cb40-36"><a href="hypothesis-tests-on-mean-vectors.html#cb40-36" tabindex="-1"></a><span class="fu">return</span>(<span class="fu">list</span>(<span class="at">pool=</span><span class="fu">cbind</span>(lvec1,uvec1),<span class="at">nonpool=</span><span class="fu">cbind</span>(lvec2,uvec2)))</span>
+<span id="cb40-37"><a href="hypothesis-tests-on-mean-vectors.html#cb40-37" tabindex="-1"></a>}</span>
+<span id="cb40-38"><a href="hypothesis-tests-on-mean-vectors.html#cb40-38" tabindex="-1"></a></span>
+<span id="cb40-39"><a href="hypothesis-tests-on-mean-vectors.html#cb40-39" tabindex="-1"></a><span class="fu">mysinterval2</span>(adf0,adf1,<span class="fl">0.01</span>) </span></code></pre></div>
+<pre><code>##            lvec        uvec
+## gre -82.5460980 -7.43808761
+## gpa  -0.2655975 -0.01849782</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="hypothesis-tests-on-mean-vectors.html#cb42-1" tabindex="-1"></a><span class="fu">mybinterval2</span>(adf0,adf1,<span class="fl">0.01</span>)</span></code></pre></div>
+<pre><code>## $pool
+##           lvec1        uvec1
+## gre -79.6752949 -10.30889064
+## gpa  -0.2561528  -0.02794254
+## 
+## $nonpool
+##           lvec2       uvec2
+## gre -79.2651244 -10.7190612
+## gpa  -0.2568243  -0.0272711</code></pre>
+</div>
+<div id="univariate-case-based-on-a-paired-sample" class="section level3 hasAnchor" number="5.2.5">
+<h3><span class="header-section-number">5.2.5</span> Univariate Case Based on a Paired Sample<a href="hypothesis-tests-on-mean-vectors.html#univariate-case-based-on-a-paired-sample" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Two samples are considered <span class="math inline">\(\textit{paired}\)</span> if each observation in the first sample is related to an observation in the second sample. In univariate case, a paired <span class="math inline">\(t\)</span> test is exactly a one-sample <span class="math inline">\(t\)</span> test on the <span class="math inline">\(\textbf{paired differences}\)</span> <span class="math inline">\(d_i\)</span>. The hypotheses are <span class="math inline">\(H_0: \mu_d=\delta_0\)</span> versus <span class="math inline">\(H_a: \mu_d\ne \delta_0\)</span>.</p>
+<p>$: $</p>
+<ul>
+<li>simple random paired sample;</li>
+<li>the paired difference has a normal distribution or large number of pairs.</li>
+</ul>
+<p>The test statistic is
+<span class="math display">\[
+t_o=\frac{\bar d-\delta_0}{\frac{s_d}{\sqrt{n}}}, \quad \bar d=\frac{\sum d_i}{n}, \quad s_d=\sqrt{\frac{\sum(d_i-\bar d)^2}{n-1}}=\sqrt{\frac{\sum d_i^2-\frac{(\sum d_i)^2}{n}}{n-1}}, \quad df=n-1.
+\]</span>
+Reject <span class="math inline">\(H_0: \mu_d=\delta_0\)</span> if <span class="math inline">\(t_o\ge t_{n-1}(\alpha/2)\)</span>.</p>
+</div>
+<div id="multivariate-case-based-on-a-paired-sample" class="section level3 hasAnchor" number="5.2.6">
+<h3><span class="header-section-number">5.2.6</span> Multivariate Case Based on a Paired Sample<a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-based-on-a-paired-sample" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Generalize the univariate case to multivariate case, let the matrix of pairwise differences <span class="math inline">\(\mathbf{D}=\mathbf{X}_1-\mathbf{X}_2\)</span>, the element-wise difference between the two observation matrices <span class="math inline">\(\mathbf{X}_1=[x_{1ik}]_{k=1}^{n}, i=1, 2, \cdots, p\)</span> and <span class="math inline">\(\mathbf{X}_2=[x_{2ik}]_{k=1}^{n}, i=1, 2, \cdots, p\)</span>. And <span class="math inline">\(\bar {\mathbf{d}}\)</span> is the sample mean vector of difference matrix <span class="math inline">\(\mathbf{D}\)</span>, and <span class="math inline">\(\mathbf{S}_d\)</span> is the sample covariance matrix of <span class="math inline">\(\mathbf{D}\)</span>. The hypotheses of the paired Hotelling’s <span class="math inline">\(T^2\)</span> test is <span class="math inline">\(H_0: \boldsymbol{\mu}_d=\boldsymbol{\delta}_0\)</span> versus <span class="math inline">\(H_a: \boldsymbol{\mu}_d\ne \boldsymbol{\delta}_0\)</span>. The test statistic is
+<span class="math display">\[
+T^2=n(\mathbf{\bar d}-\boldsymbol{\delta}_0)^T\mathbf{S}_d^{-1}(\mathbf{\bar d}-\boldsymbol{\delta}_0) \Longrightarrow \frac{(n-p)}{(n-1)p}T^2\sim F_{p, n-p}.
+\]</span>
+We reject <span class="math inline">\(H_0: \boldsymbol{\mu}_d=\boldsymbol{\delta}_0\)</span> at significance level <span class="math inline">\(\alpha\)</span> if
+<span class="math display">\[
+F_o=\frac{(n-p)}{p(n-1)}T^2\ge F_{p, n-p}(\alpha)
+\]</span>
+where <span class="math inline">\(F_{p, n-p}(\alpha)\)</span> is the upper <span class="math inline">\(\alpha\times 100\)</span>th percentile of the <span class="math inline">\(F_{p, n-p}\)</span> distribution.</p>
+<p>$$</p>
+<p>A sample of husband and wife pairs are asked to respond to each of the following questions:</p>
+<ol style="list-style-type: decimal">
+<li>What is the level of passionate love you feel for your partner?</li>
+<li>What is the level of passionate love your partner feels for you?</li>
+<li>What is the level of companionate love you feel for your partner?</li>
+<li>What is the level of companionate love your partner feels for you?</li>
+</ol>
+<p>A total of 30 married couples were questioned. Responses were recorded on the five-point scale. Responses included the following values:</p>
+<ol style="list-style-type: decimal">
+<li>None at all</li>
+<li>Very little</li>
+<li>Some</li>
+<li>A great deal</li>
+<li>Tremendous amount</li>
+</ol>
+<p>The data are summarized in the following table:</p>
+<p><img src="Plots/spouseTable.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>We can conduct the test in <span class="math inline">\(\textsf{R}.\)</span>
+Note that in the below, V1-V4 refers to the husband, and V5-V8 refers to the wife.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="hypothesis-tests-on-mean-vectors.html#cb44-1" tabindex="-1"></a><span class="fu">library</span>(ICSNP)</span>
+<span id="cb44-2"><a href="hypothesis-tests-on-mean-vectors.html#cb44-2" tabindex="-1"></a>spouse <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/spouse_paired.txt&quot;</span>,<span class="at">header=</span>F)</span>
+<span id="cb44-3"><a href="hypothesis-tests-on-mean-vectors.html#cb44-3" tabindex="-1"></a><span class="fu">head</span>(spouse)</span></code></pre></div>
+<pre><code>##   V1 V2 V3 V4 V5 V6 V7 V8
+## 1  2  3  5  5  4  4  5  5
+## 2  5  5  4  4  4  5  5  5
+## 3  4  5  5  5  4  4  5  5
+## 4  4  3  4  4  4  5  5  5
+## 5  3  3  5  5  4  4  5  5
+## 6  3  3  4  5  3  3  4  4</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="hypothesis-tests-on-mean-vectors.html#cb46-1" tabindex="-1"></a>hmat <span class="ot">&lt;-</span> spouse[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb46-2"><a href="hypothesis-tests-on-mean-vectors.html#cb46-2" tabindex="-1"></a>wmat <span class="ot">&lt;-</span> spouse[,<span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>]</span>
+<span id="cb46-3"><a href="hypothesis-tests-on-mean-vectors.html#cb46-3" tabindex="-1"></a>dmat <span class="ot">&lt;-</span> hmat<span class="sc">-</span>wmat</span>
+<span id="cb46-4"><a href="hypothesis-tests-on-mean-vectors.html#cb46-4" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(hmat)</span>
+<span id="cb46-5"><a href="hypothesis-tests-on-mean-vectors.html#cb46-5" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb46-6"><a href="hypothesis-tests-on-mean-vectors.html#cb46-6" tabindex="-1"></a>mu0 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>,p,<span class="dv">1</span>)</span>
+<span id="cb46-7"><a href="hypothesis-tests-on-mean-vectors.html#cb46-7" tabindex="-1"></a>mvec <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">round</span>(<span class="fu">apply</span>(dmat,<span class="dv">2</span>,mean),<span class="dv">4</span>),p,<span class="dv">1</span>)</span>
+<span id="cb46-8"><a href="hypothesis-tests-on-mean-vectors.html#cb46-8" tabindex="-1"></a>smat <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cov</span>(dmat),<span class="dv">4</span>)</span>
+<span id="cb46-9"><a href="hypothesis-tests-on-mean-vectors.html#cb46-9" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> n<span class="sc">*</span><span class="fu">t</span>(mvec<span class="sc">-</span>mu0)<span class="sc">%*%</span><span class="fu">round</span>(<span class="fu">solve</span>(smat),<span class="dv">4</span>)<span class="sc">%*%</span>(mvec<span class="sc">-</span>mu0)</span>
+<span id="cb46-10"><a href="hypothesis-tests-on-mean-vectors.html#cb46-10" tabindex="-1"></a>f0 <span class="ot">&lt;-</span> (n<span class="sc">-</span>p)<span class="sc">/</span>(p<span class="sc">*</span>(n<span class="dv">-1</span>))<span class="sc">*</span>t2</span>
+<span id="cb46-11"><a href="hypothesis-tests-on-mean-vectors.html#cb46-11" tabindex="-1"></a><span class="fu">qf</span>(<span class="fl">0.95</span>,p,n<span class="sc">-</span>p)</span></code></pre></div>
+<pre><code>## [1] 2.742594</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="hypothesis-tests-on-mean-vectors.html#cb48-1" tabindex="-1"></a><span class="fu">HotellingsT2</span>(dmat)</span></code></pre></div>
+<pre><code>## 
+##  Hotelling&#39;s one sample T2-test
+## 
+## data:  dmat
+## T.2 = 2.9424, df1 = 4, df2 = 26, p-value = 0.03937
+## alternative hypothesis: true location is not equal to c(0,0,0,0)</code></pre>
+<p>Given that
+<span class="math display">\[
+\mathbf{\bar d}=\left[
+\begin{array}{c}
+0.0667\\
+-0.1333\\
+-0.3000\\
+-0.1333\\
+\end{array}
+\right], \mathbf{S}_d=\left[
+\begin{array}{rrrr}
+0.8230 &amp; 0.0782&amp; -0.0138&amp; -0.0598\\
+0.0782&amp;  0.8092&amp; -0.2138 &amp;-0.1563\\
+-0.0138 &amp;-0.2138&amp;  0.5621&amp;  0.5103\\
+-0.0598&amp; -0.1563  &amp;0.5103 &amp; 0.6023\\
+\end{array}
+\right],
+\]</span>
+test at the 5% significance level whether husbands respond to the questions in the same way as their wives. We can use
+<span class="math display">\[
+\begin{aligned}
+T^2&amp;=n(\mathbf{\bar d}-\boldsymbol{\delta}_0)^T\mathbf{S}_d^{-1}(\mathbf{\bar d}-\boldsymbol{\delta}_0)\\
+&amp;=30\times [0.0667, -0.1333, -0.3000, -0.1333]\left[
+\begin{array}{rrrrr}
+1.2558 &amp; -0.1502&amp; -0.4510 &amp; 0.4678\\
+-0.1502&amp;  1.4115&amp;  0.9279&amp; -0.4348\\
+-0.4510&amp;  0.9279&amp;  8.4174&amp; -6.9356\\
+0.4678&amp; -0.4348&amp; -6.9356&amp;  7.4702\\
+\end{array}
+\right] \left[
+\begin{array}{c}
+0.0667\\
+-0.1333\\
+-0.3000\\
+-0.1333\\
+\end{array}
+\right]\\
+&amp;=13.123
+\end{aligned}
+\]</span>
+complete the test.</p>
+<p><span class="math inline">\(\textbf{1: }\)</span> <span class="math inline">\(H_0: \mu_H - \mu_W = 0 \quad \text{v.s.} \quad H_a: \mu_H - \mu_W \neq 0\)</span>
+<span class="math inline">\(\textbf{2: }\)</span> <span class="math inline">\(\alpha = 0.05\)</span>
+<span class="math inline">\(\textbf{3: }\)</span> <span class="math inline">\(F_0 = \frac{(n-p)}{p(n-1)} T^2 = \frac{30-4}{(30-1) \times 4} \times 13.123 = 2.9424\)</span>
+<span class="math inline">\(\textbf{4: }\)</span> <span class="math inline">\(\text{rejection region} \quad \text{or} \quad p\text{-value} \\ F_p = 2.7426\)</span>
+<span class="math inline">\(\textbf{5: }\)</span> <span class="math inline">\(\text{reject } H_0 \text{ since } F_0 = 2.9424 &gt; 2.7426 \text{ in the rejection region.}\)</span>
+<span class="math inline">\(\textbf{6: }\)</span> <span class="math inline">\(\text{At the 5\% significance level, we have sufficient evidence that husbands and wives respond differently.}\)</span></p>
+</div>
+</div>
+<div id="hypothesis-test-for-several-mean-vectors" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Hypothesis Test for Several Mean Vectors<a href="hypothesis-tests-on-mean-vectors.html#hypothesis-test-for-several-mean-vectors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We first review how to compare several population means in the univariate case.</p>
+<div id="univariate-case-one-way-anova-f-test" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Univariate Case: One-Way ANOVA F Test<a href="hypothesis-tests-on-mean-vectors.html#univariate-case-one-way-anova-f-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We use one-way ANOVA comparing several population means in the univariate case. The hypotheses of one-way ANOVA are formulated as</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: all means are equal, <span class="math inline">\(\mu_1=\mu_2=\cdots=\mu_k\)</span>.</li>
+<li><span class="math inline">\(H_a\)</span>: not all the means are equal.</li>
+</ul>
+<p>The test statistic is
+<span class="math display">\[
+F=\frac{\frac{SSTR}{k-1}}{\frac{SSE}{n-k}}\sim F_{k-1, n-k}
+\]</span>
+which follows an F distribution with degrees of freedom <span class="math inline">\(k-1\)</span> and <span class="math inline">\(n-k\)</span> where <span class="math inline">\(k\)</span> is the number of means and <span class="math inline">\(n=n_1+n_2+\cdots+n_k\)</span> is the total number of observations from all <span class="math inline">\(k\)</span> populations. The variation <span class="math inline">\(SSTR\)</span> and variation are calculated as
+<span class="math display">\[
+SSTR=\sum_{i=1}^k n_i(\bar x_i-\bar x)^2; \quad SSE=\sum_{i=1}^k (n_i-1)s_i^2
+\]</span>
+where <span class="math inline">\(n_i, \bar x_i, s_i^2, i=1, 2, \cdots, k\)</span> are the sample size, the sample mean and sample variance of the <span class="math inline">\(k\)</span> samples from their own populations, <span class="math inline">\(\bar x\)</span> is the mean of all observations. The total variation in the response <span class="math inline">\(SST\)</span> is given by the identity: <span class="math inline">\(SST=SSTR+SSE\)</span>. Reject <span class="math inline">\(H_0: \mu_1=\mu_2=\cdots=\mu_k\)</span> at significance level <span class="math inline">\(\alpha\)</span> if the observed F score is larger than <span class="math inline">\(F_{k-1, n-k}(\alpha)\)</span>.</p>
+</div>
+<div id="multivariate-case-one-way-manova" class="section level3 hasAnchor" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Multivariate Case: One-Way MANOVA<a href="hypothesis-tests-on-mean-vectors.html#multivariate-case-one-way-manova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The idea for one-way ANOVA can be generalized to the multivariate case by replacing the sample mean <span class="math inline">\(\bar x_i\)</span> with mean vector <span class="math inline">\(\mathbf{\bar x_i}\)</span> and the sample variance <span class="math inline">\(s_i^2\)</span> with the covariance matrix <span class="math inline">\(\mathbf{S_i}\)</span>. The between-treatment variation is given by
+<span class="math display">\[
+\mathbf{B}=\sum_{i=1}^kn_i (\mathbf{\bar x_i}-\mathbf{\bar x})(\mathbf{\bar x_i}-\mathbf{\bar x})^{T}
+\]</span>
+and the within-treatment variation is
+<span class="math display">\[
+\mathbf{W}=\sum_{i=1}^k (n_i-1) \mathbf{S_i}
+\]</span>
+Reject <span class="math inline">\(H_0: \boldsymbol{\mu_1}=\boldsymbol{\mu_2}=\cdots=\boldsymbol{\mu_k}\)</span> if
+<span class="math display">\[
+\Lambda^{\ast}=\frac{|\mathbf{W}|}{|\mathbf{B}+\mathbf{W}|}
+\]</span>
+is too . The quantity <span class="math inline">\(\Lambda^{\ast}\)</span> was originally proposed by Wilks and has distribution as follows:</p>
+<p><span class="math display">\[
+\begin{array}{ccc}
+\hline
+\text{No. of variables}&amp;\text{No. of groups}&amp;\text{Sampling distribution of $\Lambda^{\ast}$}\\
+\hline
+p=1&amp;k\ge2&amp;\left(\frac{n-k}{k-1}\right)\left(\frac{1-\Lambda^{\ast}}{\Lambda^{\ast}}\right)\sim F_{k-1, n-k}\\
+p=2&amp;k\ge2&amp;\left(\frac{n-k-1}{k-1}\right)\left(\frac{1-\sqrt{\Lambda^{\ast}}}{\sqrt{\Lambda^{\ast}}}\right)\sim F_{2(k-1), 2(n-k-1)}\\
+p\ge1&amp;k=2&amp;\left(\frac{n-p-1}{p}\right)\left(\frac{1-\Lambda^{\ast}}{\Lambda^{\ast}}\right)\sim F_{p, n-p-1}\\
+p\ge 1&amp;$k=3&amp;\left(\frac{n-p-2}{p}\right)\left(\frac{1-\sqrt{\Lambda^{\ast}}}{\sqrt{\Lambda^{\ast}}}\right)\sim F_{2p, 2(n-p-2)}\\
+\hline
+\end{array}
+\]</span></p>
+<p>If <span class="math inline">\(n\)</span> is large, Barlett has shown that if <span class="math inline">\(H_0\)</span> is true, the quantity
+<span class="math display">\[
+-\left(n-1-\frac{p+k}{2}\right)\ln{\Lambda^{\ast}}
+\]</span>
+has approximately a chi-square distribution with <span class="math inline">\(df=p(k-1)\)</span>. Therefore, we can reject <span class="math inline">\(H_0\)</span> at significance level <span class="math inline">\(\alpha\)</span> if
+<span class="math display">\[
+-\left(n-1-\frac{p+k}{2}\right)\ln\left(\frac{|\mathbf{W}|}{|\mathbf{B}+\mathbf{W}|}\right)\ge \chi^2_{p(k-1)}(\alpha)
+\]</span>
+This is called the one-way MANOVA (multivariate analysis of variance).</p>
+<p></p>
+<p>Suppose there are three groups, <span class="math inline">\(n_1=3, n_2=2, n_3=3\)</span> and the data matrices are
+<span class="math display">\[
+\mathbf{X_1}=\left[
+\begin{array}{cc}
+9  &amp;  3\\
+6 &amp;   2\\
+9 &amp;   7
+\end{array}
+\right]; \quad \mathbf{X_2}=\left[
+\begin{array}{cc}
+0  &amp;  4\\
+2 &amp;   0\\
+\end{array}
+\right]; \quad \mathbf{X_3}=\left[
+\begin{array}{cc}
+3  &amp;  8\\
+1 &amp;   9\\
+2 &amp;   7
+\end{array}
+\right] \mbox{ with } \mathbf{\bar x}=\left[
+\begin{array}{c}
+4\\
+5
+\end{array}
+\right]; \quad \mathbf{\bar x_1}=\left[
+\begin{array}{c}
+8\\
+4
+\end{array}
+\right]; \quad \mathbf{\bar x_2}=\left[
+\begin{array}{c}
+1\\
+2
+\end{array}
+\right]; \quad \mathbf{\bar x_3}=\left[
+\begin{array}{c}
+2\\
+8
+\end{array}
+\right]
+\]</span>
+The between-treatment variation is
+<span class="math display">\[
+\mathbf{B}=\sum_{i=1}^kn_i (\mathbf{\bar x_i}-\mathbf{\bar x})(\mathbf{\bar x_i}-\mathbf{\bar x})^{T}
+=3\left[
+\begin{array}{c}
+4\\
+-1
+\end{array}
+\right][4, -1]+2\left[
+\begin{array}{c}
+-3\\
+-3
+\end{array}
+\right][-3, -3]+3\left[
+\begin{array}{c}
+-2\\
+3
+\end{array}
+\right][-2, 3]
+=\left[
+\begin{array}{cc}
+78  &amp;  -12\\
+-12 &amp;   48\\
+\end{array}
+\right]
+\]</span></p>
+<p>And then the within-treatment variation is
+<span class="math display">\[
+\mathbf{W}=\sum_{i=1}^k (n_i-1) \mathbf{S_i}=(3-1)\left[
+\begin{array}{cc}
+3 &amp;  3\\
+3 &amp;   7\\
+\end{array}
+\right]+(2-1)\left[
+\begin{array}{cc}
+2 &amp;  -4\\
+-4 &amp;   8\\
+\end{array}
+\right]+(3-1)\left[
+\begin{array}{cc}
+1 &amp;  -0.5\\
+-0.5 &amp;   1\\
+\end{array}
+\right]=\left[
+\begin{array}{cc}
+10 &amp;  1\\
+1 &amp;   24\\
+\end{array}
+\right]
+\]</span>
+Therefore,
+<span class="math display">\[
+\Lambda^{\ast}=\frac{|\mathbf{W}|}{|\mathbf{B}+\mathbf{W}|}=\frac{\left|
+\begin{array}{cc}
+10 &amp;  1\\
+1 &amp;   24\\
+\end{array}
+\right|}{\left|
+\begin{array}{cc}
+88 &amp;  -11\\
+-11 &amp;   72\\
+\end{array}
+\right|}=\frac{239}{6215}=0.0385
+\]</span>
+Since <span class="math inline">\(p=2, k=3\)</span> and <span class="math inline">\(n=8\)</span> which is small, the distribution of <span class="math inline">\(\Lambda^{\ast}\)</span> is
+<span class="math display">\[
+\left(\frac{n-k-1}{k-1}\right)\left(\frac{1-\sqrt{\Lambda^{\ast}}}{\sqrt{\Lambda^{\ast}}}\right)=\left(\frac{8-3-1}{3-1}\right)\left(\frac{1-\sqrt{0.0385}}{\sqrt{0.0385}}\right)=8.199
+\]</span>
+Compared with <span class="math inline">\(F_{2(k-1), 2(n-k-1)}(0.05)=F_{2(3-1), 2(8-3-1)}(0.05)=F_{4, 8}(0.05)=3.838\)</span>. Since <span class="math inline">\(8.199&gt;F_{4, 8}(0.05)=3.838\)</span>, we can reject <span class="math inline">\(H_0: \mu_1=\mu_2=\mu_3\)</span> at the 5% significance level.</p>
+<p>Double check with .</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="hypothesis-tests-on-mean-vectors.html#cb50-1" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">9</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">7</span>),<span class="dv">3</span>,<span class="dv">2</span>,<span class="at">byrow=</span>T)</span>
+<span id="cb50-2"><a href="hypothesis-tests-on-mean-vectors.html#cb50-2" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">0</span>),<span class="dv">2</span>,<span class="dv">2</span>,<span class="at">byrow=</span>T)</span>
+<span id="cb50-3"><a href="hypothesis-tests-on-mean-vectors.html#cb50-3" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">1</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">7</span>),<span class="dv">3</span>,<span class="dv">2</span>,<span class="at">byrow=</span>T)</span>
+<span id="cb50-4"><a href="hypothesis-tests-on-mean-vectors.html#cb50-4" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb50-5"><a href="hypothesis-tests-on-mean-vectors.html#cb50-5" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb50-6"><a href="hypothesis-tests-on-mean-vectors.html#cb50-6" tabindex="-1"></a>n3 <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb50-7"><a href="hypothesis-tests-on-mean-vectors.html#cb50-7" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rbind</span>(x1,x2,x3)</span>
+<span id="cb50-8"><a href="hypothesis-tests-on-mean-vectors.html#cb50-8" tabindex="-1"></a>gr <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),<span class="fu">c</span>(n1,n2,n3)))</span>
+<span id="cb50-9"><a href="hypothesis-tests-on-mean-vectors.html#cb50-9" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">manova</span>(x <span class="sc">~</span> gr)</span>
+<span id="cb50-10"><a href="hypothesis-tests-on-mean-vectors.html#cb50-10" tabindex="-1"></a><span class="fu">summary</span>(temp,<span class="at">test=</span><span class="st">&quot;Wilks&quot;</span>)</span></code></pre></div>
+<pre><code>##           Df    Wilks approx F num Df den Df   Pr(&gt;F)   
+## gr         2 0.038455   8.1989      4      8 0.006234 **
+## Residuals  5                                            
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p><span class="math inline">\(\textbf{Example: One-way MANOVA with Iris}\)</span></p>
+<p>We can also apply Wilks’ lambda test on the Iris flowers data to see whether the three species have different mean values on the measurements. I will use the two variables and to make <span class="math inline">\(p=2\)</span> in the notes.</p>
+<p>The sample mean vectors for the three species and the overall mean vector are:
+<span class="math display">\[
+\mathbf{\bar x_1}=\left[
+\begin{array}{c}
+1.462\\
+0.246
+\end{array}
+\right]; \quad \mathbf{\bar x_2}=\left[
+\begin{array}{c}
+4.260\\
+1.326
+\end{array}
+\right]; \quad \mathbf{\bar x_3}=\left[
+\begin{array}{c}
+5.552\\
+2.026
+\end{array}
+\right]; \quad  \mathbf{\bar x}=\left[
+\begin{array}{c}
+3.758\\
+1.199
+\end{array}
+\right]
+\]</span></p>
+<p>The between and within treatment variations are
+<span class="math display">\[
+\mathbf{B}=\left[
+\begin{array}{cc}
+437.103 &amp;  186.774\\
+186.774 &amp;  80.413\\
+\end{array}
+\right]; \quad \mathbf{W}=\left[
+\begin{array}{cc}
+27.223 &amp;  6.272\\
+6.272 &amp;  6.157\\
+\end{array}
+\right]
+\]</span>
+which gives <span class="math inline">\(\Lambda^{\ast}=0.0438\)</span>. The distribution of <span class="math inline">\(\Lambda^{\ast}\)</span> is
+<span class="math display">\[
+\left(\frac{n-k-1}{k-1}\right)\left(\frac{1-\sqrt{\Lambda^{\ast}}}{\sqrt{\Lambda^{\ast}}}\right)=\left(\frac{150-3-1}{3-1}\right)\left(\frac{1-\sqrt{0.0438}}{\sqrt{0.0438}}\right)=275.9
+\]</span>
+Compared with <span class="math inline">\(F_{2(k-1), 2(n-k-1)}(0.05)=F_{2(3-1), 2(150-3-1)}(0.05)=F_{4, 292}(0.05)=2.403\)</span>. We can reject <span class="math inline">\(H_0\)</span>. Since <span class="math inline">\(n=n_1+n_2+n_3=3\times 50=150\)</span> is relatively large, we can use the chi-square approximation,
+<span class="math display">\[
+-\left(n-1-\frac{p+k}{2}\right)\ln\left(\frac{|\mathbf{W}|}{|\mathbf{B}+\mathbf{W}|}\right)=458.348
+\]</span>
+compared with <span class="math inline">\(\chi^2_{p(k-1)}(0.05)=\chi^2_4(0.05)=9.488\)</span>, reject <span class="math inline">\(H_0\)</span>.</p>
+<p>Confirm with <span class="math inline">\(\textsf{R}\)</span>.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="hypothesis-tests-on-mean-vectors.html#cb52-1" tabindex="-1"></a>ir <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(iris[,<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)])</span>
+<span id="cb52-2"><a href="hypothesis-tests-on-mean-vectors.html#cb52-2" tabindex="-1"></a>irgr <span class="ot">&lt;-</span> iris[,<span class="dv">5</span>]</span>
+<span id="cb52-3"><a href="hypothesis-tests-on-mean-vectors.html#cb52-3" tabindex="-1"></a>iris_manova <span class="ot">&lt;-</span> <span class="fu">manova</span>(ir<span class="sc">~</span>irgr)</span>
+<span id="cb52-4"><a href="hypothesis-tests-on-mean-vectors.html#cb52-4" tabindex="-1"></a><span class="fu">summary</span>(iris_manova)</span></code></pre></div>
+<pre><code>##            Df Pillai approx F num Df den Df    Pr(&gt;F)    
+## irgr        2 1.0465   80.661      4    294 &lt; 2.2e-16 ***
+## Residuals 147                                            
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>If we use all four predicted variables, the result becomes:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="hypothesis-tests-on-mean-vectors.html#cb54-1" tabindex="-1"></a>manova_result <span class="ot">&lt;-</span> <span class="fu">manova</span>(<span class="fu">cbind</span>(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) <span class="sc">~</span> Species, </span>
+<span id="cb54-2"><a href="hypothesis-tests-on-mean-vectors.html#cb54-2" tabindex="-1"></a>                        <span class="at">data =</span> iris)</span>
+<span id="cb54-3"><a href="hypothesis-tests-on-mean-vectors.html#cb54-3" tabindex="-1"></a><span class="fu">summary</span>(manova_result)</span></code></pre></div>
+<pre><code>##            Df Pillai approx F num Df den Df    Pr(&gt;F)    
+## Species     2 1.1919   53.466      8    290 &lt; 2.2e-16 ***
+## Residuals 147                                            
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="hypothesis-tests-on-mean-vectors.html#cb56-1" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb56-2"><a href="hypothesis-tests-on-mean-vectors.html#cb56-2" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb56-3"><a href="hypothesis-tests-on-mean-vectors.html#cb56-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb56-4"><a href="hypothesis-tests-on-mean-vectors.html#cb56-4" tabindex="-1"></a><span class="co"># Use the broom package to tidy the output</span></span>
+<span id="cb56-5"><a href="hypothesis-tests-on-mean-vectors.html#cb56-5" tabindex="-1"></a>manova_fit <span class="ot">&lt;-</span> <span class="fu">tidy</span>(manova_result)</span>
+<span id="cb56-6"><a href="hypothesis-tests-on-mean-vectors.html#cb56-6" tabindex="-1"></a><span class="co"># Use knitr to create a table of the output</span></span>
+<span id="cb56-7"><a href="hypothesis-tests-on-mean-vectors.html#cb56-7" tabindex="-1"></a><span class="fu">kable</span>(manova_fit, <span class="at">caption=</span><span class="st">&quot;Manova Table for Iris Data&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:tidyoutputmanova">Table 5.1: </span>Manova Table for Iris Data</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">df</th>
+<th align="right">pillai</th>
+<th align="right">statistic</th>
+<th align="right">num.df</th>
+<th align="right">den.df</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Species</td>
+<td align="right">2</td>
+<td align="right">1.191899</td>
+<td align="right">53.46649</td>
+<td align="right">8</td>
+<td align="right">290</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Residuals</td>
+<td align="right">147</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p>To check whether the three species have the same covariance matrix.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="hypothesis-tests-on-mean-vectors.html#cb57-1" tabindex="-1"></a><span class="fu">library</span>(biotools)</span>
+<span id="cb57-2"><a href="hypothesis-tests-on-mean-vectors.html#cb57-2" tabindex="-1"></a><span class="fu">boxM</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>],iris[,<span class="dv">5</span>])</span></code></pre></div>
+<pre><code>## 
+##  Box&#39;s M-test for Homogeneity of Covariance Matrices
+## 
+## data:  iris[, 1:4]
+## Chi-Sq (approx.) = 140.94, df = 20, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div id="revisit-the-learning-outcomes-2" class="section level2 unnumbered hasAnchor">
+<h2>Revisit the Learning Outcomes<a href="hypothesis-tests-on-mean-vectors.html#revisit-the-learning-outcomes-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After finishing this note, students should be able to</p>
+<ul>
+<li>Explain the main idea of using a chi-square Q-Q plot to assess the multivariate normality assumption.</li>
+<li>Assess the multivariate normality through a chi-square Q-Q plot and casual procedures using R.</li>
+<li>Conduct a Hotelling’s <span class="math inline">\(T^2\)</span> test on one mean vector based on one sample or paired sample.</li>
+<li>Conduct a Hotelling’s <span class="math inline">\(T^2\)</span> test on two mean vectors based on two independent samples.</li>
+<li>Conduct a one-way MANOVA test on at least two mean vectors based on at least two independent samples.</li>
+<li>Obtain <span class="math inline">\((1-\alpha)\times 100\%\)</span> Bonferroni confidence intervals associated with a certain test if applicable.</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="displaying-multivariate-data-and-measures-of-distance.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="principal-component-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
